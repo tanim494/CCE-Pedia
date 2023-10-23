@@ -18,7 +18,6 @@
         android:autoLink="web"
         android:onClick="openSemester1"
         android:clickable="true"
-        android:focusable="true"
         android:textAlignment="center"
         android:background="@drawable/buttonbg"
         android:layout_marginBottom="80px" />
@@ -33,7 +32,6 @@
         android:autoLink="web"
         android:onClick="openSemester2"
         android:clickable="true"
-        android:focusable="true"
         android:textAlignment="center"
         android:background="@drawable/buttonbg"
         android:layout_marginBottom="80px" />
@@ -48,7 +46,6 @@
         android:autoLink="web"
         android:onClick="openSemester3"
         android:clickable="true"
-        android:focusable="true"
         android:textAlignment="center"
         android:background="@drawable/buttonbg"
         android:layout_marginBottom="80px" />
@@ -63,7 +60,6 @@
         android:autoLink="web"
         android:onClick="openSemester4"
         android:clickable="true"
-        android:focusable="true"
         android:textAlignment="center"
         android:background="@drawable/buttonbg"
         android:layout_marginBottom="80px" />
@@ -78,7 +74,6 @@
         android:autoLink="web"
         android:onClick="openSemester5"
         android:clickable="true"
-        android:focusable="true"
         android:textAlignment="center"
         android:background="@drawable/buttonbg"
         android:layout_marginBottom="80px" />
@@ -93,7 +88,6 @@
         android:autoLink="web"
         android:onClick="openSemester6"
         android:clickable="true"
-        android:focusable="true"
         android:textAlignment="center"
         android:background="@drawable/buttonbg"
         android:layout_marginBottom="80px" />
@@ -108,7 +102,6 @@
         android:autoLink="web"
         android:onClick="openSemester7"
         android:clickable="true"
-        android:focusable="true"
         android:textAlignment="center"
         android:background="@drawable/buttonbg"
         android:layout_marginBottom="80px" />
@@ -123,7 +116,6 @@
         android:autoLink="web"
         android:onClick="openSemester8"
         android:clickable="true"
-        android:focusable="true"
         android:textAlignment="center"
         android:background="@drawable/buttonbg"
         android:layout_marginBottom="80px" />
