@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:padding="16dp"
+    android:background="@drawable/bgg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:layout_marginBottom="80px"
+        android:autoLink="web"
+        android:background="@drawable/buttonbg"
+        android:clickable="true"
+        android:onClick="openFacebookPage"
+        android:text="CCE Club Facebook Page"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:text="CCE Club Female Chapter Facebook Page"
+        android:textStyle="bold"
+        android:layout_marginBottom="80px"
+        android:textAlignment="center"
+        android:background="@drawable/buttonbg"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:autoLink="web"
+        android:onClick="openFacebookFemPage"
+        android:clickable="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:text="Previous Question and Books"
+        android:textStyle="bold"
+        android:layout_marginBottom="80px"
+        android:textAlignment="center"
+        android:background="@drawable/buttonbg"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:autoLink="web"
+        android:onClick="openQuestionPage"
+        android:clickable="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:text="Semester Wise Resources"
+        android:textStyle="bold"
+        android:layout_marginBottom="80px"
+        android:textAlignment="center"
+        android:background="@drawable/buttonbg"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:autoLink="web"
+        android:onClick="openSemesterResourcesPage"
+        android:clickable="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:text="Important Resources"
+        android:textStyle="bold"
+        android:layout_marginBottom="80px"
+        android:textAlignment="center"
+        android:background="@drawable/buttonbg"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:autoLink="web"
+        android:onClick="openImpPage"
+        android:clickable="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:text="Bus Schedule"
+        android:textStyle="bold"
+        android:layout_marginBottom="80px"
+        android:textAlignment="center"
+        android:background="@drawable/buttonbg"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:autoLink="web"
+        android:onClick="openBusPage"
+        android:clickable="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:text="Class Routine"
+        android:textStyle="bold"
+        android:layout_marginBottom="80px"
+        android:textAlignment="center"
+        android:background="@drawable/buttonbg"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:autoLink="web"
+        android:onClick="openRoutinePage"
+        android:clickable="true" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:text="IIUC CCE Website"
+        android:textStyle="bold"
+        android:layout_marginBottom="80px"
+        android:textAlignment="center"
+        android:background="@drawable/buttonbg"
+        android:textSize="16sp"
+        android:textColor="#000"
+        android:autoLink="web"
+        android:onClick="openIPage"
+        android:clickable="true" />
+
+
+</LinearLayout>

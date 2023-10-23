@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "73240871430",
+    "firebase_url": "https://cce-pedia-5284c-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "cce-pedia-5284c",
+    "storage_bucket": "cce-pedia-5284c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73240871430:android:09b7bb7f06679af1827987",
+        "android_client_info": {
+          "package_name": "com.tanim.ccepedia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWitFwWLUFdgaSOI7kMujsGkMfH2JGgFA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

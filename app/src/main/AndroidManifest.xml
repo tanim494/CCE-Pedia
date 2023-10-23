@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/logo2"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CCEPedia"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"> <!-- Set the theme without action bar -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainMenuActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".IntroductionActivity"
+            android:exported="true"
+            android:label="History of CCE">
+            <!-- Intent filter, if needed -->
+        </activity>
+
+        <activity
+            android:name=".FacultyListActivity"
+            android:exported="true"
+            android:label="Faculty List">
+        <!-- Your intent filter and other activity settings go here -->
+    </activity>
+
+        <activity
+            android:name=".ResourcesActivity"
+            android:exported="true"
+            android:label="Resources">
+            <!-- Intent filter, if needed -->
+        </activity>
+
+        <activity
+            android:name=".AuthorActivity"
+            android:exported="true"
+            android:label="Author">
+            <!-- Intent filter, if needed -->
+        </activity>
+
+        <activity
+            android:name=".SemesterResourcesActivity"
+            android:exported="true"
+            android:label="Semester Wise Resources">
+            <!-- Intent filter, if needed -->
+        </activity>
+
+    </application>
+
+</manifest>
