@@ -3,8 +3,8 @@ package com.tanim.ccepedia;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AuthorActivity extends AppCompatActivity {
@@ -16,37 +16,17 @@ public class AuthorActivity extends AppCompatActivity {
 
         // GitHub Button
         Button githubButton = findViewById(R.id.githubButton);
-        githubButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGitHubProfile();
-            }
-        });
+        githubButton.setOnClickListener(view -> openGitHubProfile());
 
         // Facebook Button
         Button facebookButton = findViewById(R.id.facebookButton);
-        facebookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFacebookProfile();
-            }
-        });
+        facebookButton.setOnClickListener(view -> openFacebookProfile());
 
         Button websiteButton = findViewById(R.id.websiteButton);
-        websiteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openWebsite();
-            }
-        });
+        websiteButton.setOnClickListener(view -> openWebsite());
 
         Button formButton = findViewById(R.id.formButton);
-        formButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openForm();
-            }
-        });
+        formButton.setOnClickListener(view -> openForm());
     }
 
     private void openGitHubProfile() {

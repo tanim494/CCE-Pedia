@@ -64,13 +64,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
                 // Button to open the web link
                 TextView openWebButton = findViewById(R.id.noticeText);
-                openWebButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (webLink != null) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webLink));
-                            startActivity(intent);
-                        }
+                openWebButton.setOnClickListener(view -> {
+                    if (webLink != null) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webLink));
+                        startActivity(intent);
                     }
                 });
             }
@@ -87,14 +84,10 @@ public class MainMenuActivity extends AppCompatActivity {
                 coVer = Integer.parseInt(snapshot.getValue(String.class));
                 if (coVer > userVer) {
                     upDt.setVisibility(View.VISIBLE);
-                    TextView upBt = findViewById(R.id.updateButton);
-                    upBt.setText("Update available, Click to download");
-                    upBt.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateLink));
-                                startActivity(intent);
-                        }
+                    upDt.setText("Update available, Click to download");
+                    upDt.setOnClickListener(view -> {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateLink));
+                            startActivity(intent);
                     });
 
                 } else {
@@ -125,39 +118,27 @@ public class MainMenuActivity extends AppCompatActivity {
 
         // Add buttons for other activities
         ImageButton introductionButton = findViewById(R.id.introductionButton);
-        introductionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, IntroductionActivity.class);
-                startActivity(intent);
-            }
+        introductionButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainMenuActivity.this, IntroductionActivity.class);
+            startActivity(intent);
         });
 
         ImageButton facultiesButton = findViewById(R.id.facultyButton);
-        facultiesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        facultiesButton.setOnClickListener(view -> {
                 Intent intent = new Intent(MainMenuActivity.this, FacultyListActivity.class);
                 startActivity(intent);
-            }
         });
 
         ImageButton resourcesButton = findViewById(R.id.resourcesButton);
-        resourcesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        resourcesButton.setOnClickListener(view -> {
                 Intent intent = new Intent(MainMenuActivity.this, ResourcesActivity.class);
                 startActivity(intent);
-            }
         });
 
         ImageButton authorButton = findViewById(R.id.authorButton);
-        authorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        authorButton.setOnClickListener(view -> {
                 Intent intent = new Intent(MainMenuActivity.this, AuthorActivity.class);
                 startActivity(intent);
-            }
         });
     }
 }

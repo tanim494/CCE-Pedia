@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast; // Import Toast
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,18 +51,15 @@ public class FacultyListActivity extends AppCompatActivity {
         facultyListView.setAdapter(facultyAdapter);
 
         // Add the OnItemClickListener for opening the dialer and displaying a toast
-        facultyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String phoneNumber = facultyContactNumbers[position];
-                String facultyName = facultyNames[position];
+        facultyListView.setOnItemClickListener((parent, view, position, id) -> {
+            String phoneNumber = facultyContactNumbers[position];
+            String facultyName = facultyNames[position];
 
-                // Open the dialer
-                dialPhoneNumber(phoneNumber);
+            // Open the dialer
+            dialPhoneNumber(phoneNumber);
 
-                // Display a toast with the faculty's name
-                Toast.makeText(FacultyListActivity.this, "Calling " + facultyName + " Sir", Toast.LENGTH_SHORT).show();
-            }
+            // Display a toast with the faculty's name
+            Toast.makeText(FacultyListActivity.this, "Calling " + facultyName + " Sir", Toast.LENGTH_SHORT).show();
         });
     }
 
