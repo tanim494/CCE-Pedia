@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString(STUDENT_NAME_KEY, studentName);
                         editor.putInt(SEMESTER_KEY, semesterId);
                         editor.apply();
+                        //If it's first run, then making it false
                         // Proceed to the main activity
                         goToMainActivity();
                         Toast.makeText(LoginActivity.this, "Welcome to CCE Pedia " + studentName, Toast.LENGTH_SHORT).show();
@@ -58,4 +59,5 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
     }
+
 }

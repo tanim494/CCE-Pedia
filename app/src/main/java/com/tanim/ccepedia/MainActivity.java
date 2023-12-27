@@ -27,6 +27,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     LinearLayout sideMenu;
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         updateVersionDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                databaseVersion = Integer.parseInt(snapshot.getValue(String.class));
+                databaseVersion = Integer.parseInt(Objects.requireNonNull(snapshot.getValue(String.class)));
                 if (databaseVersion > userVersion) {
                     updateBt.setVisibility(View.VISIBLE);
                     updateBt.setText("Update available, Click to download");
@@ -109,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.valueOf(updateLinkDb)));
                     startActivity(intent);
                     });
+                } else {
+                    updateBt.setVisibility(View.GONE);
                 }
             }
             public void onCancelled(@NonNull DatabaseError error) {
