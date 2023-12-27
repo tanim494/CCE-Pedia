@@ -1,17 +1,34 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Theme.CCEPedia" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.CCEPedia" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#395E3B</item>
+        <item name="colorPrimary">#738F73</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">#00BCD4</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">#FFEB3B</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">#C8779577</item>
+        <item name="android:statusBarColor">?android:colorPrimary</item>
+        <item name="android:navigationBarColor">?android:colorPrimary</item>
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="ButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:autoLink">web</item>
+        <item name="android:background">@drawable/buttonbg</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginBottom">80px</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Button4">
+        <item name="cornerSize">20%</item>
+    </style>
 </resources>

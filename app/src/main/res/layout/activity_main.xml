@@ -1,25 +1,81 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgs">
+    tools:context=".MainActivity"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <ImageView
-        android:id="@+id/logoImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/logo" />
-
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100px"
-        android:shadowColor="#000000"
-        android:shadowRadius="1"
-        android:text="Made By Tanim(CCE B-27)"
+        android:layout_height="match_parent"
 
-        android:textColor="@color/black"
-        android:textSize="40px" />
+        tools:context=".MainActivity">
 
-</RelativeLayout>
+        <!-- Custom AppBar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/customToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="?android:colorPrimary"
+            android:layout_alignParentTop="true"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextColor="#FFFFFF">
+
+            <!-- Menu Icon -->
+            <ImageView
+                android:id="@+id/menuIcon"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/menu"
+                android:layout_marginStart="16dp"
+                android:contentDescription="Menu Icon" />
+            <TextView
+                android:id="@+id/toolText"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="serif-monospace"
+                android:text="CCE Pedia"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                />
+        </androidx.appcompat.widget.Toolbar>
+        <!-- Container in the Middle -->
+        <FrameLayout
+            android:id="@+id/Midcontainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bgg"
+            android:layout_above="@id/bottomNavigation"
+            android:layout_below="@id/customToolbar">
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/sideMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/customToolbar"
+            android:visibility="gone">
+
+            <include layout="@layout/menu_drawer" />
+        </LinearLayout>
+
+        <!-- Bottom Navigation Bar -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?colorPrimary"
+            app:itemIconTint="@color/black"
+            app:itemTextColor="@color/black"
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/bottom_navigation" />
+
+    </RelativeLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>
