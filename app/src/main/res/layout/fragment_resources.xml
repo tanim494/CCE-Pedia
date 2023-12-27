@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:padding="16dp"
+    android:background="@drawable/bgg">
+
+    <TextView
+        android:id="@+id/openFacebookPage"
+        style="@style/ButtonStyle"
+        android:text="CCE Club Facebook Page"/>
+
+    <TextView
+        android:id="@+id/openFacebookFemPage"
+        style="@style/ButtonStyle"
+        android:text="CCE Club Female Chapter Facebook Page" />
+
+    <TextView
+        android:id="@+id/openQuestionPage"
+        style="@style/ButtonStyle"
+        android:text="Previous Question and Books" />
+
+    <TextView
+        android:id="@+id/openSemesterResourcesPage"
+        style="@style/ButtonStyle"
+        android:text="Semester Wise Resources" />
+
+    <TextView
+        android:id="@+id/batchWise"
+        style="@style/ButtonStyle"
+        android:text="Batch Wise Resources"/>
+
+    <TextView
+        android:id="@+id/openImpPage"
+        style="@style/ButtonStyle"
+        android:text="Important Resources"/>
+
+    <TextView
+        android:id="@+id/openBusPage"
+        style="@style/ButtonStyle"
+        android:text="Bus Schedule"/>
+
+    <TextView
+        android:id="@+id/openRoutinePage"
+        style="@style/ButtonStyle"
+        android:text="Class Routine"/>
+
+</LinearLayout>

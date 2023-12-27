@@ -1,0 +1,50 @@
+<!-- activity_semester.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:padding="16dp"
+    android:background="@drawable/bgg">
+
+    <TextView
+        android:id="@+id/semester1"
+        style="@style/ButtonStyle"
+        android:text="1st Semester" />
+
+    <TextView
+        android:id="@+id/semester2"
+        style="@style/ButtonStyle"
+        android:text="2nd Semester" />
+
+    <TextView
+        android:id="@+id/semester3"
+        style="@style/ButtonStyle"
+        android:text="3rd Semester" />
+
+    <TextView
+        android:id="@+id/semester4"
+        style="@style/ButtonStyle"
+        android:text="4th Semester" />
+
+    <TextView
+        android:id="@+id/semester5"
+        style="@style/ButtonStyle"
+        android:text="5th Semester" />
+
+    <TextView
+        android:id="@+id/semester6"
+        style="@style/ButtonStyle"
+        android:text="6th Semester" />
+
+    <TextView
+        android:id="@+id/semester7"
+        style="@style/ButtonStyle"
+        android:text="7th Semester" />
+
+    <TextView
+        android:id="@+id/semester8"
+        style="@style/ButtonStyle"
+        android:text="8th Semester" />
+</LinearLayout>

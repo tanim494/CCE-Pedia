@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nv_home"
+        android:title="Home"
+        android:icon="@drawable/home" />
+    <item
+        android:id="@+id/nv_faculty"
+        android:title="Faculties"
+        android:icon="@drawable/faculty" />
+    <item
+        android:id="@+id/nv_resource"
+        android:title="Resources"
+        android:icon="@drawable/resource" />
+    <item
+        android:id="@+id/nv_author"
+        android:title="Author"
+        android:icon="@drawable/author" />
+</menu>

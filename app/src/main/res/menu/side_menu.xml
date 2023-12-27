@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Profile">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+
+                    android:id="@+id/editInfo"
+
+
+                    android:title="Edit" />
+
+            </group>
+
+        </menu>
+
+    </item>
+
+    <item android:title="Quick Links">
+
+        <menu>
+
+            <item
+                
+                android:id="@+id/updateButton"
+
+                android:title="Update" />
+
+            <item
+
+                android:id="@+id/noticeButton"
+
+                android:title="Notice" />
+
+        </menu>
+
+    </item>
+
+</menu>
