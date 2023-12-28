@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     TextView updateBt;
     TextView noticeText;
     String noticeLink; // Declare websLink as a class variable
+    String updateLink;
     float databaseVersion;    //Newer Version from database
     String menuResLink = "https://cce.iiuc.ac.bd"; //default link for menu drawer semester button
     private ImageView menuIcon; //Menu drawer icon
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupDatabaseListeners() {
-        // Set up Firebase Database listeners here
+        //Fetching the notice text
         noticeTextDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -160,12 +161,11 @@ public class MainActivity extends AppCompatActivity {
                 noticeText.setTextSize(15);
                 noticeText.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        // Fetch the link to open when notice box clicked
+        // Fetch the link to open when notice box is clicked
         noticeLinkDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -178,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -193,15 +192,25 @@ public class MainActivity extends AppCompatActivity {
                     updateBt.setVisibility(View.VISIBLE);
                     updateBt.setText("Update available, Click to download");
                     updateBt.setOnClickListener(view -> {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.valueOf(updateLinkDb)));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.valueOf(updateLink)));
                         startActivity(intent);
                     });
                 } else {
                     updateBt.setVisibility(View.GONE);
                 }
             }
-
             public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        //Fetch the update link
+        updateLinkDb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                updateLink = snapshot.getValue(String.class);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
