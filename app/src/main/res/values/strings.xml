@@ -3,6 +3,8 @@
     <string name="intro">The Department of Computer and Communication Engineering (CCE) is a rapidly expanding and dynamic department within the International Islamic University Chittagong (IIUC). Situated at Academic Building 5, CCE operates under the umbrella of the Faculty of Science and Engineering (FSE).
             \n\nThe department\'s inception dates back to spring 1998/99 session with IEB accreditation. Its mission is to merge computer science with communication engineering encompassing software and hardware concepts, information networks, wireless communication systems, among others. Offering an all-encompassing instructional program bolstered by research in emerging fields, CCE covers a wide range of issues concerning both computer and communication engineering systems.
             \n\nSome notable areas include Machine Learning, Internet of Things (IoT), Web Technologies, Advanced Computer Networking, Network and Information Security, Wireless Communication Systems on Chip (NoC), Software Testing, Computer Architecture as well as Embedded Systems. \n\nIf you want to get more information about CCE and know the similarities between CCE and CSE, you can download a PDF by clicking below</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Add other strings as needed -->
 
 </resources>

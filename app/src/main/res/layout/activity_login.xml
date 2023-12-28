@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bgg"
+    android:background="@drawable/default_bg"
     android:gravity="center">
 
     <TextView
@@ -90,7 +90,7 @@
 
             <Button
                 android:id="@+id/loginButton"
-                android:text="Start"
+                android:text="Continue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="17sp"

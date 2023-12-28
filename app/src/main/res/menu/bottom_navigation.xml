@@ -3,17 +3,17 @@
     <item
         android:id="@+id/nv_home"
         android:title="Home"
-        android:icon="@drawable/home" />
+        android:icon="@drawable/nv_home" />
     <item
         android:id="@+id/nv_faculty"
         android:title="Faculties"
-        android:icon="@drawable/faculty" />
+        android:icon="@drawable/nv_faculty" />
     <item
         android:id="@+id/nv_resource"
         android:title="Resources"
-        android:icon="@drawable/resource" />
+        android:icon="@drawable/nv_resource" />
     <item
         android:id="@+id/nv_author"
         android:title="Author"
-        android:icon="@drawable/author" />
+        android:icon="@drawable/nv_author" />
 </menu>

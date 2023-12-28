@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class Resources extends Fragment {
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_resources, container, false);
@@ -37,13 +37,21 @@ public class Resources extends Fragment {
 
         impPage.setOnClickListener(v -> openWebPage("https://jpst.it/3q6PY"));
 
-        busPage.setOnClickListener(v -> openWebPage("https://jpst.it/3q4Pl"));
+        routinePage.setOnClickListener(v -> {
+            setupWebFragment();
+            WebContent.setLink("https://jpst.it/3q4Rc");
+            ((MainActivity) getActivity()).updateToolText("Routine");
+        });
 
-        routinePage.setOnClickListener(v -> openWebPage("https://jpst.it/3q4Rc"));
+        busPage.setOnClickListener(v -> {
+            setupWebFragment();
+            WebContent.setLink("https://jpst.it/3q4Pl");
+            ((MainActivity) getActivity()).updateToolText("Bus Schedule");
+
+        });
 
         semesterResourcesPage.setOnClickListener(v -> {
-            FragmentManager fragmentManager = getFragmentManager();
-            assert fragmentManager != null;
+            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.Midcontainer, new SemesterResources());
             fragmentTransaction.addToBackStack(null); // Optional: Add transaction to the back stack
@@ -56,4 +64,12 @@ public class Resources extends Fragment {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
     }
+    private void setupWebFragment() {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.Midcontainer, new WebContent());
+        fragmentTransaction.addToBackStack(null); // Optional: Add transaction to the back stack
+        fragmentTransaction.commit();
+    }
+
 }
