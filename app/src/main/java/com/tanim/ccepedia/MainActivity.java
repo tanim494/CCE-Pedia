@@ -289,10 +289,4 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-    public void updateToolText(String newText) {
-        TextView yourTextView = findViewById(R.id.toolText);
-        if (yourTextView != null) {
-            yourTextView.setText(newText);
-        }
-    }
 }

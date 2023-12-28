@@ -40,14 +40,11 @@ public class Resources extends Fragment {
         routinePage.setOnClickListener(v -> {
             setupWebFragment();
             WebContent.setLink("https://jpst.it/3q4Rc");
-            ((MainActivity) getActivity()).updateToolText("Routine");
         });
 
         busPage.setOnClickListener(v -> {
             setupWebFragment();
             WebContent.setLink("https://jpst.it/3q4Pl");
-            ((MainActivity) getActivity()).updateToolText("Bus Schedule");
-
         });
 
         semesterResourcesPage.setOnClickListener(v -> {
