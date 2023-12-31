@@ -22,6 +22,7 @@ public class Loading extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
+
         new Handler().postDelayed(() -> {
             if (isFirstRun()) {
                 // First run: open the login activity

@@ -28,6 +28,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import com.onesignal.OneSignal;
+import com.onesignal.debug.LogLevel;
+import com.onesignal.Continue;
 
 import java.util.Objects;
 
@@ -50,15 +55,18 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference updateLinkDb;
     private int semesterId;
     final int animTime = 1000;
-
+    private static final String ONESIGNAL_APP_ID = "1bb2a02a-0e83-4bb2-b810-86bfa76798d8";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseMessaging.getInstance().subscribeToTopic("notification");
         //Setting the views
         initializeViews();
         //Creating database reference
         setupFirebase();
+        //Setup OneSignal
+        setupOneSignal();
         //SharedPreference for Name and Semester
         setupSharedPreferences();
         //Setup database listener for data
@@ -118,6 +126,30 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    private void setupOneSignal() {
+        // Verbose Logging set to help debug issues, remove before releasing your app.
+        OneSignal.getDebug().setLogLevel(LogLevel.VERBOSE);
+
+        // OneSignal Initialization
+        OneSignal.initWithContext(this, ONESIGNAL_APP_ID);
+
+        // requestPermission will show the native Android notification permission prompt.
+        // NOTE: It's recommended to use a OneSignal In-App Message to prompt instead.
+        OneSignal.getNotifications().requestPermission(true, Continue.with(r -> {
+            if (r.isSuccess()) {
+                if (r.getData()) {
+                    // `requestPermission` completed successfully and the user has accepted permission
+                }
+                else {
+                    // `requestPermission` completed successfully but the user has rejected permission
+                }
+            }
+            else {
+                // `requestPermission` completed unsuccessfully, check `r.getThrowable()` for more info on the failure reason
+            }
+        }));
     }
 
     private void initializeViews() {
