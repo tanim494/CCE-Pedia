@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Setting Firebase FCM for push notifications
         FirebaseMessaging.getInstance().subscribeToTopic("notification");
         //Setting the views
         initializeViews();
