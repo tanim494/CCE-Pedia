@@ -71,21 +71,10 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/buttonbg"
             android:clickable="true"/>
-        <TextView
-            android:id="@+id/updateButton"
-            android:layout_below="@id/menuSemRes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="20dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/buttonbg"
-            android:clickable="true"/>
+
         <TextView
             android:id="@+id/noticeButton"
-            android:layout_below="@id/updateButton"
+            android:layout_below="@id/menuSemRes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?colorPrimary"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/updateDialogImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/updateDialogText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/updateDialogImage"
+        android:layout_marginTop="10dp"
+        android:padding="16dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:text="Newer version available, \nplease update."
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_below="@id/updateDialogText"
+        android:padding="15dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/okay_text"
+            style="@style/updateBtn"
+            android:text="Update"
+            android:textColor="#FFB300"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/cancel_text"
+            style="@style/updateBtn"
+            android:text="Cancel"
+            android:textColor="#4C4C4C "
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

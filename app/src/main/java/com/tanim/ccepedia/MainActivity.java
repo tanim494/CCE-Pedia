@@ -4,11 +4,14 @@ import static com.tanim.ccepedia.LoginActivity.PREFS_NAME;
 import static com.tanim.ccepedia.LoginActivity.SEMESTER_KEY;
 import static com.tanim.ccepedia.LoginActivity.STUDENT_NAME_KEY;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.webkit.WebView;
@@ -42,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     TextView toolBarTxt;
     TextView studentName;
     TextView studentSemester;
-    TextView updateBt;
     TextView noticeText;
     String noticeLink; // Declare websLink as a class variable
     String updateLink;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference noticeTextDb;
     DatabaseReference noticeLinkDb;
     DatabaseReference updateVersionDb;
+    float userVersion;
     DatabaseReference updateLinkDb;
     private int semesterId;
     final int animTime = 1000;
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Check For update
+        checkForUpdate();
         //Setting Firebase FCM for push notifications
         FirebaseMessaging.getInstance().subscribeToTopic("notification");
         //Setting the views
@@ -129,6 +134,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void checkForUpdate() {
+        new Handler().postDelayed(() -> {
+            TextView okay_text, cancel_text;
+            if (databaseVersion > userVersion) {
+            Dialog dialog = new Dialog(MainActivity.this);
+            dialog.setContentView(R.layout.update_dialog);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.setCancelable(false);
+            dialog.getWindow().getAttributes().windowAnimations = 0;//R.style.animation;
+            dialog.show();
+
+            okay_text = dialog.findViewById(R.id.okay_text);
+            cancel_text = dialog.findViewById(R.id.cancel_text);
+
+            okay_text.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateLink));
+                startActivity(intent);
+            });
+            cancel_text.setOnClickListener(v -> dialog.dismiss());
+            }
+        }, 2000); // Delay in milliseconds
+    }
+
     private void setupOneSignal() {
         // Verbose Logging set to help debug issues, remove before releasing your app.
         OneSignal.getDebug().setLogLevel(LogLevel.VERBOSE);
@@ -158,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
         menuIcon = findViewById(R.id.menuIcon);
         sideMenu = findViewById(R.id.sideMenu);
         toolBarTxt = findViewById(R.id.toolText);
-        updateBt = findViewById(R.id.updateButton);
         noticeText = findViewById(R.id.noticeButton);
         bottomNavigation = findViewById(R.id.bottomNavigation);
     }
@@ -219,18 +246,8 @@ public class MainActivity extends AppCompatActivity {
         updateVersionDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                float userVersion = Float.parseFloat(BuildConfig.VERSION_NAME) * 100; //User installed version in decimal
+                userVersion = Float.parseFloat(BuildConfig.VERSION_NAME) * 100; //User installed version in decimal
                 databaseVersion = Integer.parseInt(Objects.requireNonNull(snapshot.getValue(String.class)));
-                if (databaseVersion > userVersion) {
-                    updateBt.setVisibility(View.VISIBLE);
-                    updateBt.setText("Update available, Click to download");
-                    updateBt.setOnClickListener(view -> {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.valueOf(updateLink)));
-                        startActivity(intent);
-                    });
-                } else {
-                    updateBt.setVisibility(View.GONE);
-                }
             }
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -239,7 +256,8 @@ public class MainActivity extends AppCompatActivity {
         updateLinkDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                updateLink = snapshot.getValue(String.class);
+                updateLink = String.valueOf(snapshot.getValue(String.class));
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

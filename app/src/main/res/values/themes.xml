@@ -28,7 +28,20 @@
         <item name="android:layout_marginBottom">80px</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="updateBtn">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="Button4">
         <item name="cornerSize">20%</item>
     </style>
+    <style name="animation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
 </resources>
