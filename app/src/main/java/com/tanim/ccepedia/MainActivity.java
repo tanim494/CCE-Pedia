@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     float userVersion;
     DatabaseReference updateLinkDb;
     private int semesterId;
-    final int animTime = 1000;
+    final int animTime = 500;
     private static final String ONESIGNAL_APP_ID = "1bb2a02a-0e83-4bb2-b810-86bfa76798d8";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -292,34 +292,42 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 menuSemRes.setText("1st Semester Resources");
                 menuResLink = "https://jpst.it/3q4Ai";
+                OneSignal.getUser().addTag("semester", "1");//Tagging user as 1st semester to onesignal, doing same for the rest semsester as well
                 break;
             case 2:
                 menuSemRes.setText("2nd Semester Resources");
                 menuResLink = "https://jpst.it/3q4Em";
+                OneSignal.getUser().addTag("semester", "2");
                 break;
             case 3:
                 menuSemRes.setText("3rd Semester Resources");
                 menuResLink = "https://jpst.it/3q4I3";
+                OneSignal.getUser().addTag("semester", "3");
                 break;
             case 4:
                 menuSemRes.setText("4th Semester Resources");
                 menuResLink = "https://jpst.it/3q4Jm";
+                OneSignal.getUser().addTag("semester", "4");
                 break;
             case 5:
                 menuSemRes.setText("5th Semester Resources");
                 menuResLink = "https://jpst.it/3q6UJ";
+                OneSignal.getUser().addTag("semester", "5");
                 break;
             case 6:
                 menuSemRes.setText("6th Semester Resources");
                 menuResLink = "https://jpst.it/3q6Wm";
+                OneSignal.getUser().addTag("semester", "6");
                 break;
             case 7:
                 menuSemRes.setText("7th Semester Resources");
                 menuResLink = "https://jpst.it/3q6X0";
+                OneSignal.getUser().addTag("semester", "7");
                 break;
             case 8:
                 menuSemRes.setText("8th Semester Resources");
                 menuResLink = "https://jpst.it/3q6XV";
+                OneSignal.getUser().addTag("semester", "8");
                 break;
         }
     }
