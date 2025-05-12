@@ -58,4 +58,6 @@ If you'd like to contribute to **CCE Pedia**, feel free to fork the repository a
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License Version 2.0 - see the [LICENSE](LICENSE) file for details.
+# CCE Pedia
+![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
