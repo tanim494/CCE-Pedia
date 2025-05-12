@@ -1,5 +1,6 @@
 
 # CCE Pedia
+![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
 **CCE Pedia** is a mobile application designed to provide **students of the Computer and Communication Engineering (CCE)** department at **IIUC** (International Islamic University Chittagong) with easy access to academic resources such as lecture notes, previous exam papers, lab sheets, and other educational materials. The app aims to streamline the process of accessing department-specific information, enhancing the academic experience.
 
@@ -59,5 +60,3 @@ If you'd like to contribute to **CCE Pedia**, feel free to fork the repository a
 ## License
 
 This project is licensed under the Apache License Version 2.0 - see the [LICENSE](LICENSE) file for details.
-# CCE Pedia
-![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
