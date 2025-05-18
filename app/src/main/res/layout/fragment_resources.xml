@@ -9,6 +9,11 @@
     android:background="@drawable/default_bg">
 
     <TextView
+        android:id="@+id/openDriveLinks"
+        style="@style/ButtonStyle"
+        android:text="Drive Links" />
+
+    <TextView
         android:id="@+id/openFacebookPage"
         style="@style/ButtonStyle"
         android:text="CCE Club Facebook Page"/>
@@ -17,11 +22,6 @@
         android:id="@+id/openFacebookFemPage"
         style="@style/ButtonStyle"
         android:text="CCE Club Female Chapter Facebook Page" />
-
-    <TextView
-        android:id="@+id/openQuestionPage"
-        style="@style/ButtonStyle"
-        android:text="Previous Question and Books" />
 
     <TextView
         android:id="@+id/openSemesterResourcesPage"
@@ -33,10 +33,6 @@
         style="@style/ButtonStyle"
         android:text="Batch Wise Resources"/>
 
-    <TextView
-        android:id="@+id/openImpPage"
-        style="@style/ButtonStyle"
-        android:text="Important Resources"/>
 
     <TextView
         android:id="@+id/openBusPage"

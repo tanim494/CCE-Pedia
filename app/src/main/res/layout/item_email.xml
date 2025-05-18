@@ -51,7 +51,7 @@
             android:id="@+id/requestButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reqeust Feature"
+            android:text="Request Feature"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:background="@drawable/rounded_button"

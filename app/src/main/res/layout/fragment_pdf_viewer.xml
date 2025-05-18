@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Your PDF viewer (e.g., BarteksPdfViewer or any View) -->
+    <com.github.barteksc.pdfviewer.PDFView
+        android:id="@+id/pdfView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Floating Download Button -->
+    <Button
+        android:id="@+id/downloadButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#E78178"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="16dp"
+        android:elevation="6dp" />
+
+
+</FrameLayout>

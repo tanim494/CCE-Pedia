@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import androidx.fragment.app.Fragment;
 
 public class WebContent extends Fragment {

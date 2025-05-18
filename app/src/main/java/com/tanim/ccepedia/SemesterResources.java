@@ -26,26 +26,34 @@ import androidx.fragment.app.Fragment;
             TextView semester8 = rootView.findViewById(R.id.semester8);
 
             // Set click listeners for each TextView
-            semester1.setOnClickListener(v -> openWebPage("https://jpst.it/3q4Ai"));
+            semester1.setOnClickListener(v -> openCourseListFragment("semester_1"));
 
-            semester2.setOnClickListener(v -> openWebPage("https://jpst.it/3q4Em"));
+            semester2.setOnClickListener(v -> openCourseListFragment("semester_2"));
 
-            semester3.setOnClickListener(v -> openWebPage("https://jpst.it/3q4I3"));
+            semester3.setOnClickListener(v -> openCourseListFragment("semester_3"));
 
-            semester4.setOnClickListener(v -> openWebPage("https://jpst.it/3q4Jm"));
+            semester4.setOnClickListener(v -> openCourseListFragment("semester_4"));
 
-            semester5.setOnClickListener(v -> openWebPage("https://jpst.it/3q6UJ"));
+            semester5.setOnClickListener(v -> openCourseListFragment("semester_5"));
 
-            semester6.setOnClickListener(v -> openWebPage("https://jpst.it/3q6Wm"));
+            semester6.setOnClickListener(v -> openCourseListFragment("semester_6"));
 
-            semester7.setOnClickListener(v -> openWebPage("https://jpst.it/3q6X0"));
+            semester7.setOnClickListener(v -> openCourseListFragment("semester_7"));
 
-            semester8.setOnClickListener(v -> openWebPage("https://jpst.it/3q6XV"));
+            semester8.setOnClickListener(v -> openCourseListFragment("semester_8"));
 
             return rootView;
         }
 
-        private void openWebPage(String url) {
+     private void openCourseListFragment(String semesterId) {
+         CourseListFragment fragment = CourseListFragment.newInstance(semesterId);
+         getParentFragmentManager().beginTransaction()
+                 .replace(R.id.Midcontainer, fragment)
+                 .addToBackStack(null)
+                 .commit();
+     }
+
+     private void openWebPage(String url) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
         }

@@ -1,8 +1,6 @@
 package com.tanim.ccepedia;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
@@ -11,10 +9,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-public class Loading extends AppCompatActivity {
-    private static final String PREFS_NAME = "MyPrefsFile";
-    private static final String FIRSTRUN_KEY = "firstrun";
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+public class Loading extends AppCompatActivity {
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,29 +23,78 @@ public class Loading extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
+        mAuth = FirebaseAuth.getInstance();
 
         new Handler().postDelayed(() -> {
-            if (isFirstRun()) {
-                // First run: open the login activity
-                Toast.makeText(Loading.this, "To continue, Enter your info.", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(Loading.this, LoginActivity.class);
-                startActivity(intent);
-            } else {
-                // Not the first run: open the main activity
-                Intent intent = new Intent(Loading.this, MainActivity.class);
-                startActivity(intent);
-            }
-            finish(); // Close the splash activity
-        }, 1500); // 3000 milliseconds (3 seconds)
+            FirebaseUser currentUser = mAuth.getCurrentUser();
 
+            if (currentUser == null) {
+                Toast.makeText(this, "Login to continue.", Toast.LENGTH_SHORT).show();
+                goToLogin();
+            } else {
+                // 🔄 Reload the user to check if still valid
+                currentUser.reload()
+                        .addOnSuccessListener(unused -> {
+                            // Check again in case account was deleted
+                            FirebaseUser updatedUser = mAuth.getCurrentUser();
+                            if (updatedUser == null) {
+                                Toast.makeText(this, "Account not found. Please login again.", Toast.LENGTH_SHORT).show();
+                                goToLogin();
+                                return;
+                            }
+
+                            // ✅ Proceed to check Firestore user data
+                            String uid = updatedUser.getUid();
+                            FirebaseFirestore.getInstance()
+                                    .collection("users")
+                                    .document(uid)
+                                    .get()
+                                    .addOnSuccessListener(this::handleUserDocument)
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(this, "Error loading profile. Try again.", Toast.LENGTH_SHORT).show();
+                                        goToLogin();
+                                    });
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(this, "Session expired. Please login again.", Toast.LENGTH_SHORT).show();
+                            mAuth.signOut();
+                            goToLogin();
+                        });
+            }
+        }, 1500);  // Delay for splash screen
     }
-    private boolean isFirstRun() {
-        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        boolean firstRun = preferences.getBoolean(FIRSTRUN_KEY, true);
-        if (firstRun) {
-            // Set the flag to false to indicate that it's no longer the first run
-            preferences.edit().putBoolean(FIRSTRUN_KEY, false).apply();
+
+    private void handleUserDocument(DocumentSnapshot snapshot) {
+        if (snapshot.exists()) {
+            // ✅ Populate singleton
+            UserData user = UserData.getInstance();
+            user.setId(snapshot.getString("id"));
+            user.setName(snapshot.getString("name"));
+            user.setEmail(snapshot.getString("email"));
+            user.setGender(snapshot.getString("gender"));
+            user.setPhone(snapshot.getString("phone"));
+            user.setSemester(snapshot.getString("semester"));
+
+            String role = snapshot.getString("role");
+            user.setRole(role != null ? role : "");
+
+            goToHome();
+        } else {
+            FirebaseAuth.getInstance().signOut();
+            Toast.makeText(this, "Profile data not found. Please login.", Toast.LENGTH_SHORT).show();
+            goToLogin();
         }
-        return firstRun;
+    }
+
+    private void goToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private void goToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

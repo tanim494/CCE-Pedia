@@ -33,9 +33,9 @@ public class Author extends Fragment {
             startActivity(intent);
         });
 
-        LinearLayout websiteButton = view.findViewById(R.id.websiteButton);
+        LinearLayout websiteButton = view.findViewById(R.id.linkedinButton);
         websiteButton.setOnClickListener(view1 -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tanim.codes"));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/tanim494/"));
             startActivity(intent);
         });
 

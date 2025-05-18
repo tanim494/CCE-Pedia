@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/rounded_button">
-<RelativeLayout
-    android:layout_alignParentTop="true"
-    android:layout_width="300dp"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:background="@drawable/side_menu_bg"
         >
 
         <TextView
-            android:id="@+id/stuName"
+            android:id="@+id/studentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
@@ -24,31 +20,32 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/stuSem"
+            android:id="@+id/studentSemester"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/stuName"
+            android:layout_below="@id/studentName"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:textColor="@color/menuText"
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/editInfo"
+            android:id="@+id/logOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/stuSem"
+            android:layout_below="@id/studentSemester"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:clickable="true"
-            android:text="Edit" />
+            android:text="Log Out" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_below="@id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/textbg"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="0dp"
         >
         <TextView
             android:id="@+id/forYou"
@@ -70,7 +67,9 @@
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/buttonbg"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"/>
 
         <TextView
             android:id="@+id/noticeButton"
@@ -82,8 +81,41 @@
             android:layout_marginBottom="20dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/buttonbg"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"/>
+
+        <TextView
+            android:id="@+id/adminMode"
+            android:layout_below="@id/noticeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/buttonbg"
+            android:visibility="gone"
+            android:text="Hello Admin"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"/>
+
+        <TextView
+            android:id="@+id/moderatorMode"
+            android:layout_below="@id/adminMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/buttonbg"
+            android:visibility="gone"
+            android:text="Hello Moderator"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"/>
     </RelativeLayout>
 
-</RelativeLayout>
 </RelativeLayout>

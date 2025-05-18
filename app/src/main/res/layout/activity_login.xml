@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,20 +8,19 @@
     android:gravity="center">
 
     <TextView
-        android:text="Enter Your Info"
+        android:text="Login to Your Account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
         android:textStyle="bold|italic"
         android:textColor="@color/black"
-        android:layout_gravity="center"
         android:textSize="30sp"
+        android:layout_gravity="center"
         android:padding="10dp"
         android:background="@drawable/buttonbg"
-        android:alpha=".85"
-        />
+        android:alpha=".85"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/loginCardView"
         app:cardCornerRadius="25dp"
         app:cardElevation="10dp"
         android:layout_gravity="center"
@@ -32,12 +30,13 @@
         app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
-                android:id="@+id/logInLayout"
                 android:background="@color/white"
                 android:padding="25dp"
                 android:gravity="center"
@@ -45,68 +44,100 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <!-- Email Field -->
                 <com.google.android.material.textfield.TextInputLayout
-                    android:hint="Your Nick Name"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:hint="Email"
                     android:layout_marginTop="5dp"
-                    app:shapeAppearanceOverlay="@style/Button4"
-                    app:hintTextColor="#4E4A4A"
-                    app:boxStrokeColor="#4E4A4A"
-                    app:boxStrokeWidth="1dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <com.google.android.material.textfield.TextInputEditText
-                        android:inputType="textPersonName|textEmailAddress"
-                        android:id="@+id/studentNameEditText"
-                        android:ems="10"
+                        android:id="@+id/emailEditText"
+                        android:inputType="textEmailAddress"
                         android:textSize="13sp"
                         android:textColor="@color/black"
-                        android:textStyle="normal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Password Field -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:hint="Password"
+                    android:layout_marginTop="5dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/passwordEditText"
+                        android:inputType="textPassword"
+                        android:textSize="13sp"
+                        android:textColor="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Login Button -->
+                <Button
+                    android:id="@+id/loginButton"
+                    android:text="Login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:elevation="15dp"
+                    android:gravity="center"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"/>
+
+                <!-- Reset Password Button (Initially hidden) -->
+                <Button
+                    android:id="@+id/resetPasswordButton"
+                    android:text="Reset Password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:elevation="15dp"
+                    android:gravity="center"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:visibility="gone"/>
+
+                <!-- Forgot Password Link -->
                 <TextView
+                    android:id="@+id/forgotPasswordTextView"
+                    android:text="Forgot Password?"
+                    android:textColor="@color/teal_700"
+                    android:textSize="16sp"
+                    android:padding="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Semester"
-                    android:textColor="@color/black"
-                    android:layout_gravity="start"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="showResetPasswordView"/>
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/semesterSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:spinnerMode="dropdown"
-                    android:contentDescription="Semester Selection"
-                    />
-
+                <!-- Register Link -->
+                <TextView
+                    android:id="@+id/registerTextView"
+                    android:text="Don't have an account? Register"
+                    android:textColor="@color/teal_700"
+                    android:textSize="16sp"
+                    android:padding="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="goToRegister"/>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/loginButton"
-                android:text="Continue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:elevation="15dp"
-                android:gravity="center"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center"
-                app:shapeAppearanceOverlay="@style/Button4"
-                app:backgroundTint="@color/teal_700"/>
-
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

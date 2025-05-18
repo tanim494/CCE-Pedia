@@ -116,17 +116,17 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:clickable="true"
-                        android:id="@+id/websiteButton">
+                        android:id="@+id/linkedinButton">
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
                             app:tint="@color/black"
-                            android:src="@drawable/ic_web"
+                            android:src="@drawable/ic_linkedin"
                             android:importantForAccessibility="no" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Website"
+                            android:text="Linkedin"
                             android:gravity="center"
                             android:textStyle="bold"
                             android:textSize="14sp"
