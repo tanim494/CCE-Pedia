@@ -8,12 +8,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,13 +62,28 @@ public class FileListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.fileRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new FileAdapter(requireContext(), fileList, item -> {
-            PdfViewerFragment fragment = PdfViewerFragment.newInstance(item.getUrl(), item.getFileName());
-            getParentFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.Midcontainer, fragment)
-                    .addToBackStack(null)
-                    .commit();
+        adapter = new FileAdapter(fileList, new FileAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(FileItem item) {
+                // Open PDF viewer fragment
+                PdfViewerFragment fragment = PdfViewerFragment.newInstance(item.getUrl(), item.getFileName());
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.Midcontainer, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+
+            @Override
+            public void onDeleteClick(FileItem item) {
+                // Confirm delete
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Delete File")
+                        .setMessage("Are you sure you want to delete \"" + item.getFileName() + "\"?")
+                        .setPositiveButton("Yes", (dialog, which) -> deleteFile(item))
+                        .setNegativeButton("No", null)
+                        .show();
+            }
         });
 
         recyclerView.setAdapter(adapter);
@@ -89,11 +107,12 @@ public class FileListFragment extends Fragment {
 
                     fileList.clear();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                        String id = doc.getId();
                         String fileName = doc.getString("fileName");
                         String url = doc.getString("url");
                         String uploader = doc.getString("uploadedBy");
 
-                        fileList.add(new FileItem(fileName, url, uploader));
+                        fileList.add(new FileItem(id, fileName, url, uploader));
                     }
 
                     adapter.notifyDataSetChanged();
@@ -101,5 +120,32 @@ public class FileListFragment extends Fragment {
                 .addOnFailureListener(e -> {
                     Toast.makeText(requireContext(), "Failed to load files: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    private void deleteFile(FileItem item) {
+        // Construct Storage path based on your structure; adjust if necessary
+        StorageReference fileRef = FirebaseStorage.getInstance().getReference()
+                .child(semesterId + "/" + courseId + "/" + item.getFileName());
+
+        fileRef.delete()
+                .addOnSuccessListener(aVoid -> {
+                    // Now delete Firestore document
+                    db.collection("semesters")
+                            .document(semesterId)
+                            .collection("courses")
+                            .document(courseId)
+                            .collection("files")
+                            .document(item.getId())
+                            .delete()
+                            .addOnSuccessListener(aVoid1 -> {
+                                Toast.makeText(requireContext(), "File deleted successfully", Toast.LENGTH_SHORT).show();
+                                fileList.remove(item);
+                                adapter.notifyDataSetChanged();
+                            })
+                            .addOnFailureListener(e ->
+                                    Toast.makeText(requireContext(), "Failed to delete metadata: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(requireContext(), "Failed to delete file: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

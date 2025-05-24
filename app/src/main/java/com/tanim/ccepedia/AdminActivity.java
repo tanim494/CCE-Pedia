@@ -7,8 +7,6 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -21,8 +19,6 @@ public class AdminActivity extends AppCompatActivity {
     private EditText notificationTitleEditText;
     private EditText notificationMessageEditText;
 
-    private DatabaseReference resourcesDb;
-    private DatabaseReference usersDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +31,6 @@ public class AdminActivity extends AppCompatActivity {
         notificationMessageEditText = findViewById(R.id.notificationMessageEditText);
 
         // Firebase reference for resources and users
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://cce-pedia-5284c-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        resourcesDb = database.getReference("resources");
-        usersDb = database.getReference("users");
 
         // Send push notification
         sendPushNotificationBtn.setOnClickListener(v -> {
@@ -95,8 +88,6 @@ public class AdminActivity extends AppCompatActivity {
     // New functionality to edit user data or change user roles
     private void editUserData(String userId, String newName, String newSemester) {
         // Update user data in Firebase (e.g., change name or semester)
-        usersDb.child(userId).child("name").setValue(newName);
-        usersDb.child(userId).child("semester").setValue(newSemester);
 
         new AlertDialog.Builder(this)
                 .setTitle("User Updated")
@@ -106,18 +97,4 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     // Example method to delete a user from the database
-    private void deleteUser(String userId) {
-        usersDb.child(userId).removeValue()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        new AlertDialog.Builder(this)
-                                .setTitle("User Deleted")
-                                .setMessage("The user has been deleted successfully.")
-                                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
-                                .show();
-                    } else {
-                        showErrorDialog("Failed to delete user.");
-                    }
-                });
-    }
 }

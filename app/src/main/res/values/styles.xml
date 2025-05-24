@@ -10,4 +10,5 @@
         <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
 
+
 </resources>

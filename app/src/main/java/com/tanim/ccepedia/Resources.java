@@ -23,7 +23,6 @@ public class Resources extends Fragment {
         TextView semesterResourcesPage = rootView.findViewById(R.id.openSemesterResourcesPage);
         TextView batchWise = rootView.findViewById(R.id.batchWise);
         TextView busPage = rootView.findViewById(R.id.openBusPage);
-        TextView routinePage = rootView.findViewById(R.id.openRoutinePage);
         TextView driveLinks = rootView.findViewById(R.id.openDriveLinks);
 
         facebookPage.setOnClickListener(v -> openWebPage("https://www.facebook.com/profile.php?id=100090282199663"));
@@ -31,11 +30,6 @@ public class Resources extends Fragment {
         facebookFemPage.setOnClickListener(v -> openWebPage("https://www.facebook.com/profile.php?id=100091710725410"));
 
         batchWise.setOnClickListener(v -> showGenderDialog());
-
-        routinePage.setOnClickListener(v -> {
-            setupWebFragment();
-            WebContent.setLink("https://jpst.it/3q4Rc");
-        });
 
         busPage.setOnClickListener(v -> {
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -86,13 +80,6 @@ public class Resources extends Fragment {
     private void openWebPage(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
-    }
-    private void setupWebFragment() {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.Midcontainer, new WebContent());
-        fragmentTransaction.addToBackStack(null); // Optional: Add transaction to the back stack
-        fragmentTransaction.commit();
     }
 
 }

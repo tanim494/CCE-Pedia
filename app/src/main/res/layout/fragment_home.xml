@@ -1,53 +1,40 @@
-<!-- res/layout/activity_introduction.xml -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@drawable/default_bg">
+    android:background="@drawable/default_bg"
+    android:fillViewport="true">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Text related to the introduction -->
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/introcover"
-            android:importantForAccessibility="no" />
-
-
+        <!-- 🔔 Notice Box -->
         <TextView
+            android:id="@+id/noticeBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-thin"
-            android:background="@drawable/textbg"
-            android:padding="10dp"
-            android:text="@string/intro"
-            android:textSize="16sp"
-            android:textColor="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/websiteLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/textbg"
-            android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            android:fontFamily="sans-serif-thin"
+            android:background="@drawable/buttonbg"
+            android:padding="16dp"
+            android:text="Loading notice..."
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium"
             android:textStyle="bold"
-            android:text="Click Here"
-            android:textSize="16sp"
-            android:padding="10dp"
-            android:textAllCaps="true"
-            android:textColor="#FFFFFF"
-            android:autoLink="web" />
+            android:elevation="4dp"
+            android:clickable="true"
+            android:focusable="true"
 
+            />
+
+        <!-- 💬 Message Wall -->
+        <LinearLayout
+            android:id="@+id/messageContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+        </LinearLayout>
     </LinearLayout>
-
 </ScrollView>

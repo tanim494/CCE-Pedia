@@ -14,16 +14,6 @@
         android:text="Drive Links" />
 
     <TextView
-        android:id="@+id/openFacebookPage"
-        style="@style/ButtonStyle"
-        android:text="CCE Club Facebook Page"/>
-
-    <TextView
-        android:id="@+id/openFacebookFemPage"
-        style="@style/ButtonStyle"
-        android:text="CCE Club Female Chapter Facebook Page" />
-
-    <TextView
         android:id="@+id/openSemesterResourcesPage"
         style="@style/ButtonStyle"
         android:text="Semester Wise Resources" />
@@ -40,8 +30,14 @@
         android:text="Bus Schedule"/>
 
     <TextView
-        android:id="@+id/openRoutinePage"
+        android:id="@+id/openFacebookPage"
         style="@style/ButtonStyle"
-        android:text="Class Routine"/>
+        android:text="CCE Club Facebook Page"/>
+
+    <TextView
+        android:id="@+id/openFacebookFemPage"
+        style="@style/ButtonStyle"
+        android:text="CCE Club Female Chapter Facebook Page" />
+
 
 </LinearLayout>

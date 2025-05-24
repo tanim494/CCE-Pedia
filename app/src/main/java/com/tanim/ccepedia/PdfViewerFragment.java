@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,8 @@ public class PdfViewerFragment extends Fragment {
 
     private String fileUrl, fileName;
     private PDFView pdfView;
+    private ProgressBar loadingSpinner;
+
 
     public static PdfViewerFragment newInstance(String url, String fileName) {
         PdfViewerFragment fragment = new PdfViewerFragment();
@@ -54,6 +57,7 @@ public class PdfViewerFragment extends Fragment {
 
         pdfView = view.findViewById(R.id.pdfView);
         Button downloadButton = view.findViewById(R.id.downloadButton);
+        loadingSpinner = view.findViewById(R.id.loadingSpinner);
 
         if (getArguments() != null) {
             fileUrl = getArguments().getString(ARG_URL);
@@ -73,6 +77,7 @@ public class PdfViewerFragment extends Fragment {
     }
 
     private void downloadAndDisplayPdf(String urlString) {
+        loadingSpinner.setVisibility(View.VISIBLE);
         new Thread(() -> {
             try {
                 URL url = new URL(urlString);
@@ -96,6 +101,7 @@ public class PdfViewerFragment extends Fragment {
                         .enableSwipe(true)
                         .swipeHorizontal(false)
                         .enableDoubletap(true)
+                        .onLoad(nbPages -> loadingSpinner.setVisibility(View.GONE))
                         .load());
 
             } catch (Exception e) {

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -25,7 +26,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
@@ -41,9 +41,9 @@ public class BusScheduleFragment extends Fragment {
 
     private ImageView scheduleImage;
     private TextView scheduleTitle;
+    private ProgressBar loadingSpinner;
     private LinearLayout contactsLayout;
     private Button downloadButton;
-
     private FirebaseFirestore db;
     private String imageUrl;
 
@@ -57,9 +57,11 @@ public class BusScheduleFragment extends Fragment {
         scheduleTitle = rootView.findViewById(R.id.scheduleTitle);
         contactsLayout = rootView.findViewById(R.id.contactsLayout);
         downloadButton = rootView.findViewById(R.id.downloadButton);
+        loadingSpinner = rootView.findViewById(R.id.loadingSpinner);
 
         db = FirebaseFirestore.getInstance();
 
+        loadingSpinner.setVisibility(View.VISIBLE);
         loadBusScheduleFromFirestore();
 
         downloadButton.setOnClickListener(v -> {
@@ -92,7 +94,9 @@ public class BusScheduleFragment extends Fragment {
                             Glide.with(requireContext())
                                     .load(imageUrl)
                                     .into(scheduleImage);
+                            loadingSpinner.setVisibility(View.GONE);
                         } else {
+                            loadingSpinner.setVisibility(View.GONE);
                             Toast.makeText(requireContext(), "No image URL found", Toast.LENGTH_SHORT).show();
                         }
 

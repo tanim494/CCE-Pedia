@@ -1,48 +1,106 @@
 package com.tanim.ccepedia;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+import java.util.Objects;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
+    private final String CHANNEL_ID = "ccepedia_channel";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // Handle the message here
-        if (remoteMessage.getNotification() != null) {
-            // Extract notification data
-            String title = remoteMessage.getNotification().getTitle();
-            String message = remoteMessage.getNotification().getBody();
+        super.onMessageReceived(remoteMessage);
 
-            // Call a method to display the notification
-            sendNotification(title, message);
+        String title = "CCE Pedia";
+        String message = "You have a new notification!";
+        String url = null;
+
+        // If notification contains title/body
+        if (remoteMessage.getNotification() != null) {
+            title = remoteMessage.getNotification().getTitle();
+            message = remoteMessage.getNotification().getBody();
         }
+
+        // If custom data contains a URL
+        if (remoteMessage.getData() != null) {
+            Map<String, String> data = remoteMessage.getData();
+            if (data.containsKey("url")) {
+                url = data.get("url");
+            }
+        }
+
+        showNotification(title, message, url);
     }
 
-    private void sendNotification(String title, String messageBody) {
-        // Create a notification intent
-        Intent intent = new Intent(this, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    private void showNotification(String title, String message, String url) {
+        createNotificationChannel();
 
-        // Create a PendingIntent to open your activity when the notification is clicked
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+        Intent intent;
+        if (url != null) {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        } else {
+            intent = new Intent(this, HomeActivity.class);
+        }
 
-        // Build the notification
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "default_channel")
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_stat_name)  // ← Make sure this is a valid icon
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                 .setContentTitle(title)
-                .setContentText(messageBody)
+                .setContentText(message)
+                .setColor(Color.parseColor("#6200EE"))
                 .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_stat_onesignal_default) // Replace with your own icon
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
 
-        // Get the NotificationManager system service to display the notification
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notificationBuilder.build());
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        NotificationManagerCompat.from(this).notify((int) System.currentTimeMillis(), builder.build());
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "CCE Pedia Channel";
+            String description = "CCE Pedia Notifications";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            if (manager != null) {
+                manager.createNotificationChannel(channel);
+            }
+        }
     }
 }

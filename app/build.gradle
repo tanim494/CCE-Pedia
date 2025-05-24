@@ -1,21 +1,20 @@
 plugins {
     id 'com.android.application'
-    id 'com.google.gms.google-services' // For Firebase services
+    id 'com.google.gms.google-services'
 }
 
 android {
     signingConfigs {
-        // If you need to set up signing for release builds
     }
     namespace 'com.tanim.ccepedia'
-    compileSdk 35 // Set the compile SDK version to the same as target SDK
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.tanim.ccepedia"
         minSdk 24
-        targetSdk 35 // Use target SDK as 33 for better compatibility with the latest Android features
-        versionCode 1
-        versionName '1.48'
+        targetSdk 35
+        versionCode 2
+        versionName '2.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
@@ -36,7 +35,7 @@ android {
 dependencies {
 
     // Firebase BOM for managing Firebase SDK versions
-    implementation(platform('com.google.firebase:firebase-bom:33.13.0'))
+    implementation(platform('com.google.firebase:firebase-bom:33.14.0'))
 
     // Core dependencies
     implementation 'androidx.appcompat:appcompat:1.7.0'
@@ -44,11 +43,10 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
 
     // Firebase dependencies
-    implementation 'com.google.firebase:firebase-database:21.0.0'
     implementation 'com.google.firebase:firebase-messaging:24.1.1'
-    implementation 'com.google.firebase:firebase-auth:23.2.0' // Add Firebase Authentication
-    implementation 'com.google.firebase:firebase-firestore:25.1.4' // For Firestore Database
-    implementation 'com.google.firebase:firebase-storage:21.0.1' // For Firebase Storage (if needed later)
+    implementation 'com.google.firebase:firebase-auth:23.2.1'
+    implementation 'com.google.firebase:firebase-firestore:25.1.4'
+    implementation 'com.google.firebase:firebase-storage:21.0.2'
 
     // Additional dependencies
     implementation 'androidx.activity:activity:1.10.1'

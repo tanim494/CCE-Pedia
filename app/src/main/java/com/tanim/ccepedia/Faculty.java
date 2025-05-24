@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,7 @@ public class Faculty extends Fragment {
     private ListView facultyListView;
     private ArrayList<FacultyModel> facultyList = new ArrayList<>();
     private FacultyAdapter facultyAdapter;
+    private ProgressBar loadingSpinner;
     private Handler mainHandler = new Handler(Looper.getMainLooper());
 
     @Override
@@ -32,6 +34,7 @@ public class Faculty extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_faculty, container, false);
 
         facultyListView = rootView.findViewById(R.id.facultyListView);
+        loadingSpinner = rootView.findViewById(R.id.loadingSpinner);
         facultyAdapter = new FacultyAdapter(requireContext(), facultyList);
         facultyListView.setAdapter(facultyAdapter);
 
@@ -47,6 +50,7 @@ public class Faculty extends Fragment {
     }
 
     private void fetchFacultyFromWeb() {
+        loadingSpinner.setVisibility(View.VISIBLE);
         new Thread(() -> {
             try {
                 String url = "https://www.iiuc.ac.bd/cce/faculty";
@@ -93,12 +97,14 @@ public class Faculty extends Fragment {
 
                 // Update UI on main thread
                 mainHandler.post(() -> {
+                    loadingSpinner.setVisibility(View.GONE);
                     facultyList.clear();
                     facultyList.addAll(tempList);
                     facultyAdapter.notifyDataSetChanged();
                 });
 
             } catch (Exception e) {
+                loadingSpinner.setVisibility(View.GONE);
                 mainHandler.post(() -> Toast.makeText(requireContext(),
                         "Failed to load faculty data: " + e.getMessage(), Toast.LENGTH_LONG).show());
             }

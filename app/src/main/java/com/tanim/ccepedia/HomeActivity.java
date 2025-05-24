@@ -1,30 +1,36 @@
 package com.tanim.ccepedia;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
+
+import java.util.Objects;
+
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
@@ -32,19 +38,17 @@ public class HomeActivity extends AppCompatActivity {
     TextView toolBarTxt;
     TextView studentName;
     TextView studentSemester;
-    TextView noticeText;
-    TextView adminMode, moderatorMode;
+    Button adminBtn, uploadBtn;
     String noticeLink;
     String updateLink;
     float databaseVersion;
     float userVersion;
     String userRole;
-    String menuResLink;
 
-    DatabaseReference noticeTextDb;
-    DatabaseReference noticeLinkDb;
-    DatabaseReference updateVersionDb;
-    DatabaseReference updateLinkDb;
+    FirebaseFirestore firestore;
+    DocumentReference configDocRef;
+    ListenerRegistration configListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,6 @@ public class HomeActivity extends AppCompatActivity {
         checkForUpdate();
         FirebaseMessaging.getInstance().subscribeToTopic("notification");
 
-        setupFirebase();
         initializeViews();
         setUserData();
         setupDatabaseListeners();
@@ -65,42 +68,39 @@ public class HomeActivity extends AppCompatActivity {
     private void checkForUpdate() {
         new Handler().postDelayed(() -> {
             if (databaseVersion > userVersion) {
-                Dialog dialog = new Dialog(HomeActivity.this, R.style.DialogSlideAnim);
-                dialog.setContentView(R.layout.update_dialog);
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog.setCancelable(false);
-                dialog.show();
 
-                dialog.findViewById(R.id.okay_text).setOnClickListener(v -> {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateLink));
-                    startActivity(intent);
-                });
+                SpannableString title = new SpannableString("Update Available");
+                title.setSpan(new StyleSpan(Typeface.BOLD), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                dialog.findViewById(R.id.cancel_text).setOnClickListener(v -> dialog.dismiss());
+                new MaterialAlertDialogBuilder(this)
+                        .setTitle(title)
+                        .setMessage("A new version of CCEPedia is ready to download. Update now to get the latest features and improvements.")
+                        .setCancelable(false)
+                        .setPositiveButton("Update", (dialog, which) -> {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateLink));
+                            startActivity(intent);
+                        })
+                        .setNegativeButton("Later", (dialog, which) -> dialog.dismiss())
+                        .show();
             }
         }, 2000);
     }
+
+
+
 
     private void initializeViews() {
         sideMenu = findViewById(R.id.sideMenu);
         toolBarTxt = findViewById(R.id.toolText);
         bottomNavigation = findViewById(R.id.bottomNavigation);
 
-        noticeText = findViewById(R.id.noticeButton);
         studentName = findViewById(R.id.studentName);
         studentSemester = findViewById(R.id.studentSemester);
-        adminMode = findViewById(R.id.adminMode);
-        moderatorMode = findViewById(R.id.moderatorMode);
+        uploadBtn = findViewById(R.id.uploadBtn);
+        adminBtn = findViewById(R.id.adminBtn);
     }
 
-    private void setupFirebase() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://cce-pedia-5284c-default-rtdb.asia-southeast1.firebasedatabase.app/");
-        noticeTextDb = database.getReference("message");
-        noticeLinkDb = database.getReference("link");
-        updateVersionDb = database.getReference("version");
-        updateLinkDb = database.getReference("update-link");
-    }
-
+    @SuppressLint("SetTextI18n")
     private void setUserData() {
         UserData user = UserData.getInstance();
         studentName.setText("Name: " + user.getName());
@@ -108,89 +108,59 @@ public class HomeActivity extends AppCompatActivity {
         userRole = user.getRole();
 
         if (userRole.equalsIgnoreCase("admin")) {
-            adminMode.setVisibility(View.VISIBLE);
-            adminMode.setOnClickListener(v -> openFileUpload());
+            adminBtn.setVisibility(View.VISIBLE);
+            adminBtn.setOnClickListener(v -> openAdminMode());
+            uploadBtn.setVisibility(View.VISIBLE);
+            uploadBtn.setOnClickListener(v -> openFileUpload());
         } else if (userRole.equalsIgnoreCase("moderator")) {
-            moderatorMode.setVisibility(View.VISIBLE);
-            moderatorMode.setOnClickListener(v -> openFileUpload());
-        } else {
+            uploadBtn.setVisibility(View.VISIBLE);
+            uploadBtn.setOnClickListener(v -> openFileUpload());
         }
     }
 
+    private void openAdminMode() {
+        Intent intent = new Intent(this, AdminActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    @SuppressLint("SetTextI18n")
     private void openFileUpload() {
         sideMenuClose();
         UploadFile uploadFragment = new UploadFile();
-        getSupportFragmentManager()
-                .beginTransaction()
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(R.id.Midcontainer, uploadFragment)
                 .addToBackStack(null)
                 .commit();
-
         toolBarTxt.setText("Upload Resources");
     }
 
-
-    private void redirectToLogin() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-
     private void setupDatabaseListeners() {
-        noticeTextDb.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String message = snapshot.getValue(String.class);
-                noticeText.setAlpha(0f); // Start transparent
-                noticeText.setText(message);
-                noticeText.animate().alpha(1f).setDuration(300).start(); // Fade in
-                noticeText.setTextSize(15);
-                noticeText.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+        firestore = FirebaseFirestore.getInstance();
+        configDocRef = firestore.collection("appConfig").document("main");
+
+        configListener = configDocRef.addSnapshotListener((snapshot, e) -> {
+            if (e != null) {
+                // Handle error if needed
+                return;
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
+            if (snapshot != null && snapshot.exists()) {
+                noticeLink = snapshot.getString("link");
+                Double version = snapshot.getDouble("version");
+                updateLink = snapshot.getString("updateLink");
 
-        noticeLinkDb.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                noticeLink = snapshot.getValue(String.class);
-                noticeText.setOnClickListener(view -> {
-                    if (noticeLink != null) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(noticeLink));
-                        startActivity(intent);
-                    }
-                });
-            }
+                if (version != null) {
+                    databaseVersion = version.floatValue();
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-
-        updateVersionDb.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Get current app version
                 userVersion = Float.parseFloat(BuildConfig.VERSION_NAME) * 100;
-                databaseVersion = snapshot.getValue(Float.class);
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-
-        updateLinkDb.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                updateLink = snapshot.getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
+
 
     private void setupClickListeners() {
         findViewById(R.id.menuIcon).setOnClickListener(v -> {
@@ -201,61 +171,77 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.logOut).setOnClickListener(view -> redirectToLogin());
+        findViewById(R.id.profileBtn).setOnClickListener(view -> openProfileFragment());
         setupMenuSemesterData();
     }
 
-    private void setupMenuSemesterData() {
-        TextView menuSemRes = findViewById(R.id.menuSemRes);
-        UserData user = UserData.getInstance();
+    @SuppressLint("SetTextI18n")
+    private void openProfileFragment() {
+        sideMenuClose();
+        toolBarTxt.setText("My Profile");
 
-        switch (user.getSemester().toString()) {
+        ProfileFragment profileFragment = new ProfileFragment();
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.Midcontainer, profileFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setupMenuSemesterData() {
+        Button menuSemRes = findViewById(R.id.menuSemRes);
+        UserData user = UserData.getInstance();
+        String semester = user.getSemester();
+
+        switch (semester) {
             case "1":
                 menuSemRes.setText("1st Semester Resources");
-                menuResLink = "https://jpst.it/3q4Ai";
                 break;
             case "2":
                 menuSemRes.setText("2nd Semester Resources");
-                menuResLink = "https://jpst.it/3q4Em";
                 break;
             case "3":
                 menuSemRes.setText("3rd Semester Resources");
-                menuResLink = "https://jpst.it/3q4I3";
                 break;
             case "4":
                 menuSemRes.setText("4th Semester Resources");
-                menuResLink = "https://jpst.it/3q4Jm";
                 break;
             case "5":
                 menuSemRes.setText("5th Semester Resources");
-                menuResLink = "https://jpst.it/3q6UJ";
                 break;
             case "6":
                 menuSemRes.setText("6th Semester Resources");
-                menuResLink = "https://jpst.it/3q6Wm";
                 break;
             case "7":
                 menuSemRes.setText("7th Semester Resources");
-                menuResLink = "https://jpst.it/3q6X0";
                 break;
             case "8":
                 menuSemRes.setText("8th Semester Resources");
-                menuResLink = "https://jpst.it/3q6XV";
                 break;
         }
 
-        menuSemRes.setOnClickListener(view -> {
-            view.animate().scaleX(0.95f).scaleY(0.95f).setDuration(100).withEndAction(() -> {
-                view.animate().scaleX(1f).scaleY(1f).setDuration(100).start();
-                if (menuResLink != null) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(menuResLink));
-                    startActivity(intent);
-                }
-            }).start();
-        });
+        menuSemRes.setOnClickListener(view -> view.animate().scaleX(0.95f).scaleY(0.95f).setDuration(100).withEndAction(() -> {
+            view.animate().scaleX(1f).scaleY(1f).setDuration(100).start();
+            openCourseListFragment("semester_" + semester);  // <<< This opens the right fragment
+        }).start());
     }
 
+    @SuppressLint("SetTextI18n")
+    private void openCourseListFragment(String semesterId) {
+        sideMenuClose();
+        toolBarTxt.setText("Resources");
+        bottomNavigation.setSelectedItemId(R.id.nv_resource);
+
+        CourseListFragment fragment = CourseListFragment.newInstance(semesterId);
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.Midcontainer, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @SuppressLint({"SetTextI18n", "NonConstantResourceId"})
     private void loadFragment() {
         FragmentManager fgMan = getSupportFragmentManager();
         FragmentTransaction tran = fgMan.beginTransaction();
@@ -296,6 +282,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void sideMenuOpen() {
+        setupMenuSemesterData();
         sideMenu.setVisibility(View.VISIBLE);
         sideMenu.setTranslationX(-sideMenu.getWidth());
         sideMenu.animate().translationX(0).setDuration(300).start();
@@ -318,10 +305,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        WebView webView = findViewById(R.id.webContent);
-        if (webView != null && webView.canGoBack()) {
-            webView.goBack();
-        } else super.onBackPressed();
+    protected void onDestroy() {
+        super.onDestroy();
+        if (configListener != null) {
+            configListener.remove();
+        }
     }
+
 }
