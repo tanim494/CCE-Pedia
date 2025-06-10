@@ -1,6 +1,7 @@
 package com.tanim.ccepedia;
 
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,9 +9,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.OpenableColumns;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +26,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,7 +47,7 @@ public class UploadFile extends Fragment {
     private EditText etFileName;
     private Spinner spinnerSemester, spinnerCourse;
     private ProgressBar progressBar;
-
+    private TextView thankText;
     private Uri selectedFileUri = null;
 
     private String[] semesters = {"1", "2", "3", "4", "5", "6", "7", "8"};
@@ -64,6 +69,7 @@ public class UploadFile extends Fragment {
         spinnerSemester = view.findViewById(R.id.spinnerSemester);
         spinnerCourse = view.findViewById(R.id.spinnerCourse);
         progressBar = view.findViewById(R.id.progressBar);
+        thankText = view.findViewById(R.id.thankText);
 
         // Initialize Firebase instances
         db = FirebaseFirestore.getInstance();
@@ -74,8 +80,33 @@ public class UploadFile extends Fragment {
         setupSemesterSpinner();
         setupFilePicker();
         setupListeners();
+        setupThank();
 
         return view;
+    }
+
+    private void setupThank() {
+        UserData user = UserData.getInstance();
+        String name = user.getName();
+        String id = user.getId();
+
+        String message = "Thank you, " + name + " (ID: " + id + ")" +
+                " for your valuable contribution to CCE Pedia. 🙏";
+
+        SpannableString spannable = new SpannableString(message);
+
+        // Make name bold and colored
+        int startName = message.indexOf(name);
+        int endName = startName + name.length();
+        spannable.setSpan(new StyleSpan(Typeface.BOLD), startName, endName, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.orange)), startName, endName, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        // Make ID bold
+        int startID = message.indexOf(id);
+        int endID = startID + id.length();
+        spannable.setSpan(new StyleSpan(Typeface.BOLD), startID, endID, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        thankText.setText(spannable);
     }
 
     private void setupSemesterSpinner() {
@@ -169,9 +200,7 @@ public class UploadFile extends Fragment {
             new androidx.appcompat.app.AlertDialog.Builder(requireContext())
                     .setTitle("Confirm Upload")
                     .setMessage("Upload file:\n" + fileName + "\nSemester: " + semester + "\nCourse: " + course + "\nProceed?")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        uploadFile(selectedFileUri, fileName, "semester_" + semester, course);
-                    })
+                    .setPositiveButton("Yes", (dialog, which) -> uploadFile(selectedFileUri, fileName, "semester_" + semester, course))
                     .setNegativeButton("No", null)
                     .show();
         });

@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_bg"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#85D9CFC4"
+        android:background="#F0EBE3"
         android:padding="24dp"
-        android:elevation="4dp"
+        android:elevation="10dp"
         android:clipToPadding="false"
         android:layout_margin="8dp">
 
@@ -98,6 +98,7 @@
         <!-- Edit Mode Inputs (Initially GONE) -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/nameInputLayout"
+            android:textColorHint="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -119,6 +120,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/idInputLayout"
+            android:textColorHint="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -140,6 +142,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/phoneInputLayout"
+            android:textColorHint="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -161,6 +164,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/semesterInputLayout"
+            android:textColorHint="@color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"

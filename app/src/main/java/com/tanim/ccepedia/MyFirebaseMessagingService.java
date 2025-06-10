@@ -18,7 +18,6 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -32,13 +31,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String message = "You have a new notification!";
         String url = null;
 
-        // If notification contains title/body
+        // Get notification title and body
         if (remoteMessage.getNotification() != null) {
             title = remoteMessage.getNotification().getTitle();
             message = remoteMessage.getNotification().getBody();
         }
 
-        // If custom data contains a URL
+        // Get data payload (e.g., URL)
         if (remoteMessage.getData() != null) {
             Map<String, String> data = remoteMessage.getData();
             if (data.containsKey("url")) {
@@ -59,15 +58,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             intent = new Intent(this, HomeActivity.class);
         }
 
+        // Safe flag handling for different Android versions
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this,
                 0,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                flags
         );
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_stat_name)  // ← Make sure this is a valid icon
+                .setSmallIcon(R.drawable.ic_stat_name) // Ensure this is a valid white-only icon
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                 .setContentTitle(title)
                 .setContentText(message)
@@ -76,16 +81,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        // Only check POST_NOTIFICATIONS permission on Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
         NotificationManagerCompat.from(this).notify((int) System.currentTimeMillis(), builder.build());
     }
 

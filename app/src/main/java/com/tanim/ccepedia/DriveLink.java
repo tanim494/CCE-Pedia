@@ -4,8 +4,6 @@ public class DriveLink {
     private String title;
     private String url;
 
-    public DriveLink() {} // Needed for Firebase
-
     public DriveLink(String title, String url) {
         this.title = title;
         this.url = url;

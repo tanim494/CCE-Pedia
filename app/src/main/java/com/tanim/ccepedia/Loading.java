@@ -20,6 +20,15 @@ public class Loading extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        String selectedTheme = HomeActivity.ThemePref.getTheme(this);
+
+        // Apply the theme before calling super.onCreate()
+        if (selectedTheme.equals(HomeActivity.ThemePref.THEME_BLUE)) {
+            setTheme(R.style.Theme_CCEPedia_Blue);
+        } else {
+            setTheme(R.style.Theme_CCEPedia_Green);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 

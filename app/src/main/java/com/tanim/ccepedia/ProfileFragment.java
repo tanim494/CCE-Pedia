@@ -145,9 +145,7 @@ public class ProfileFragment extends Fragment {
                     switchToViewMode();
                     Toast.makeText(getContext(), "Profile updated", Toast.LENGTH_SHORT).show();
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Update failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Update failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void logoutUser() {

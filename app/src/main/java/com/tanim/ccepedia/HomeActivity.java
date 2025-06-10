@@ -1,8 +1,11 @@
 package com.tanim.ccepedia;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 import android.annotation.SuppressLint;
-import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,13 +14,16 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -29,17 +35,16 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 
-import java.util.Objects;
-
 
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     LinearLayout sideMenu;
     TextView toolBarTxt;
     TextView studentName;
+    TextView studentId;
     TextView studentSemester;
     Button adminBtn, uploadBtn;
-    String noticeLink;
+    TextView themeSwitcher;
     String updateLink;
     float databaseVersion;
     float userVersion;
@@ -52,6 +57,13 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String selectedTheme = ThemePref.getTheme(this);
+        if (selectedTheme.equals(ThemePref.THEME_BLUE)) {
+            setTheme(R.style.Theme_CCEPedia_Blue);
+        } else {
+            setTheme(R.style.Theme_CCEPedia_Green);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -63,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
         setupDatabaseListeners();
         setupClickListeners();
         loadFragment();
+        Toast.makeText(this, "Welcome to CCE Pedia, " + UserData.getInstance().getName(), LENGTH_LONG).show();
     }
 
     private void checkForUpdate() {
@@ -93,8 +106,10 @@ public class HomeActivity extends AppCompatActivity {
         sideMenu = findViewById(R.id.sideMenu);
         toolBarTxt = findViewById(R.id.toolText);
         bottomNavigation = findViewById(R.id.bottomNavigation);
+        themeSwitcher = findViewById(R.id.switchTheme);
 
         studentName = findViewById(R.id.studentName);
+        studentId = findViewById(R.id.studentId);
         studentSemester = findViewById(R.id.studentSemester);
         uploadBtn = findViewById(R.id.uploadBtn);
         adminBtn = findViewById(R.id.adminBtn);
@@ -104,6 +119,7 @@ public class HomeActivity extends AppCompatActivity {
     private void setUserData() {
         UserData user = UserData.getInstance();
         studentName.setText("Name: " + user.getName());
+        studentId.setText("ID: " + user.getId());
         studentSemester.setText("Semester: " + user.getSemester());
         userRole = user.getRole();
 
@@ -118,10 +134,15 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void openAdminMode() {
-        Intent intent = new Intent(this, AdminActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+    @SuppressLint("SetTextI18n")
+    private void openAdminMode() {sideMenuClose();
+        AdminFragment adminFragment = new AdminFragment();
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.Midcontainer, adminFragment)
+                .addToBackStack(null)
+                .commit();
+        toolBarTxt.setText("Admin Control");
     }
 
     @SuppressLint("SetTextI18n")
@@ -147,7 +168,6 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             if (snapshot != null && snapshot.exists()) {
-                noticeLink = snapshot.getString("link");
                 Double version = snapshot.getDouble("version");
                 updateLink = snapshot.getString("updateLink");
 
@@ -156,7 +176,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 // Get current app version
-                userVersion = Float.parseFloat(BuildConfig.VERSION_NAME) * 100;
+                userVersion = Math.round(Float.parseFloat(BuildConfig.VERSION_NAME) * 100);
             }
         });
     }
@@ -173,12 +193,29 @@ public class HomeActivity extends AppCompatActivity {
 
         findViewById(R.id.profileBtn).setOnClickListener(view -> openProfileFragment());
         setupMenuSemesterData();
+
+        themeSwitcher.setOnClickListener(v -> {
+            String current = ThemePref.getTheme(this);
+            if (current.equals(ThemePref.THEME_BLUE)) {
+                // Switch to GREEN
+                bottomNavigation.setSelectedItemId(R.id.nv_home);
+                ThemePref.setTheme(this, ThemePref.THEME_GREEN);
+                Toast.makeText(this, "Switched to Green Theme", LENGTH_LONG).show();
+            } else {
+                // Switch to BLUE
+                bottomNavigation.setSelectedItemId(R.id.nv_home);
+                ThemePref.setTheme(this, ThemePref.THEME_BLUE);
+                Toast.makeText(this, "Switched to Blue Theme", LENGTH_LONG).show();
+            }
+            recreate(); // recreate to apply theme
+        });
+
     }
 
     @SuppressLint("SetTextI18n")
     private void openProfileFragment() {
         sideMenuClose();
-        toolBarTxt.setText("My Profile");
+        toolBarTxt.setText("User Profile");
 
         ProfileFragment profileFragment = new ProfileFragment();
         getSupportFragmentManager().beginTransaction()
@@ -309,6 +346,24 @@ public class HomeActivity extends AppCompatActivity {
         super.onDestroy();
         if (configListener != null) {
             configListener.remove();
+        }
+    }
+
+    public static class ThemePref {
+        private static final String PREF_NAME = "theme_pref";
+        private static final String KEY_THEME = "selected_theme";
+
+        public static final String THEME_GREEN = "green";
+        public static final String THEME_BLUE = "blue";
+
+        public static void setTheme(Context context, String theme) {
+            SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+            prefs.edit().putString(KEY_THEME, theme).apply();
+        }
+
+        public static String getTheme(Context context) {
+            SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+            return prefs.getString(KEY_THEME, THEME_BLUE); // default = blue
         }
     }
 

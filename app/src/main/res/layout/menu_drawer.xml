@@ -14,7 +14,8 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="#5E735E"
+        android:backgroundTint="?colorSecondary"
+        android:elevation="100dp"
         >
 
         <LinearLayout
@@ -25,6 +26,14 @@
 
             <TextView
                 android:id="@+id/studentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/studentId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"

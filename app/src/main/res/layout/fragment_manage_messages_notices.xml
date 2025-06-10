@@ -1,0 +1,51 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Notices Section -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddNotice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Notice"
+            android:textAllCaps="false"
+            app:backgroundTint="#FFB74D"
+            android:layout_marginBottom="12dp"
+            app:cornerRadius="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewNotices"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginBottom="24dp"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp" />
+
+        <!-- Messages Section -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Message"
+            android:textAllCaps="false"
+            app:backgroundTint="#FFB74D"
+            android:layout_marginBottom="12dp"
+            app:cornerRadius="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMessages"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_bg"
     android:padding="16dp"
     >
 
@@ -13,9 +12,9 @@
         android:layout_centerHorizontal="true"
         android:shadowColor="#000000"
         android:padding="1dp"
-        android:shadowRadius="3"
+        android:shadowRadius="2"
         android:text="Click on a faculty to Call"
-        android:textColor="#E6E5E5"
+        android:textColor="@color/black"
         android:textSize="16sp" />
 
     <!-- Faculty ListView -->

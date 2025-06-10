@@ -6,8 +6,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
 
 
     <application
@@ -17,11 +16,9 @@
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CCEPedia"
+        android:theme="@style/Theme.CCEPedia.Blue"
         tools:targetApi="31">
-        <activity
-            android:name=".AdminActivity"
-            android:exported="false" />
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />

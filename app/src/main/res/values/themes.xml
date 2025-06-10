@@ -1,18 +1,38 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.CCEPedia" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.CCEPedia.Green" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#738F73</item>
+        <item name="colorPrimary">#00695C</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">#003231</item>
+        <item name="colorSecondaryVariant">#00695C</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?android:colorPrimary</item>
         <item name="android:navigationBarColor">?android:colorPrimary</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.CCEPedia.Blue" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Backgrounds and surfaces -->
+        <item name="android:colorBackground">#121212</item>
+        <item name="colorSurface">#1E1E1E</item>
+        <item name="colorOnSurface">#E0E0E0</item>
+
+        <item name="colorPrimary">#2B4B57</item>
+        <item name="colorPrimaryVariant">#388E3C</item>
+        <item name="colorOnPrimary">#121212</item>
+
+        <!-- Secondary color (teal tone) -->
+        <item name="colorSecondary">#006992</item>
+        <item name="colorSecondaryVariant">#00897B</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+
+        <!-- App bars, status bar, and nav bar -->
+        <item name="android:statusBarColor">?android:colorPrimary</item>
+        <item name="android:navigationBarColor">?android:colorPrimary</item>
     </style>
 
     <style name="ButtonStyle">
@@ -22,17 +42,20 @@
         <item name="android:autoLink">web</item>
         <item name="android:background">@drawable/buttonbg</item>
         <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">#000</item>
         <item name="android:textSize">16sp</item>
         <item name="android:layout_marginBottom">80px</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:elevation">3dp</item>
     </style>
 
     <style name="SideMenuBtn" parent="Widget.Material3.Button.OutlinedButton">
-        <item name="android:textColor">#738F73</item>
-        <item name="strokeColor">#738F73</item>
-        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="strokeColor">?colorPrimary</item>
+        <item name="strokeWidth">2dp</item>
         <item name="cornerRadius">12dp</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>

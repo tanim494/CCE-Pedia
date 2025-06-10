@@ -6,8 +6,6 @@ public class FileItem {
     private String url;
     private String uploader;
 
-    public FileItem() {} // Needed for Firestore
-
     public FileItem(String id, String fileName, String url, String uploader) {
         this.id = id;
         this.fileName = fileName;

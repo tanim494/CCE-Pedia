@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:hintTextColor="@color/white"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editDriveTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Drive Link Title"
+            android:inputType="text"
+            android:textColor="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextColor="@color/white"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editDriveUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Drive Link URL"
+            android:inputType="textUri"
+            android:textColor="@color/white"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddDriveLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Link"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:textAllCaps="false"
+        app:cornerRadius="12dp"
+        android:backgroundTint="@color/orange"/>
+
+    <TextView
+        android:id="@+id/tvDriveLinksTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Existing Drive Links"
+        android:textStyle="bold"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:layout_marginBottom="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDriveLinks"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="4dp" />
+
+</LinearLayout>

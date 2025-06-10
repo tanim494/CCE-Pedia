@@ -117,9 +117,7 @@ public class FileListFragment extends Fragment {
 
                     adapter.notifyDataSetChanged();
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(requireContext(), "Failed to load files: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e -> Toast.makeText(requireContext(), "Failed to load files: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void deleteFile(FileItem item) {

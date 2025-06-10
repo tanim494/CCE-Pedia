@@ -25,6 +25,14 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String selectedTheme = HomeActivity.ThemePref.getTheme(this);
+
+        // Apply the theme before calling super.onCreate()
+        if (selectedTheme.equals(HomeActivity.ThemePref.THEME_BLUE)) {
+            setTheme(R.style.Theme_CCEPedia_Blue);
+        } else {
+            setTheme(R.style.Theme_CCEPedia_Green);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -96,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(LoginActivity.this, "User data not found, contact developer", Toast.LENGTH_SHORT).show();
+            showAlert("User data not found, contact the developer");
         }
     }
 
@@ -109,33 +117,45 @@ public class LoginActivity extends AppCompatActivity {
                             if (user.isEmailVerified()) {
                                 String uid = user.getUid();
 
-                                // Fetch user data from Firestore
-                                FirebaseFirestore.getInstance()
-                                        .collection("users")
+                                // Update "verified" field to true
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                db.collection("users")
                                         .document(uid)
-                                        .get()
-                                        .addOnSuccessListener(this::handleUserDocument)
-                                        .addOnFailureListener(e -> {
-                                            Toast.makeText(LoginActivity.this, "Failed to fetch user data", Toast.LENGTH_SHORT).show();
-                                        });
+                                        .update("verified", true)
+                                        .addOnSuccessListener(aVoid -> {
+                                            // fetch user data
+                                            db.collection("users")
+                                                    .document(uid)
+                                                    .get()
+                                                    .addOnSuccessListener(this::handleUserDocument)
+                                                    .addOnFailureListener(e ->
+                                                            showAlert("Failed to fetch user data"));
+                                        })
+                                        .addOnFailureListener(e ->
+                                                Toast.makeText(LoginActivity.this, "Failed to update verification status", Toast.LENGTH_SHORT).show());
 
                             } else {
                                 // Resend email verification
                                 user.sendEmailVerification()
-                                        .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(LoginActivity.this, "Email not verified. A verification email has been sent.", Toast.LENGTH_SHORT).show();
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            Toast.makeText(LoginActivity.this, "Failed to resend verification email. Please try again.", Toast.LENGTH_SHORT).show();
-                                        });
+                                        .addOnSuccessListener(aVoid ->
+                                                showAlert("Email not verified. A verification email has been sent."))
+                                        .addOnFailureListener(e ->
+                                                showAlert("Failed to resend verification email. Please try again."));
                             }
                         }
                     } else {
-                        Toast.makeText(LoginActivity.this, "Incorrect Email/Password", Toast.LENGTH_SHORT).show();
+                        showAlert("Incorrect Email/Password");
                     }
                 });
     }
 
+    private void showAlert(String message) {
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Alert!")
+                .setMessage(message)
+                .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
     private void toggleLoginView() {
         CardView loginCardView = findViewById(R.id.loginCardView);
         loginCardView.animate()

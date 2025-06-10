@@ -77,9 +77,7 @@ public class CourseListFragment extends Fragment {
                         openFileListFragment(selectedCourse);
                     });
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(requireContext(), "Failed to load courses: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e -> Toast.makeText(requireContext(), "Failed to load courses: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void openFileListFragment(String courseId) {

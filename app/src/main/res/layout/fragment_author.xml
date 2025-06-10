@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:background="@drawable/default_bg"
+    android:background="@color/white"
     tools:context=".HomeActivity">
     <LinearLayout
         android:orientation="vertical"
@@ -20,7 +20,7 @@
             <TextView
                 android:text="About"
                 android:textStyle="normal"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="30sp"
                 android:layout_marginStart="15dp"
                 android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             <TextView
                 android:text="The Developer"
                 android:textStyle="bold"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="33sp"
                 android:layout_marginStart="15dp"
                 android:layout_width="match_parent"

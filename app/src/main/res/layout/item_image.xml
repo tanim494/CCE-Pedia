@@ -61,6 +61,7 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:clickable="true"
+                        android:focusable="true"
                         android:id="@+id/facebookButton">
                         <ImageView
                             android:layout_width="wrap_content"
@@ -88,6 +89,7 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:clickable="true"
+                        android:focusable="true"
                         android:id="@+id/githubButton">
                         <ImageView
                             android:layout_width="wrap_content"
@@ -116,6 +118,7 @@
                         android:orientation="vertical"
                         android:gravity="center"
                         android:clickable="true"
+                        android:focusable="true"
                         android:id="@+id/linkedinButton">
                         <ImageView
                             android:layout_width="24dp"

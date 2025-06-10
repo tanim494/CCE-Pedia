@@ -23,26 +23,28 @@ public class Home extends Fragment {
     public ScrollView onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
 
-        // Root ScrollView
-        ScrollView scrollView = new ScrollView(getContext());
+        // Root ScrollView with requireContext()
+        ScrollView scrollView = new ScrollView(requireContext());
         scrollView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
         ));
-        scrollView.setBackgroundResource(R.drawable.default_bg);
 
         // Vertical LinearLayout inside ScrollView
-        LinearLayout mainLayout = new LinearLayout(getContext());
+        LinearLayout mainLayout = new LinearLayout(requireContext());
         mainLayout.setOrientation(LinearLayout.VERTICAL);
-        int paddingPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        int paddingPx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
         mainLayout.setPadding(paddingPx, paddingPx, paddingPx, paddingPx);
         scrollView.addView(mainLayout);
 
-        // Load Notices (Multiple)
+        // Load Notices
         db.collection("notices")
-                //.orderBy("timestamp", Query.Direction.DESCENDING) // Optional sorting if you have timestamp
+                //.orderBy("timestamp", Query.Direction.DESCENDING) // Optional sorting if needed
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!isAdded()) return;  // Ensure fragment still attached
+
                     if (queryDocumentSnapshots.isEmpty()) {
                         TextView noNotice = createNoticeTextView("No notices at the moment.");
                         mainLayout.addView(noNotice);
@@ -68,6 +70,7 @@ public class Home extends Fragment {
                     }
                 })
                 .addOnFailureListener(e -> {
+                    if (!isAdded()) return;
                     TextView errorNotice = createNoticeTextView("Failed to load notices.");
                     mainLayout.addView(errorNotice);
                 });
@@ -76,6 +79,8 @@ public class Home extends Fragment {
         db.collection("messages")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!isAdded()) return;
+
                     if (!queryDocumentSnapshots.isEmpty()) {
                         for (DocumentSnapshot doc : queryDocumentSnapshots) {
                             String msg = doc.getString("text");
@@ -90,6 +95,7 @@ public class Home extends Fragment {
                     }
                 })
                 .addOnFailureListener(e -> {
+                    if (!isAdded()) return;
                     TextView errorView = createMessageTextView("Failed to load messages.");
                     mainLayout.addView(errorView);
                 });
@@ -99,11 +105,11 @@ public class Home extends Fragment {
 
     // Helper method to create styled notice TextView
     private TextView createNoticeTextView(String text) {
-        TextView noticeView = new TextView(getContext());
+        TextView noticeView = new TextView(requireContext());
         noticeView.setText(text);
-        noticeView.setTextSize(18);
-        noticeView.setTextColor(getResources().getColor(android.R.color.holo_orange_dark)); // matches XML notice color
-        noticeView.setBackgroundResource(R.drawable.buttonbg); // as per your updated XML for notice box
+        noticeView.setTextSize(16);
+        noticeView.setTypeface(null, android.graphics.Typeface.BOLD);
+        noticeView.setBackgroundResource(R.drawable.buttonbg); // your notice background drawable
         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
         noticeView.setPadding(padding, padding, padding, padding);
 
@@ -114,7 +120,7 @@ public class Home extends Fragment {
         params.setMargins(0, 0, 0, padding); // bottom margin for spacing
         noticeView.setLayoutParams(params);
 
-        // Optional elevation for shadow effect (requires API 21+)
+        // Optional elevation for shadow effect (API 21+)
         noticeView.setElevation(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics()));
 
         return noticeView;
@@ -122,7 +128,7 @@ public class Home extends Fragment {
 
     // Helper method to create styled message TextView
     private TextView createMessageTextView(String text) {
-        TextView msgView = new TextView(getContext());
+        TextView msgView = new TextView(requireContext());
         msgView.setText(text);
         msgView.setTextSize(16);
         msgView.setTextColor(getResources().getColor(android.R.color.white));

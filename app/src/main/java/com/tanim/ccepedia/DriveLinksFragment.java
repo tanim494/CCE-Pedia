@@ -1,7 +1,5 @@
 package com.tanim.ccepedia;
 
-import static java.security.AccessController.getContext;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -4,7 +4,10 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="orange">#FFB74D</color>
     <color name="white">#FFFFFFFF</color>
     <color name="menuText">#FFFFFFFF</color>
+    <color name="Red">#FF0000</color>
+    <color name="Green">#16D322</color>
 
 </resources>

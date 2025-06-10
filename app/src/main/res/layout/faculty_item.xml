@@ -1,51 +1,61 @@
-<!-- res/layout/faculty_item_alternative.xml -->
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="12dp"
+    android:background="#F0EBE3"
+    >
 
-    <!-- Faculty Image -->
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/facultyImage"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:scaleType="centerCrop"
-        android:layout_gravity="center"
-        android:layout_marginBottom="12dp"
-        android:importantForAccessibility="no" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shapeAppearanceOverlay="@style/CircleImageStyle" />
 
     <!-- Faculty Name -->
     <TextView
         android:id="@+id/fName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Faculty Name"
-        android:textColor="#E6E5E5"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:gravity="center" />
+        app:layout_constraintTop_toTopOf="@+id/facultyImage"
+        app:layout_constraintStart_toEndOf="@id/facultyImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="12dp" />
 
-    <!-- Faculty Designation -->
+    <!-- Designation -->
     <TextView
         android:id="@+id/fDesignation"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Designation"
-        android:textColor="#CACACA"
+        android:textColor="@color/black"
         android:textSize="14sp"
-        android:gravity="center"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintTop_toBottomOf="@id/fName"
+        app:layout_constraintStart_toStartOf="@id/fName"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="4dp" />
 
-    <!-- Faculty Contact Number -->
+    <!-- Phone Number -->
     <TextView
         android:id="@+id/fPhoneNumber"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Contact Number"
-        android:textColor="#CACACA"
+        android:text="Phone Number"
+        android:textColor="@color/black"
         android:textSize="14sp"
-        android:gravity="center"
-        android:layout_marginTop="8dp" />
-</LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/fDesignation"
+        app:layout_constraintStart_toStartOf="@id/fName"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_bg"
+    android:background="?colorPrimary"
     android:fillViewport="true">
 
     <LinearLayout
@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- 🔔 Notice Box -->
         <TextView
             android:id="@+id/noticeBox"
             android:layout_width="match_parent"
@@ -18,17 +17,15 @@
             android:background="@drawable/buttonbg"
             android:padding="16dp"
             android:text="Loading notice..."
-            android:textColor="@android:color/holo_orange_dark"
+            android:textColor="@color/black"
             android:textSize="18sp"
-            android:fontFamily="sans-serif-medium"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             android:elevation="4dp"
             android:clickable="true"
             android:focusable="true"
 
             />
 
-        <!-- 💬 Message Wall -->
         <LinearLayout
             android:id="@+id/messageContainer"
             android:layout_width="match_parent"

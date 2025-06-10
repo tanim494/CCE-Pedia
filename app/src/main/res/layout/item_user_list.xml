@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="4dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="4dp">
+
+    <LinearLayout
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/textbg">
+
+        <!-- Left Column: Name, Semester, Gender, Role -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.6"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:textStyle="bold|italic"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/tvSemester"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Semester"
+                android:textColor="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/tvGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                android:textColor="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/tvRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Role"
+                android:textColor="#F9A825"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <!-- Right Column: Student ID, Email, Phone -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:gravity="start">
+
+            <TextView
+                android:id="@+id/tvStudentId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student ID"
+                android:textColor="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/tvPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone"
+                android:textColor="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/tvUserVerified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Red"
+                android:text="Non Verified"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/default_bg"
+    android:background="?colorPrimary"
     android:gravity="center">
 
     <TextView
-        android:text="Login to Your Account"
+        android:text="LOG IN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold|italic"
@@ -47,8 +47,12 @@
                 <!-- Email Field -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:hint="Email"
+                    android:textColorHint="@color/black"
                     android:layout_marginTop="5dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:boxStrokeColor="?colorPrimary"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <com.google.android.material.textfield.TextInputEditText
@@ -63,8 +67,12 @@
                 <!-- Password Field -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:hint="Password"
+                    android:textColorHint="@color/black"
                     android:layout_marginTop="5dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:boxStrokeColor="?colorPrimary"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <com.google.android.material.textfield.TextInputEditText
@@ -119,7 +127,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="showResetPasswordView"/>
+                    />
 
                 <!-- Register Link -->
                 <TextView
@@ -135,7 +143,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="goToRegister"/>
+                    />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

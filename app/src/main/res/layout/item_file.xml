@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="12dp"
+        android:background="@drawable/textbg">
 
         <ImageView
             android:id="@+id/fileThumbnail"
@@ -33,7 +34,8 @@
                 android:layout_height="wrap_content"
                 android:text="File Name"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/uploaderName"
@@ -41,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="Uploaded by: uploader"
                 android:textSize="14sp"
-                android:textColor="#777" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
         <ImageButton
