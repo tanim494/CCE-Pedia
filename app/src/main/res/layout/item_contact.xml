@@ -1,44 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:paddingVertical="12dp"
-    android:background="@drawable/rounded_whitebg"
-    android:padding="16dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="12dp"
     android:clickable="true"
     android:focusable="true"
-    android:gravity="center_vertical">
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/dividerColor"
+    app:strokeWidth="1dp">
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_phone"
-        app:tint="@color/Green"
-        android:contentDescription="Call Icon" />
-
-    <TextView
-        android:id="@+id/contactNameTextView"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="16dp"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        tools:text="Bus Coordinator"
-        android:maxLines="1"
-        android:ellipsize="end"/>
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/contactNumberTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@color/Green"
-        android:textStyle="bold"
-        tools:text="01XXXXXXXXXX"/>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="@color/GreenLight"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
 
-</LinearLayout>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_phone"
+                app:tint="@color/Green" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/contactNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/textPrimary"
+                android:textSize="16sp"
+                tools:text="Bus Coordinator" />
+
+            <TextView
+                android:id="@+id/contactNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp"
+                tools:text="01XXXXXXXXXX" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_right"
+            app:tint="@color/dividerColor" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

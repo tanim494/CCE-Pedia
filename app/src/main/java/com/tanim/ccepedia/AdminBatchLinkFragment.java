@@ -6,16 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,10 +28,10 @@ import java.util.stream.Collectors;
 
 public class AdminBatchLinkFragment extends Fragment {
 
-    private Spinner spinnerGender;
-    private Spinner spinnerDepartment;
+    private AutoCompleteTextView spinnerGender;
+    private AutoCompleteTextView spinnerDepartment;
     private EditText editTitle, editUrl;
-    private Button btnAdd, btnUpdate, btnDelete;
+    private MaterialButton btnAdd, btnUpdate, btnDelete;
     private ListView listViewLinks;
 
     private FirebaseFirestore db;
@@ -58,8 +58,7 @@ public class AdminBatchLinkFragment extends Fragment {
         btnDelete = view.findViewById(R.id.btnDelete);
         listViewLinks = view.findViewById(R.id.listViewLinks);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, new String[]{"Male", "Female"});
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_item, new String[]{"Male", "Female"});
         spinnerGender.setAdapter(spinnerAdapter);
 
         db = FirebaseFirestore.getInstance();
@@ -67,16 +66,8 @@ public class AdminBatchLinkFragment extends Fragment {
 
         loadDepartmentSpinner();
 
-        spinnerDepartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                loadBatchLinks();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
+        spinnerDepartment.setOnItemClickListener((parent, view1, position, id) -> loadBatchLinks());
+        spinnerGender.setOnItemClickListener((parent, view1, position, id) -> loadBatchLinks());
 
         btnAdd.setOnClickListener(v -> addBatchLink());
         btnUpdate.setOnClickListener(v -> updateBatchLink());
@@ -89,9 +80,9 @@ public class AdminBatchLinkFragment extends Fragment {
             String linkGender = selectedLink.gender != null ? selectedLink.gender.trim() : "";
 
             if (linkGender.equalsIgnoreCase("Male")) {
-                spinnerGender.setSelection(0);
+                spinnerGender.setText("Male", false);
             } else {
-                spinnerGender.setSelection(1);
+                spinnerGender.setText("Female", false);
             }
 
             editTitle.setText(selectedLink.title);
@@ -113,18 +104,16 @@ public class AdminBatchLinkFragment extends Fragment {
                             .map(id -> id.replace("dept_", "").toUpperCase())
                             .collect(Collectors.toList());
 
-                    displayNames.add(0, "Select Department");
-
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                            getContext(),
-                            android.R.layout.simple_spinner_item,
+                            requireContext(),
+                            R.layout.dropdown_item,
                             displayNames
                     );
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerDepartment.setAdapter(adapter);
 
                     if(displayNames.contains("CCE")) {
-                        spinnerDepartment.setSelection(displayNames.indexOf("CCE"));
+                        spinnerDepartment.setText("CCE", false);
+                        loadBatchLinks();
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -133,9 +122,9 @@ public class AdminBatchLinkFragment extends Fragment {
     }
 
     private CollectionReference getCollectionRef() {
-        String selectedDeptCode = spinnerDepartment.getSelectedItem() != null ? spinnerDepartment.getSelectedItem().toString() : "";
+        String selectedDeptCode = spinnerDepartment.getText().toString();
 
-        if (selectedDeptCode.equals("Select Department") || selectedDeptCode.isEmpty()) {
+        if (selectedDeptCode.isEmpty()) {
             Toast.makeText(getContext(), "Please select a department.", Toast.LENGTH_SHORT).show();
             return null;
         }
@@ -190,7 +179,7 @@ public class AdminBatchLinkFragment extends Fragment {
         CollectionReference collectionRef = getCollectionRef();
         if (collectionRef == null) return;
 
-        String gender = spinnerGender.getSelectedItem().toString().trim().toLowerCase();
+        String gender = spinnerGender.getText().toString().trim().toLowerCase();
         String title = editTitle.getText().toString().trim();
         String url = editUrl.getText().toString().trim();
 
@@ -219,7 +208,7 @@ public class AdminBatchLinkFragment extends Fragment {
         CollectionReference collectionRef = getCollectionRef();
         if (collectionRef == null) return;
 
-        String gender = spinnerGender.getSelectedItem().toString().trim().toLowerCase();
+        String gender = spinnerGender.getText().toString().trim().toLowerCase();
         String title = editTitle.getText().toString().trim();
         String url = editUrl.getText().toString().trim();
 
@@ -261,7 +250,6 @@ public class AdminBatchLinkFragment extends Fragment {
 
     private void resetForm() {
         selectedDocId = null;
-        spinnerGender.setSelection(0);
         editTitle.setText("");
         editUrl.setText("");
         btnAdd.setVisibility(View.VISIBLE);

@@ -24,9 +24,6 @@
             android:name=".CommunityActivity"
             android:exported="false" />
         <activity
-            android:name=".AIChatActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity

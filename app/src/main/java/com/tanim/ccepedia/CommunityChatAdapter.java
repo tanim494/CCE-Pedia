@@ -88,6 +88,10 @@ public class CommunityChatAdapter extends RecyclerView.Adapter<CommunityChatAdap
             messageTime = itemView.findViewById(R.id.text_message_time);
             senderName = itemView.findViewById(R.id.text_message_name);
 
+            if (messageTime != null) {
+                messageTime.setVisibility(View.VISIBLE);
+            }
+
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {

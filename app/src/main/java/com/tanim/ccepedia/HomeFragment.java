@@ -43,13 +43,12 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore db;
 
     private RecyclerView noticesRecyclerView;
-    private RecyclerView quickActionsRecyclerView;
     private RecyclerView latestUpdatesRecyclerView;
     private ImageView homeBannerImage;
+    private TextView tvLatestAnnouncementsTitle, tvHubTitle;
 
     private NoticeAdapter noticeAdapter;
     private LatestUpdatesAdapter latestUpdatesAdapter;
-    private MaterialCardView chatBotBtn, communityBtn;
 
     private Button adminBtn, uploadBtn;
     private LinearLayout controlLayout;
@@ -64,24 +63,19 @@ public class HomeFragment extends Fragment {
         controlLayout = view.findViewById(R.id.controlLayout);
         adminBtn = view.findViewById(R.id.adminBtn);
         uploadBtn = view.findViewById(R.id.uploadBtn);
-        chatBotBtn = view.findViewById(R.id.card_chatbot);
-        communityBtn = view.findViewById(R.id.card_community);
 
         noticesRecyclerView = view.findViewById(R.id.noticesRecyclerView);
-        quickActionsRecyclerView = view.findViewById(R.id.quickActionsRecyclerView);
         latestUpdatesRecyclerView = view.findViewById(R.id.latestUpdatesRecyclerView);
+        tvLatestAnnouncementsTitle = view.findViewById(R.id.tv_latest_announcements_title);
         homeBannerImage = view.findViewById(R.id.homeBannerImage);
-
-        Animation pulse = AnimationUtils.loadAnimation(requireContext(), R.anim.pulse);
-        communityBtn.startAnimation(pulse);
+        tvHubTitle = view.findViewById(R.id.tv_hub_title);
 
         db = FirebaseFirestore.getInstance();
 
         setupNotices();
-        setupQuickActions();
+        setupBentoGrid(view);
         setupLatestUpdates();
-
-        setupInteractiveTools();
+        setupStudentHub(view);
 
         loadAllNotices();
         loadLatestUpdates();
@@ -89,6 +83,41 @@ public class HomeFragment extends Fragment {
         setUserData();
 
         return view;
+    }
+
+    private void setupBentoGrid(View v) {
+        v.findViewById(R.id.card_community).setOnClickListener(view -> openCommunity());
+        
+        TextView resTitle = v.findViewById(R.id.tv_res_title);
+        String currentSemester = UserData.getInstance().getSemester();
+        
+        String semesterDisplay;
+        if (currentSemester.equalsIgnoreCase("Outgoing")) {
+            semesterDisplay = "8th Semester Resources";
+        } else {
+            String suffix;
+            try {
+                int sem = Integer.parseInt(currentSemester);
+                if (sem == 1) suffix = "st";
+                else if (sem == 2) suffix = "nd";
+                else if (sem == 3) suffix = "rd";
+                else suffix = "th";
+                semesterDisplay = sem + suffix + " Semester Resources";
+            } catch (Exception e) {
+                semesterDisplay = currentSemester + " Semester Resources";
+            }
+        }
+        resTitle.setText(semesterDisplay);
+
+        v.findViewById(R.id.card_resources).setOnClickListener(view -> {
+            String semesterId = currentSemester.equalsIgnoreCase("Outgoing") ? "semester_8" : "semester_" + currentSemester;
+            openCourseListFragment(semesterId);
+        });
+
+        v.findViewById(R.id.card_portal).setOnClickListener(view -> openStudentPortal());
+        v.findViewById(R.id.card_tracker).setOnClickListener(view -> openBusTracker());
+        v.findViewById(R.id.card_schedule).setOnClickListener(view -> openBusSchedule());
+        v.findViewById(R.id.card_java).setOnClickListener(view -> openWebFragment("https://github.com/tanim494/CodeForces"));
     }
 
     private void loadDynamicBanner() {
@@ -123,11 +152,6 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    private void setupInteractiveTools() {
-        chatBotBtn.setOnClickListener(v -> openChatBot());
-        communityBtn.setOnClickListener(v -> openCommunity());
-    }
-
     private void setupNotices() {
         noticesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         PagerSnapHelper snapHelper = new PagerSnapHelper();
@@ -160,15 +184,15 @@ public class HomeFragment extends Fragment {
 
                     if (noticesList.isEmpty()) {
                         noticesRecyclerView.setVisibility(View.GONE);
+                    } else {
+                        noticesRecyclerView.setVisibility(View.VISIBLE);
                     }
 
                     noticeAdapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error loading announcements", e);
-                    noticesList.clear();
-                    noticesList.add(new Notice("Failed to load announcements.", null));
-                    noticeAdapter.notifyDataSetChanged();
+                    noticesRecyclerView.setVisibility(View.GONE);
                 });
     }
 
@@ -176,26 +200,29 @@ public class HomeFragment extends Fragment {
         db.collection("messages")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    latestUpdatesList.clear();
                     if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                        latestUpdatesList.clear();
                         for (DocumentSnapshot doc : queryDocumentSnapshots) {
                             String msg = doc.getString("text");
                             if (msg != null) {
                                 latestUpdatesList.add(msg);
                             }
                         }
-                        latestUpdatesAdapter.notifyDataSetChanged();
-                    } else {
-                        latestUpdatesList.clear();
-                        latestUpdatesList.add("No latest updates at the moment.");
-                        latestUpdatesAdapter.notifyDataSetChanged();
                     }
+
+                    if (latestUpdatesList.isEmpty()) {
+                        latestUpdatesRecyclerView.setVisibility(View.GONE);
+                        tvLatestAnnouncementsTitle.setVisibility(View.GONE);
+                    } else {
+                        latestUpdatesRecyclerView.setVisibility(View.VISIBLE);
+                        tvLatestAnnouncementsTitle.setVisibility(View.VISIBLE);
+                    }
+                    latestUpdatesAdapter.notifyDataSetChanged();
                 })
                 .addOnFailureListener(e -> {
                     Log.e(TAG, "Error loading updates", e);
-                    latestUpdatesList.clear();
-                    latestUpdatesList.add("Failed to load updates.");
-                    latestUpdatesAdapter.notifyDataSetChanged();
+                    latestUpdatesRecyclerView.setVisibility(View.GONE);
+                    tvLatestAnnouncementsTitle.setVisibility(View.GONE);
                 });
     }
 
@@ -224,68 +251,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void setupQuickActions() {
-        List<QuickActionItem> quickActionList = new ArrayList<>();
-        String semesterDisplay = UserData.getInstance().getSemester();
-
-        if (semesterDisplay.equalsIgnoreCase("Outgoing")) {
-            semesterDisplay = "8th Semester (Outgoing)";
-        } else {
-            semesterDisplay = semesterDisplay + " Semester";
-        }
-
-        quickActionList.add(new QuickActionItem(semesterDisplay, R.drawable.ic_pdf, QuickActionItem.ACTION_RESOURCES));
-        quickActionList.add(new QuickActionItem("Bus Tracker", R.drawable.ic_tracker, QuickActionItem.ACTION_BUS_TRACKER));
-        quickActionList.add(new QuickActionItem("Student Portal", R.drawable.ic_stportal, QuickActionItem.ACTION_STUDENT_PORTAL));
-        quickActionList.add(new QuickActionItem("Bus Schedule", R.drawable.ic_bus, QuickActionItem.ACTION_BUS_SCHEDULE));
-        quickActionList.add(new QuickActionItem("CP in Java", R.drawable.ic_java, QuickActionItem.ACTION_JAVACP));
-        quickActionList.add(new QuickActionItem("IIUC Repository", R.drawable.ic_repository, QuickActionItem.ACTION_IIUCRepo));
-
-        QuickActionsAdapter quickActionsAdapter = new QuickActionsAdapter(quickActionList, this::handleQuickActionClick);
-        quickActionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        quickActionsRecyclerView.setAdapter(quickActionsAdapter);
-    }
-
-    private void handleQuickActionClick(int actionType, String actionTitle) {
-        String currentSemester = UserData.getInstance().getSemester();
-        String semesterId;
-
-        if (currentSemester.equalsIgnoreCase("Outgoing")) {
-            semesterId = "semester_8";
-        } else {
-            semesterId = "semester_" + currentSemester;
-        }
-
-        switch (actionType) {
-            case QuickActionItem.ACTION_RESOURCES:
-                openCourseListFragment(semesterId);
-                break;
-
-            case QuickActionItem.ACTION_BUS_TRACKER:
-                openBusTracker();
-                break;
-
-            case QuickActionItem.ACTION_STUDENT_PORTAL:
-                openStudentPortal();
-                break;
-
-            case QuickActionItem.ACTION_BUS_SCHEDULE:
-                openBusSchedule();
-                break;
-
-            case QuickActionItem.ACTION_JAVACP:
-                openWebFragment("https://github.com/tanim494/CodeForces");
-                break;
-
-            case QuickActionItem.ACTION_IIUCRepo:
-                openWebFragment("https://dspace.iiuc.ac.bd/home");
-                break;
-
-            default:
-                Log.w(TAG, "Unhandled quick action type: " + actionType);
-        }
-    }
-
     private void openWebFragment(String url) {
         WebFragment fragment = WebFragment.newInstance(url);
         getParentFragmentManager().beginTransaction()
@@ -301,25 +266,6 @@ public class HomeFragment extends Fragment {
                 .replace(R.id.Midcontainer, portalFragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    public static class QuickActionItem {
-        public static final int ACTION_RESOURCES = 1;
-        public static final int ACTION_BUS_TRACKER = 2;
-        public static final int ACTION_STUDENT_PORTAL = 3;
-        public static final int ACTION_BUS_SCHEDULE = 4;
-        public static final int ACTION_JAVACP = 5;
-        public static final int ACTION_IIUCRepo = 6;
-
-        public final String title;
-        public final int iconResId;
-        public final int actionType;
-
-        public QuickActionItem(String title, int iconResId, int actionType) {
-            this.title = title;
-            this.iconResId = iconResId;
-            this.actionType = actionType;
-        }
     }
 
     private void openBusTracker() {
@@ -359,6 +305,44 @@ public class HomeFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
+    private void setupStudentHub(View v) {
+        String userName = UserData.getInstance().getName();
+        if (userName != null && !userName.isEmpty() && isAdded()) {
+            String firstName = userName.split(" ")[0];
+            tvHubTitle.setText(getString(R.string.hub_greeting, firstName));
+        }
+
+        View shareCard = v.findViewById(R.id.card_share_app);
+        if (shareCard != null) {
+            shareCard.setOnClickListener(view -> shareApp());
+        }
+    }
+
+    private void shareApp() {
+        db.collection("appConfig").document("main").get()
+                .addOnSuccessListener(doc -> {
+                    String shareMessage = "Download IIUC Pedia - Your ultimate IIUC resource hub! 🎓\n\n";
+                    if (doc != null && doc.exists()) {
+                        String updateLink = doc.getString("updateLink");
+                        if (updateLink != null && !updateLink.isEmpty()) {
+                            shareMessage += "Get it here: " + updateLink;
+                        }
+                    }
+
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "IIUC Pedia App");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "Share IIUC Pedia via"));
+                })
+                .addOnFailureListener(e -> {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, "Download IIUC Pedia - Your ultimate university resource hub! 🎓");
+                    startActivity(Intent.createChooser(shareIntent, "Share IIUC Pedia via"));
+                });
+    }
+
     private void openAdminMode() {
         AdminFragment adminFragment = new AdminFragment();
         getParentFragmentManager().beginTransaction()
@@ -379,11 +363,6 @@ public class HomeFragment extends Fragment {
 
     private void openCommunity() {
         Intent intent = new Intent(requireContext(), CommunityActivity.class);
-        requireActivity().startActivity(intent);
-    }
-
-    private void openChatBot() {
-        Intent intent = new Intent(requireContext(), AIChatActivity.class);
         requireActivity().startActivity(intent);
     }
 
@@ -445,56 +424,6 @@ public class HomeFragment extends Fragment {
             public ViewHolder(View itemView) {
                 super(itemView);
                 noticeText = itemView.findViewById(R.id.noticeContentTextView);
-            }
-        }
-    }
-
-    public static class QuickActionsAdapter extends RecyclerView.Adapter<QuickActionsAdapter.ViewHolder> {
-        private final List<QuickActionItem> items;
-        private final QuickActionClickListener listener;
-
-        public interface QuickActionClickListener {
-            void onQuickActionClick(int actionType, String actionTitle);
-        }
-
-        public QuickActionsAdapter(List<QuickActionItem> items, QuickActionClickListener listener) {
-            this.items = items;
-            this.listener = listener;
-        }
-
-        @NonNull
-        @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_quick_action, parent, false);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            QuickActionItem item = items.get(position);
-            holder.actionText.setText(item.title);
-            holder.actionIcon.setImageResource(item.iconResId);
-
-            holder.itemView.setOnClickListener(v -> {
-                if (listener != null) {
-                    listener.onQuickActionClick(item.actionType, item.title);
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.size();
-        }
-
-        public static class ViewHolder extends RecyclerView.ViewHolder {
-            final TextView actionText;
-            final ImageView actionIcon;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                actionText = itemView.findViewById(R.id.actionText);
-                actionIcon = itemView.findViewById(R.id.actionIcon);
             }
         }
     }

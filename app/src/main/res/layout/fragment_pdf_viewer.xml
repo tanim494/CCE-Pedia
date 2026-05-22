@@ -1,57 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp">
+    android:background="@color/backgroundColor">
 
-    <com.github.barteksc.pdfviewer.PDFView
-        android:id="@+id/pdfView"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:elevation="0dp">
 
-    <ProgressBar
-        android:id="@+id/loadingSpinner"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/pdfToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/textPrimary"
+            app:title="PDF Viewer"
+            app:titleTextColor="@color/textPrimary"
+            app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6">
+
+            <TextView
+                android:id="@+id/tvPageCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:text="0 / 0"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/pdfView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/loadingSpinner"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/Green"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|end"
         android:layout_margin="24dp"
-        android:elevation="8dp">
+        android:src="@drawable/ic_download"
+        app:backgroundTint="@color/Green"
+        app:tint="@color/white"
+        app:fabSize="normal"
+        app:elevation="6dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/downloadButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Download"
-            android:paddingVertical="12dp"
-            app:iconGravity="textStart"
-            app:iconTint="@android:color/white"
-            app:cornerRadius="24dp"
-            android:backgroundTint="@color/Green"
-            android:layout_marginEnd="8dp" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="96dp"
+        android:src="@drawable/ic_share"
+        app:backgroundTint="@color/Blue"
+        app:tint="@color/white"
+        app:fabSize="mini"
+        app:elevation="6dp"
+        android:visibility="invisible"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/shareButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Share"
-            android:paddingVertical="12dp"
-            app:iconGravity="textStart"
-            app:iconTint="@android:color/white"
-            app:cornerRadius="24dp"
-            android:backgroundTint="@color/Blue"
-            android:layout_marginStart="8dp" />
-
-    </LinearLayout>
-
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

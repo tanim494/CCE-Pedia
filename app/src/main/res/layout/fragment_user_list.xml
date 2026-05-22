@@ -1,172 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
-    >
+    android:background="@color/backgroundColor">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search by name or ID"
-        android:iconifiedByDefault="false"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:iconifiedByDefault="false"
-        app:queryBackground="@android:color/transparent"
-        android:background="@drawable/rounded_search_background"
-        android:elevation="2dp" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="5dp"
-        app:cardElevation="2dp"
-        app:cardCornerRadius="12dp"
-        app:contentPadding="12dp">
+        android:background="@color/backgroundColor"
+        app:elevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:orientation="vertical"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="4dp">
+                android:fontFamily="sans-serif-black"
+                android:text="User Management"
+                android:textColor="@color/textPrimary"
+                android:textSize="24sp" />
 
-                <TextView
+            <TextView
+                android:id="@+id/tvUserCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif"
+                android:text="Loading users..."
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:iconifiedByDefault="false"
+                    app:queryBackground="@android:color/transparent"
+                    app:queryHint="Search name or ID..."
+                    app:searchIcon="@drawable/ic_name" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:scrollbars="none">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gender"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:paddingBottom="2dp"/>
+                    android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spinnerGender"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    style="@style/Widget.AppCompat.Spinner.DropDown"
-                    android:background="@drawable/spinner_background_outline"
-                    android:paddingStart="4dp"
-                    android:gravity="center_vertical"/>
-            </LinearLayout>
+                    <!-- Dept Filter -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Dept">
+                        <AutoCompleteTextView
+                            android:id="@+id/spinnerDepartment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textSize="13sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:orientation="vertical"
-                android:layout_height="wrap_content"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp">
+                    <!-- Sem Filter -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Sem">
+                        <AutoCompleteTextView
+                            android:id="@+id/spinnerSemester"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textSize="13sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sem."
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:paddingBottom="2dp"/>
+                    <!-- Gender Filter -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Gender">
+                        <AutoCompleteTextView
+                            android:id="@+id/spinnerGender"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textSize="13sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <Spinner
-                    android:id="@+id/spinnerSemester"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    style="@style/Widget.AppCompat.Spinner.DropDown"
-                    android:background="@drawable/spinner_background_outline"
-                    android:paddingStart="4dp"
-                    android:gravity="center_vertical"/>
-            </LinearLayout>
+                    <!-- Role Filter -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Role">
+                        <AutoCompleteTextView
+                            android:id="@+id/spinnerRole"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textSize="13sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:orientation="vertical"
-                android:layout_height="wrap_content"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Role"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:paddingBottom="2dp"/>
-
-                <Spinner
-                    android:id="@+id/spinnerRole"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    style="@style/Widget.AppCompat.Spinner.DropDown"
-                    android:background="@drawable/spinner_background_outline"
-                    android:paddingStart="4dp"
-                    android:gravity="center_vertical"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:orientation="vertical"
-                android:layout_height="wrap_content"
-                android:paddingStart="4dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Department"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:paddingBottom="2dp" />
-
-                <Spinner
-                    android:id="@+id/spinnerDepartment"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    style="@style/Widget.AppCompat.Spinner.DropDown"
-                    android:background="@drawable/spinner_background_outline"
-                    android:paddingStart="4dp"
-                    android:gravity="center_vertical"/>
-            </LinearLayout>
-
-
+                </LinearLayout>
+            </HorizontalScrollView>
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/tvUserCount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="?android:attr/textColorSecondary"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        tools:text="Showing user(s)"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewUsers"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:scrollbarStyle="outsideOverlay"/>
+        android:paddingHorizontal="12dp"
+        android:paddingBottom="80dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_user" />
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

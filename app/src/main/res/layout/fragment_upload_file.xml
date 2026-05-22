@@ -1,147 +1,228 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
-    <LinearLayout
+    android:background="@color/backgroundColor">
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/backgroundColor"
+        app:elevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@drawable/rounded_whitebg"
             android:padding="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Semester"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginBottom="4dp" />
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinnerSemester"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:spinnerMode="dropdown"
-                android:popupBackground="@color/white"
-                android:padding="12dp" />
+                android:fontFamily="sans-serif-black"
+                android:text="Contribute Resources"
+                android:textColor="@color/textPrimary"
+                android:textSize="24sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Course"
-                android:layout_marginTop="24dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginBottom="4dp" />
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/spinnerCourse"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:popupBackground="@color/white"
-                android:layout_marginBottom="20dp"
-                android:enabled="false"
-                android:padding="12dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select a file to upload"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/black"
-                />
-
-            <Button
-                android:id="@+id/btnPickFile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Choose File"
-                android:backgroundTint="@color/Green"
-                android:textColor="@android:color/white"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:layout_gravity="center_horizontal"
-                android:elevation="10dp"
-                android:stateListAnimator="@null" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Give suitable filename"
-                android:layout_marginTop="15dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginBottom="4dp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilFileName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="File name"
-                app:boxBackgroundMode="outline"
-                app:boxStrokeColor="@color/Green"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etFileName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:padding="12dp"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/btnUpload"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Upload"
-                android:backgroundTint="@color/Green"
-                android:textColor="@android:color/white"
-                android:padding="14dp"
-                android:enabled="false"
-                android:elevation="4dp"
-                android:stateListAnimator="@null" />
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_gravity="center"/>
-
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif"
+                android:text="Help your peers by sharing useful notes and files"
+                android:textColor="@color/textSecondary"
+                android:textSize="14sp" />
         </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="100dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="30dp"
-            android:padding="20dp"
-            android:background="@drawable/rounded_whitebg"
-            android:layout_gravity="center_horizontal">
+            android:paddingHorizontal="20dp">
 
-            <TextView
-                android:id="@+id/thankText"
+            <!-- Step 1: Select Details -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/dividerColor"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="1. Subject Details"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilSemester"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="Select Semester"
+                        app:startIconDrawable="@drawable/ic_semester">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/spinnerSemester"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCourse"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Select Course"
+                        app:startIconDrawable="@drawable/ic_repository">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/spinnerCourse"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:enabled="false"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Step 2: File Details -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/dividerColor"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="2. File Information"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPickFile"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginBottom="12dp"
+                        android:text="Choose PDF File"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_pdf"
+                        app:iconGravity="textStart"
+                        app:iconSize="24dp"
+                        app:strokeColor="@color/Green" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilFileName"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="File Name"
+                        app:startIconDrawable="@drawable/ic_name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etFileName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Thank you Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardBackgroundColor="@color/GreenLight"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_notification"
+                        app:tint="@color/Green"
+                        android:scaleType="centerInside"
+                        android:contentDescription="Notification Icon" />
+
+                    <TextView
+                        android:id="@+id/thankText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textPrimary"
+                        android:textSize="13sp"
+                        tools:text="Thank you for your contribution!" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnUpload"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:enabled="false"
+                android:text="Upload Now"
+                app:cornerRadius="12dp"
+                app:icon="@drawable/ic_upload"
+                app:iconGravity="textStart"
+                app:iconSize="24dp" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:indeterminateTint="@color/Green"
+                android:visibility="gone" />
+
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    </LinearLayout>
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

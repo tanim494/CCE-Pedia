@@ -1,117 +1,328 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    android:padding="16dp">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
             android:text="Admin Control Panel"
-            android:textSize="24sp"
-            android:textColor="?attr/colorOnSurface"
-            android:textStyle="bold"
+            android:textColor="@color/textPrimary"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="24dp"
-            android:gravity="center_horizontal" />
+            android:fontFamily="sans-serif"
+            android:text="System-wide management and resources"
+            android:textColor="@color/textSecondary"
+            android:textSize="14sp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnUserList"
+        <!-- Bento Grid for Admin Actions -->
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/Green"
-            android:text="Manage Users"
-        />
+            android:columnCount="2"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/importFaculty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/Green"
-            android:text="Import Faculty"
-            />
+            <!-- Manage Users -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnUserList"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/dividerColor"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="12dp">
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_profile"
+                        app:tint="@color/Blue"
+                        android:padding="6dp"
+                        android:background="@color/BlueLight"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Manage Users"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textPrimary"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
+            <!-- Import Faculty -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/importFaculty"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/dividerColor"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="12dp">
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_department"
+                        app:tint="@color/Green"
+                        android:padding="6dp"
+                        android:background="@color/GreenLight"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Import Faculty"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textPrimary"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Content Management"
-            android:textSize="18sp"
-            android:textColor="?attr/colorOnSurface"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="12dp" />
+            <!-- Batch Links -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnBatchLinks"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/dividerColor"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="12dp">
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_batch"
+                        app:tint="@color/accent_resources"
+                        android:padding="6dp"
+                        android:background="@color/backgroundColor"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Batch Resources"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textPrimary"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBatchLinks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Manage Batch-wise Resources"
-            android:backgroundTint="@color/Green"
-            android:layout_marginBottom="8dp"
-            android:textAllCaps="false"
-            android:textSize="16sp"
-            />
+            <!-- Drive Links -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnDriveLinks"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/dividerColor"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="12dp">
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_link"
+                        app:tint="@color/accent_community"
+                        android:padding="6dp"
+                        android:background="@color/backgroundColor"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="External Links"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textPrimary"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnDriveLinks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Manage Drive/External Links"
-            android:backgroundTint="@color/Green"
-            android:layout_marginBottom="8dp"
-            android:textAllCaps="false"
-            android:textSize="16sp"
-            />
+            <!-- Messages / Notices -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnMessages"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/dividerColor"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="12dp">
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_notification"
+                        app:tint="@color/orange"
+                        android:padding="6dp"
+                        android:background="@color/backgroundColor"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Notices"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textPrimary"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnMessages"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/Green"
-            android:text="Manage Messages / Notices"
-            android:layout_marginBottom="8dp"
-            android:textAllCaps="false"
-            android:textSize="16sp"
-            />
+            <!-- Bus Schedule -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnBusSchedule"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/dividerColor"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="12dp">
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_bus"
+                        app:tint="@color/accent_schedule"
+                        android:padding="6dp"
+                        android:background="@color/backgroundColor"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bus Schedule"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textPrimary"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Transport &amp; Configuration"
-            android:textSize="18sp"
-            android:textColor="?attr/colorOnSurface"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="12dp" />
+            <!-- App Configuration (Wide Card) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnAppConfig"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_columnSpan="2"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/dividerColor"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical"
+                    android:background="@color/white">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_semester"
+                        app:tint="@color/accent_ai"
+                        android:padding="8dp"
+                        android:background="@color/backgroundColor"
+                        android:layout_marginEnd="16dp"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="App Configuration"
+                            android:textSize="16sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/textPrimary"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="System settings and links"
+                            android:textSize="12sp"
+                            android:textColor="@color/textSecondary"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_right"
+                        app:tint="@color/textSecondary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBusSchedule"
-            android:layout_width="match_parent"
-            android:backgroundTint="@color/Green"
-            android:layout_height="wrap_content"
-            android:text="Manage Bus Schedule"
-            android:layout_marginBottom="8dp"
-            android:textAllCaps="false"
-            android:textSize="16sp"
-            />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAppConfig"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/Green"
-            android:text="Manage App Configuration"
-            android:layout_marginBottom="16dp"
-            android:textAllCaps="false"
-            android:textSize="16sp"
-            />
+        </GridLayout>
 
     </LinearLayout>
-
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

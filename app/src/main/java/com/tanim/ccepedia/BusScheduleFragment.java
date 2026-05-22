@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -70,10 +69,8 @@ public class BusScheduleFragment extends Fragment {
         loadBusScheduleFromFirestore();
 
         downloadButton.setOnClickListener(v -> {
-            String fileUrl = imageUrl;
-
-            if (fileUrl != null && !fileUrl.isEmpty()) {
-                checkPermissionAndDownload(fileUrl);
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                checkPermissionAndDownload(imageUrl);
             } else {
                 Toast.makeText(requireContext(), "Download link not available", Toast.LENGTH_SHORT).show();
             }
@@ -86,26 +83,26 @@ public class BusScheduleFragment extends Fragment {
         db.collection("resources").document("bus_schedule")
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
+                    if (!isAdded()) return;
 
                     if (documentSnapshot.exists()) {
                         imageUrl = documentSnapshot.getString("url");
                         List<Map<String, Object>> contacts = (List<Map<String, Object>>) documentSnapshot.get("contacts");
 
                         if (imageUrl != null && !imageUrl.isEmpty()) {
-
                             Glide.with(requireContext())
                                     .load(imageUrl)
                                     .listener(new RequestListener<Drawable>() {
                                         @Override
                                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                            loadingSpinner.setVisibility(View.GONE);
+                                            if (loadingSpinner != null) loadingSpinner.setVisibility(View.GONE);
                                             Toast.makeText(requireContext(), "Failed to load schedule image", Toast.LENGTH_SHORT).show();
                                             return false;
                                         }
 
                                         @Override
                                         public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                            loadingSpinner.setVisibility(View.GONE);
+                                            if (loadingSpinner != null) loadingSpinner.setVisibility(View.GONE);
                                             return false;
                                         }
                                     })
@@ -119,6 +116,7 @@ public class BusScheduleFragment extends Fragment {
                         if (contacts != null && !contacts.isEmpty()) {
                             addContactsToLayout(contacts);
                         } else {
+                            contactsLayout.removeAllViews();
                             TextView noContacts = new TextView(requireContext());
                             noContacts.setText("No important contacts found");
                             contactsLayout.addView(noContacts);
@@ -129,6 +127,7 @@ public class BusScheduleFragment extends Fragment {
                     }
                 })
                 .addOnFailureListener(e -> {
+                    if (!isAdded()) return;
                     loadingSpinner.setVisibility(View.GONE);
                     Toast.makeText(requireContext(), "Failed to load bus schedule", Toast.LENGTH_SHORT).show();
                 });
@@ -153,7 +152,6 @@ public class BusScheduleFragment extends Fragment {
                 contactView.setOnClickListener(v -> {
                     Intent callIntent = new Intent(Intent.ACTION_DIAL);
                     callIntent.setData(Uri.parse("tel:" + phone));
-                    Toast.makeText(requireContext(), "Dialing " + name, Toast.LENGTH_SHORT).show();
                     startActivity(callIntent);
                 });
 
@@ -162,7 +160,6 @@ public class BusScheduleFragment extends Fragment {
         }
     }
 
-
     private void checkPermissionAndDownload(String fileUrl) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q &&
                 ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -170,24 +167,18 @@ public class BusScheduleFragment extends Fragment {
             ActivityCompat.requestPermissions(requireActivity(),
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     REQUEST_WRITE_STORAGE);
-            this.imageUrl = fileUrl;
         } else {
-            new DownloadImageTask().execute(fileUrl);
+            downloadFile(fileUrl);
         }
     }
 
-
-
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         if (requestCode == REQUEST_WRITE_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (imageUrl != null) {
-                    new DownloadImageTask().execute(imageUrl);
+                    downloadFile(imageUrl);
                 }
             } else {
                 Toast.makeText(requireContext(), "Permission denied. Cannot download file.", Toast.LENGTH_SHORT).show();
@@ -195,108 +186,73 @@ public class BusScheduleFragment extends Fragment {
         }
     }
 
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Boolean> {
-
-        private String savedFilePath = null;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(requireContext(), "Starting download...", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected Boolean doInBackground(String... urls) {
-            String urlToDownload = urls[0];
-
+    private void downloadFile(String urlString) {
+        Toast.makeText(requireContext(), "Starting download...", Toast.LENGTH_SHORT).show();
+        new Thread(() -> {
+            boolean success = false;
+            String savedFilePath = null;
             try {
-                URL url = new URL(urlToDownload);
+                URL url = new URL(urlString);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
                 if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    return false;
-                }
-
-                InputStream input = connection.getInputStream();
-
-                String extension = ".jpg";
-                if (urlToDownload.contains(".")) {
-                    extension = urlToDownload.substring(urlToDownload.lastIndexOf("."));
-                }
-
-                String mimeType = "image/" + extension.replace(".", "");
-                if (extension.equalsIgnoreCase(".pdf")) {
-                    mimeType = "application/pdf";
-                }
-
-                String fileName = "bus_schedule_" + System.currentTimeMillis() + extension;
-
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-                    ContentValues values = new ContentValues();
-                    values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
-                    values.put(MediaStore.Downloads.MIME_TYPE, mimeType);
-                    values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/IIUC Pedia/Bus Schedule");
-
-                    Uri uri = requireContext().getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
-
-                    if (uri != null) {
-                        OutputStream output = requireContext().getContentResolver().openOutputStream(uri);
-                        byte[] buffer = new byte[4096];
-                        int bytesRead;
-                        while ((bytesRead = input.read(buffer)) != -1) {
-                            output.write(buffer, 0, bytesRead);
-                        }
-                        output.close();
-                        input.close();
-                        savedFilePath = "Downloads/IIUC Pedia/Bus Schedule/" + fileName;
-                        return true;
-                    } else {
-                        return false;
-                    }
-
+                    success = false;
                 } else {
-                    File downloadsFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                    File iiucPediaFolder = new File(downloadsFolder, "IIUC Pedia/Bus Schedule");
-                    if (!iiucPediaFolder.exists()) iiucPediaFolder.mkdirs();
+                    InputStream input = connection.getInputStream();
+                    String extension = urlString.contains(".") ? urlString.substring(urlString.lastIndexOf(".")) : ".jpg";
+                    String fileName = "bus_schedule_" + System.currentTimeMillis() + extension;
 
-                    File file = new File(iiucPediaFolder, fileName);
-                    savedFilePath = file.getAbsolutePath();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        ContentValues values = new ContentValues();
+                        values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
+                        values.put(MediaStore.Downloads.MIME_TYPE, extension.equalsIgnoreCase(".pdf") ? "application/pdf" : "image/jpeg");
+                        values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/IIUC Pedia/Bus Schedule");
 
-                    FileOutputStream output = new FileOutputStream(file);
-                    byte[] buffer = new byte[4096];
-                    int bytesRead;
-                    while ((bytesRead = input.read(buffer)) != -1) {
-                        output.write(buffer, 0, bytesRead);
+                        Uri uri = requireContext().getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
+                        if (uri != null) {
+                            try (OutputStream output = requireContext().getContentResolver().openOutputStream(uri)) {
+                                byte[] buffer = new byte[4096];
+                                int bytesRead;
+                                while ((bytesRead = input.read(buffer)) != -1) {
+                                    output.write(buffer, 0, bytesRead);
+                                }
+                            }
+                            savedFilePath = "Downloads/IIUC Pedia/Bus Schedule/" + fileName;
+                            success = true;
+                        }
+                    } else {
+                        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "IIUC Pedia/Bus Schedule");
+                        if (!folder.exists()) folder.mkdirs();
+                        File file = new File(folder, fileName);
+                        try (FileOutputStream output = new FileOutputStream(file)) {
+                            byte[] buffer = new byte[4096];
+                            int bytesRead;
+                            while ((bytesRead = input.read(buffer)) != -1) {
+                                output.write(buffer, 0, bytesRead);
+                            }
+                        }
+                        savedFilePath = file.getAbsolutePath();
+                        success = true;
                     }
-
-                    output.close();
                     input.close();
-
-                    if (file.exists() && file.length() > 0) {
-                        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                        mediaScanIntent.setData(Uri.fromFile(file));
-                        requireContext().sendBroadcast(mediaScanIntent);
-                    }
-
-                    return true;
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
-                return false;
+                success = false;
             }
-        }
 
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            if (success) {
-                Toast.makeText(requireContext(), "Downloaded to: " + savedFilePath, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(requireContext(), "Failed to download bus schedule. Check connection or URL.", Toast.LENGTH_SHORT).show();
+            final boolean finalSuccess = success;
+            final String finalPath = savedFilePath;
+            if (isAdded()) {
+                requireActivity().runOnUiThread(() -> {
+                    if (finalSuccess) {
+                        Toast.makeText(requireContext(), "Downloaded to: " + finalPath, Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(requireContext(), "Failed to download bus schedule.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        }
+        }).start();
     }
 }

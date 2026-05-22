@@ -46,7 +46,7 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.Semest
     }
 
     public class SemesterViewHolder extends RecyclerView.ViewHolder {
-        MaterialCardView cardView;
+        MaterialCardView cardView, numberCard;
         TextView tvNumber;
         TextView tvStatusTag;
         TextView tvTitle;
@@ -54,6 +54,7 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.Semest
         public SemesterViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardSemester);
+            numberCard = itemView.findViewById(R.id.cv_number_container);
             tvNumber = itemView.findViewById(R.id.tv_semester_number);
             tvStatusTag = itemView.findViewById(R.id.tv_status_tag);
             tvTitle = itemView.findViewById(R.id.tv_semester_title);
@@ -70,32 +71,40 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.Semest
         }
 
         private void applyStatusColors(String status) {
-            int numberBgColor;
+            int numberCardColor;
+            int numberTextColor;
             int tagTextColor;
             int tagBgColor;
 
             switch (status) {
                 case "Completed":
-                    numberBgColor = Color.parseColor("#4ade80");
-                    tagTextColor = Color.parseColor("#15803d");
-                    tagBgColor = Color.parseColor("#dcfce7");
+                    numberCardColor = Color.parseColor("#E8F5E9"); // Light Green
+                    numberTextColor = Color.parseColor("#2E7D32"); // Green
+                    tagTextColor = Color.parseColor("#2E7D32");
+                    tagBgColor = Color.parseColor("#E8F5E9");
                     break;
                 case "Current":
-                    numberBgColor = Color.parseColor("#3b82f6");
-                    tagTextColor = Color.parseColor("#2d69eb");
-                    tagBgColor = Color.parseColor("#dbeafe");
+                    numberCardColor = Color.parseColor("#E3F2FD"); // Light Blue
+                    numberTextColor = Color.parseColor("#1565C0"); // Blue
+                    tagTextColor = Color.parseColor("#1565C0");
+                    tagBgColor = Color.parseColor("#E3F2FD");
                     break;
                 case "Upcoming":
                 default:
-                    numberBgColor = Color.parseColor("#9ca3af");
-                    tagTextColor = Color.parseColor("#4b5563");
-                    tagBgColor = Color.parseColor("#f3f4f6");
+                    numberCardColor = Color.parseColor("#F5F7F9"); // Light Gray
+                    numberTextColor = Color.parseColor("#757575"); // Text Secondary
+                    tagTextColor = Color.parseColor("#757575");
+                    tagBgColor = Color.parseColor("#F5F7F9");
                     break;
             }
 
-            tvNumber.getBackground().setTint(numberBgColor);
+            numberCard.setCardBackgroundColor(numberCardColor);
+            tvNumber.setTextColor(numberTextColor);
+            
             tvStatusTag.setTextColor(tagTextColor);
-            tvStatusTag.getBackground().setTint(tagBgColor);
+            if (tvStatusTag.getBackground() != null) {
+                tvStatusTag.getBackground().setTint(tagBgColor);
+            }
         }
     }
 }

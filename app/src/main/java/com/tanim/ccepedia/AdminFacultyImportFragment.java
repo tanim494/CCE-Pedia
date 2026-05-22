@@ -5,15 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,9 +27,9 @@ import java.util.stream.Collectors;
 
 public class AdminFacultyImportFragment extends Fragment {
 
-    private Spinner spinnerDepartment;
+    private AutoCompleteTextView spinnerDepartment;
     private EditText editFacultyData;
-    private Button btnRunImport;
+    private MaterialButton btnRunImport;
 
     private FirebaseFirestore db;
     private DepartmentRepository departmentRepository;
@@ -64,8 +64,7 @@ public class AdminFacultyImportFragment extends Fragment {
                             .collect(Collectors.toList());
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                            getContext(), android.R.layout.simple_spinner_item, departmentDisplayList);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            getContext(), R.layout.dropdown_item, departmentDisplayList);
                     spinnerDepartment.setAdapter(adapter);
                 })
                 .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to load departments.", Toast.LENGTH_SHORT).show());
@@ -84,7 +83,7 @@ public class AdminFacultyImportFragment extends Fragment {
 
     private void confirmAndRunImport() {
         String data = editFacultyData.getText().toString().trim();
-        String selectedDeptCode = spinnerDepartment.getSelectedItem().toString();
+        String selectedDeptCode = spinnerDepartment.getText().toString();
 
         if (data.isEmpty()) {
             Toast.makeText(getContext(), "Paste data into the text box first.", Toast.LENGTH_SHORT).show();

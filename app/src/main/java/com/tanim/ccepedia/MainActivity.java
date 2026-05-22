@@ -2,6 +2,7 @@ package com.tanim.ccepedia;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -12,9 +13,11 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.widget.TextView;
+import android.view.MenuItem;
 import android.Manifest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -25,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.activity.OnBackPressedCallback;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import com.tanim.ccepedia.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -34,11 +38,7 @@ import com.google.firebase.firestore.ListenerRegistration;
 
 
 public class MainActivity extends AppCompatActivity {
-    BottomNavigationView bottomNavigation;
-
-    private TextView userNameTextView;
-    private TextView userId;
-    private ConstraintLayout profileHeader;
+    private ActivityMainBinding binding;
 
     String updateLink;
     float databaseVersion;
@@ -53,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         checkForUpdate();
         checkForNotificationPermission();
         FirebaseMessaging.getInstance().subscribeToTopic("notification");
 
-        initializeViews();
         setUserData();
         setupDatabaseListeners();
         setupClickListeners();
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().popBackStack();
                 }
                 else {
-                    bottomNavigation.setSelectedItemId(R.id.nv_home);
+                    binding.bottomNavigation.setSelectedItemId(R.id.nv_home);
 
                     FragmentTransaction tran = getSupportFragmentManager().beginTransaction();
                     tran.setCustomAnimations(android.R.anim.fade_in,
@@ -141,20 +141,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void initializeViews() {
-        userNameTextView = findViewById(R.id.userNameTextView);
-        userId = findViewById(R.id.userId);
-        profileHeader = findViewById(R.id.customHeader);
-
-        bottomNavigation = findViewById(R.id.bottomNavigation);
-    }
-
     @SuppressLint("SetTextI18n")
     private void setUserData() {
         UserData user = UserData.getInstance();
 
-        userNameTextView.setText(user.getName());
-        userId.setText(user.getStudentId() + ", " + user.getDepartmentName() + " (" + user.getSemester() + " Semester)");
+        binding.userNameTextView.setText(user.getName());
+        binding.userId.setText(user.getStudentId() + ", " + user.getDepartmentName() + " (" + user.getSemester() + " Semester)");
         userRole = user.getRole();
     }
 
@@ -175,13 +167,29 @@ public class MainActivity extends AppCompatActivity {
                     databaseVersion = version.floatValue();
                 }
 
-                userVersion = Math.round(Float.parseFloat(BuildConfig.VERSION_NAME) * 100);
+                userVersion = Math.round(Float.parseFloat(com.tanim.ccepedia.BuildConfig.VERSION_NAME) * 100);
             }
         });
     }
 
     private void setupClickListeners() {
-        profileHeader.setOnClickListener(view -> openProfileFragment());
+        binding.customHeader.setOnClickListener(view -> openProfileFragment());
+        binding.ivAppLogo.setOnClickListener(view -> toggleTheme());
+    }
+
+    private void toggleTheme() {
+        SharedPreferences sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE);
+        boolean isDarkMode = sharedPreferences.getBoolean("DarkMode", false);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor.putBoolean("DarkMode", false);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor.putBoolean("DarkMode", true);
+        }
+        editor.apply();
     }
 
     @SuppressLint("SetTextI18n")
@@ -210,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         tran.commit();
 
 
-        bottomNavigation.setOnItemSelectedListener(item -> {
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
 
             FragmentTransaction tran1 = getSupportFragmentManager().beginTransaction();
             tran1.setCustomAnimations(android.R.anim.fade_in,
@@ -218,19 +226,15 @@ public class MainActivity extends AppCompatActivity {
                     android.R.anim.fade_in,
                     android.R.anim.fade_out);
 
-            switch (item.getItemId()) {
-                case R.id.nv_home:
-                    tran1.replace(R.id.Midcontainer, new HomeFragment());
-                    break;
-                case R.id.nv_faculty:
-                    tran1.replace(R.id.Midcontainer, new FacultyFragment());
-                    break;
-                case R.id.nv_resource:
-                    tran1.replace(R.id.Midcontainer, new ResourcesFragment());
-                    break;
-                case R.id.nv_author:
-                    tran1.replace(R.id.Midcontainer, new DeveloperFragment());
-                    break;
+            int itemId = item.getItemId();
+            if (itemId == R.id.nv_home) {
+                tran1.replace(R.id.Midcontainer, new HomeFragment());
+            } else if (itemId == R.id.nv_faculty) {
+                tran1.replace(R.id.Midcontainer, new FacultyFragment());
+            } else if (itemId == R.id.nv_resource) {
+                tran1.replace(R.id.Midcontainer, new ResourcesFragment());
+            } else if (itemId == R.id.nv_author) {
+                tran1.replace(R.id.Midcontainer, new DeveloperFragment());
             }
 
             tran1.commit();

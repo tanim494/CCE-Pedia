@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import androidx.appcompat.widget.SearchView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 public class AdminUserListFragment extends Fragment {
 
-    private Spinner spinnerGender, spinnerSemester, spinnerRole, spinnerDepartment;
+    private AutoCompleteTextView spinnerGender, spinnerSemester, spinnerRole, spinnerDepartment;
     private SearchView searchView;
     private RecyclerView recyclerViewUsers;
     private UserListAdapter userAdapter;
@@ -110,20 +110,12 @@ public class AdminUserListFragment extends Fragment {
 
         loadDepartmentOptions(itemLayout);
 
-        AdapterView.OnItemSelectedListener filterListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                applyFiltersAndSearch();
-            }
+        AdapterView.OnItemClickListener filterListener = (parent, view1, position, id1) -> applyFiltersAndSearch();
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        };
-
-        spinnerGender.setOnItemSelectedListener(filterListener);
-        spinnerSemester.setOnItemSelectedListener(filterListener);
-        spinnerRole.setOnItemSelectedListener(filterListener);
-        spinnerDepartment.setOnItemSelectedListener(filterListener);
+        spinnerGender.setOnItemClickListener(filterListener);
+        spinnerSemester.setOnItemClickListener(filterListener);
+        spinnerRole.setOnItemClickListener(filterListener);
+        spinnerDepartment.setOnItemClickListener(filterListener);
     }
 
     private void loadDepartmentOptions(int itemLayout) {
@@ -146,21 +138,17 @@ public class AdminUserListFragment extends Fragment {
     }
 
     private void applyFiltersAndSearch() {
-        Object genderSelection = spinnerGender.getSelectedItem();
-        String gender = (genderSelection != null) ? genderSelection.toString() : null;
-        if ("All".equals(gender)) gender = null;
+        String gender = spinnerGender.getText().toString().trim();
+        if ("All".equals(gender) || gender.isEmpty()) gender = null;
 
-        Object semesterSelection = spinnerSemester.getSelectedItem();
-        String semester = (semesterSelection != null) ? semesterSelection.toString() : null;
-        if ("All".equals(semester)) semester = null;
+        String semester = spinnerSemester.getText().toString().trim();
+        if ("All".equals(semester) || semester.isEmpty()) semester = null;
 
-        Object roleSelection = spinnerRole.getSelectedItem();
-        String role = (roleSelection != null) ? roleSelection.toString() : null;
-        if ("All".equals(role)) role = null;
+        String role = spinnerRole.getText().toString().trim();
+        if ("All".equals(role) || role.isEmpty()) role = null;
 
-        Object departmentSelection = spinnerDepartment.getSelectedItem();
-        String departmentFilter = (departmentSelection != null) ? departmentSelection.toString() : null;
-        if ("All".equals(departmentFilter)) departmentFilter = null;
+        String departmentFilter = spinnerDepartment.getText().toString().trim();
+        if ("All".equals(departmentFilter) || departmentFilter.isEmpty()) departmentFilter = null;
 
         loadUsers(gender, semester, role, departmentFilter);
 

@@ -1,8 +1,10 @@
 package com.tanim.ccepedia;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -25,10 +27,19 @@ public class LoadingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        SharedPreferences sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE);
+        boolean isDarkMode = sharedPreferences.getBoolean("DarkMode", false);
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+
+        TextView versionText = findViewById(R.id.appVersionText);
+        versionText.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

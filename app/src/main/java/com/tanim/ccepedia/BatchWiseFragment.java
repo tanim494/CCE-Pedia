@@ -28,6 +28,7 @@ public class BatchWiseFragment extends Fragment {
     private List<DriveLink> linkList;
     private List<DriveLink> fullLinkList;
     private androidx.appcompat.widget.SearchView searchView;
+    private View searchCard;
     private TextView emptyStateTextView;
 
     public static BatchWiseFragment newInstance(String gender) {
@@ -54,6 +55,7 @@ public class BatchWiseFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         searchView = view.findViewById(R.id.searchViewBatchResources);
+        searchCard = view.findViewById(R.id.searchCard);
         emptyStateTextView = view.findViewById(R.id.emptyStateBatchText);
 
         linkList = new ArrayList<>();
@@ -130,10 +132,12 @@ public class BatchWiseFragment extends Fragment {
 
                     if (fullLinkList.isEmpty()) {
                         recyclerView.setVisibility(View.GONE);
+                        if (searchCard != null) searchCard.setVisibility(View.GONE);
                         emptyStateTextView.setText("No batch resources found for the " + deptCode + " department.");
                         emptyStateTextView.setVisibility(View.VISIBLE);
                     } else {
                         recyclerView.setVisibility(View.VISIBLE);
+                        if (searchCard != null) searchCard.setVisibility(View.VISIBLE);
                         emptyStateTextView.setVisibility(View.GONE);
                     }
                 })

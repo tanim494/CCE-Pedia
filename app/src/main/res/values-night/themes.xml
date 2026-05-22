@@ -1,17 +1,20 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="Theme.IIUCPedia" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">#395E3B</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">#00BCD4</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+    <style name="Theme.IIUCPedia" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#2E7D32</item>
+        <item name="colorPrimaryVariant">#1B5E20</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">#81C784</item>
+        <item name="colorSecondaryVariant">#2E7D32</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">#C8779577</item>
-        <!-- Customize your theme here. -->
-    </style>
 
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">#E1E1E1</item>
+        <item name="backgroundColor">@color/backgroundColor</item>
+
+        <item name="android:statusBarColor">@color/backgroundColor</item>
+        <item name="android:navigationBarColor">@color/backgroundColor</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+    </style>
 </resources>

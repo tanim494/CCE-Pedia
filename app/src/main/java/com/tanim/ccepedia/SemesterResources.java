@@ -55,10 +55,17 @@ public class SemesterResources extends Fragment implements SemesterAdapter.OnSem
         List<Semester> list = new ArrayList<>();
 
         int currentSemesterNumber;
-        try {
-            String currentSemesterString = UserData.getInstance().getSemester();
-            currentSemesterNumber = Integer.parseInt(currentSemesterString.replaceAll("[^0-9]", ""));
-        } catch (Exception e) {
+        String currentSemesterString = UserData.getInstance().getSemester();
+        
+        if (currentSemesterString != null && currentSemesterString.equalsIgnoreCase("Outgoing")) {
+            currentSemesterNumber = 9; // Higher than any semester count to mark all as completed
+        } else if (currentSemesterString != null) {
+            try {
+                currentSemesterNumber = Integer.parseInt(currentSemesterString.replaceAll("[^0-9]", ""));
+            } catch (Exception e) {
+                currentSemesterNumber = 1;
+            }
+        } else {
             currentSemesterNumber = 1;
         }
 

@@ -9,58 +9,72 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/customHeader"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:background="@color/white"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    android:elevation="2dp">
-
-    <ImageView
-        android:id="@+id/profileImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:tint="@color/Green"
-        android:src="@drawable/ic_profile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:contentDescription="User Profile" />
-
-    <LinearLayout
-        android:id="@+id/profileTextContainer"
-        android:layout_width="0dp"
+        android:id="@+id/customHeader"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="12dp"
-        app:layout_constraintStart_toEndOf="@id/profileImage"
-        app:layout_constraintTop_toTopOf="@id/profileImage"
-        app:layout_constraintBottom_toBottomOf="@id/profileImage"
-        >
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:elevation="4dp">
 
-        <TextView
-            android:id="@+id/userNameTextView"
-            android:layout_width="wrap_content"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profileImage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_profile"
+            app:tint="@color/Green"
+            android:padding="8dp"
+            android:background="@color/GreenLight"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="User Profile" />
+
+        <LinearLayout
+            android:id="@+id/profileTextContainer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="User Name"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@id/profileImage"
+            app:layout_constraintTop_toTopOf="@id/profileImage"
+            app:layout_constraintBottom_toBottomOf="@id/profileImage"
+            app:layout_constraintEnd_toStartOf="@+id/iv_app_logo"
+            >
 
-        <TextView
-            android:id="@+id/userId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="E221013"
-            android:textSize="14sp"
-            android:textColor="#757575" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/userNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Name"
+                android:textSize="18sp"
+                android:textColor="@color/textPrimary"
+                android:fontFamily="sans-serif-medium" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/userId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E221013"
+                android:textSize="14sp"
+                android:textColor="@color/textSecondary" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_app_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_launcher_round"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

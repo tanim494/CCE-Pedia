@@ -1,145 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:layout_centerInParent="true"
-    android:gravity="center">
-    <RelativeLayout
-        android:layout_centerInParent="true"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="4dp"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
-        <androidx.cardview.widget.CardView
-            app:cardCornerRadius="15dp"
-            app:cardElevation="10dp"
-            app:cardUseCompatPadding="true"
-            card_view:cardCornerRAdius="5dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            >
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_marginTop="23dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_marginTop="15dp"
-                    android:text="Ahsanul Karim Tanim"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/GreenLight"
+                app:strokeWidth="2dp">
+
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_marginTop="2dp"
-                    android:text="CCE Batch - 27"
-                    android:textSize="13sp"
-                    android:textStyle="normal"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:textColor="#5C5A5A"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <View
-                    android:background="#79D6D1D1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/dev_dp"
+                    android:contentDescription="Developer Photo" />
+            </com.google.android.material.card.MaterialCardView>
 
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:id="@+id/facebookButton">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_fb"
-                            android:importantForAccessibility="no" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Facebook"
-                            android:gravity="center"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
-                            android:textColor="#636262"/>
-                    </LinearLayout>
-                    <View
-                        android:background="#79D6D1D1"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Ahsanul Karim Tanim"
+                android:textColor="@color/textPrimary"
+                android:textSize="22sp" />
 
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:id="@+id/githubButton">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_github"
-                            app:tint="@color/black"
-                            android:importantForAccessibility="no" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="GitHub"
-                            android:gravity="center"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
-                            android:textColor="#636262"/>
-                    </LinearLayout>
-                    <View
-                        android:background="#79D6D1D1"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif"
+                android:text="Developer • CCE Batch 27"
+                android:textColor="@color/Green"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:id="@+id/linkedinButton">
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            app:tint="@color/black"
-                            android:src="@drawable/ic_linkedin"
-                            android:importantForAccessibility="no" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Linkedin"
-                            android:gravity="center"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
-                            android:textColor="#636262"/>
-                    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="24dp"
+            android:background="@color/dividerColor" />
 
-                </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            </LinearLayout>
+            <!-- GitHub Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/githubButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/dividerColor"
+                app:strokeWidth="1dp">
 
-        </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_github"
+                    app:tint="@color/textPrimary" />
+            </com.google.android.material.card.MaterialCardView>
 
-    </RelativeLayout>
-</RelativeLayout>
+            <!-- LinkedIn Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/linkedinButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/dividerColor"
+                app:strokeWidth="1dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_linkedin"
+                    app:tint="@color/Blue" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Facebook Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/facebookButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/dividerColor"
+                app:strokeWidth="1dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_fb"
+                    app:tint="@color/Blue" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

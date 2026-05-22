@@ -1,46 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:background="@color/backgroundColor">
 
-    <ImageView
-        android:id="@+id/logoImageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:importantForAccessibility="no"
-        app:srcCompat="@drawable/logo"
-        app:tint="@color/Green"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:scaleType="fitCenter"/>
-
-    <ProgressBar
-        android:id="@+id/loadingProgressBar"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/logoImageView"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"
-        android:indeterminateTint="@color/Green"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            app:cardCornerRadius="70dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/GreenLight"
+            app:strokeWidth="2dp">
+
+            <ImageView
+                android:id="@+id/logoImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:padding="28dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/logo"
+                app:tint="@color/Green"
+                tools:ignore="ContentDescription" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="sans-serif-black"
+            android:text="IIUC Pedia"
+            android:textColor="@color/textPrimary"
+            android:textSize="28sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif"
+            android:text="Your IIUC Companion"
+            android:textColor="@color/textSecondary"
+            android:textSize="14sp"
+            android:letterSpacing="0.1" />
+
+        <ProgressBar
+            android:id="@+id/loadingProgressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="48dp"
+            android:indeterminateTint="@color/Green" />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Developed By Tanim (CCE B-27)"
-        android:textColor="@color/Green"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:shadowColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="sans-serif-medium"
+        android:text="Developed by Tanim (CCE Batch - 27)"
+        android:textColor="@color/textSecondary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/appVersionText"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="26dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="28dp" />
+
+    <TextView
+        android:id="@+id/appVersionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="sans-serif"
+        android:text="Version 1.0.0"
+        android:textColor="@color/dividerColor"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,16 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.github.barteksc.pdfviewer.PDFView;
-import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,6 +42,8 @@ public class PdfViewerFragment extends Fragment {
     private String fileUrl, fileName, uploaderStudentId;
     private PDFView pdfView;
     private ProgressBar loadingSpinner;
+    private TextView tvPageCount;
+    private FloatingActionButton fabAction, fabShare;
 
     private Uri localPdfUri = null;
 
@@ -62,18 +66,28 @@ public class PdfViewerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pdf_viewer, container, false);
 
         pdfView = view.findViewById(R.id.pdfView);
-        MaterialButton downloadButton = view.findViewById(R.id.downloadButton);
-        MaterialButton shareButton = view.findViewById(R.id.shareButton);
         loadingSpinner = view.findViewById(R.id.loadingSpinner);
+        tvPageCount = view.findViewById(R.id.tvPageCount);
+        fabAction = view.findViewById(R.id.fabAction);
+        fabShare = view.findViewById(R.id.fabShare);
+        Toolbar toolbar = view.findViewById(R.id.pdfToolbar);
 
         if (getArguments() != null) {
             fileUrl = getArguments().getString(ARG_URL);
             fileName = getArguments().getString(ARG_FILENAME);
             uploaderStudentId = getArguments().getString(ARG_UPLOADER_STUDENT_ID);
+
+            if (toolbar != null && fileName != null) {
+                toolbar.setTitle(fileName);
+            }
             downloadAndDisplayPdf(fileUrl);
         }
 
-        downloadButton.setOnClickListener(v -> {
+        if (toolbar != null) {
+            toolbar.setNavigationOnClickListener(v -> requireActivity().getOnBackPressedDispatcher().onBackPressed());
+        }
+
+        fabAction.setOnClickListener(v -> {
             if (fileUrl != null && !fileUrl.isEmpty()) {
                 checkPermissionAndDownload(fileUrl);
             } else {
@@ -81,7 +95,7 @@ public class PdfViewerFragment extends Fragment {
             }
         });
 
-        shareButton.setOnClickListener(v -> {
+        fabShare.setOnClickListener(v -> {
             if (localPdfUri != null) {
                 sharePdfFile();
             } else {
@@ -143,7 +157,15 @@ public class PdfViewerFragment extends Fragment {
                         .enableSwipe(true)
                         .swipeHorizontal(false)
                         .enableDoubletap(true)
-                        .onLoad(nbPages -> loadingSpinner.setVisibility(View.GONE))
+                        .onPageChange((page, pageCount) -> {
+                            if (tvPageCount != null && isAdded()) {
+                                tvPageCount.setText(getString(R.string.pdf_page_count, page + 1, pageCount));
+                            }
+                        })
+                        .onLoad(nbPages -> {
+                            loadingSpinner.setVisibility(View.GONE);
+                            if (fabShare != null) fabShare.setVisibility(View.VISIBLE);
+                        })
                         .onError(t -> {
                             loadingSpinner.setVisibility(View.GONE);
                             Toast.makeText(getContext(), "Failed to render PDF: " + t.getMessage(), Toast.LENGTH_LONG).show();

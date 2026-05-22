@@ -65,9 +65,25 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.FileViewHolder
         holder.tvFileName.setText(item.getFileName());
 
         String uploaderText = item.getUploader() != null && !item.getUploader().isEmpty()
-                ? "Uploader: " + item.getUploader()
-                : "Uploader unknown";
+                ? "Contributed by " + item.getUploader()
+                : "Public Resource";
         holder.tvUploader.setText(uploaderText);
+
+        // Delete button visibility logic
+        String userRole = UserData.getInstance().getRole();
+        String currentUserId = UserData.getInstance().getStudentId();
+
+        boolean canDelete = false;
+        if ("admin".equalsIgnoreCase(userRole)) {
+            canDelete = true;
+        } else if ("moderator".equalsIgnoreCase(userRole)) {
+            if (currentUserId != null && item.getUploaderStudentId() != null &&
+                    currentUserId.equalsIgnoreCase(item.getUploaderStudentId())) {
+                canDelete = true;
+            }
+        }
+
+        holder.btnDelete.setVisibility(canDelete ? View.VISIBLE : View.GONE);
 
         holder.itemView.setOnClickListener(v -> listener.onItemClick(item));
         holder.btnDelete.setOnClickListener(v -> listener.onDeleteClick(item));

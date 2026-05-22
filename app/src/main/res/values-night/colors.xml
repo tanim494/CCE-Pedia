@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="backgroundColor">#121212</color>
+    <color name="surfaceColor">#1E1E1E</color>
+    <color name="white">#1E1E1E</color>
+    <color name="textPrimary">#E1E1E1</color>
+    <color name="textSecondary">#B0B0B0</color>
+    <color name="dividerColor">#2C2C2C</color>
+    <color name="GreenLight">#1B2E1C</color>
+    <color name="BlueLight">#1A237E</color>
+</resources>

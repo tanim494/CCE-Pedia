@@ -8,42 +8,38 @@
     android:paddingEnd="8dp"
     android:paddingVertical="4dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_message_sent"
-        android:paddingTop="8dp"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:paddingBottom="4dp" android:elevation="1dp"
+        android:paddingTop="10dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="10dp"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constrainedWidth="true"
-        android:layout_marginTop="2dp">
+        app:layout_constrainedWidth="true">
 
         <TextView
             android:id="@+id/text_message_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="6dp" android:maxWidth="250dp" android:text="My message text here. Sent by me."
+            android:text="My message text here."
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="15sp"
+            android:lineSpacingExtra="2dp" />
 
         <TextView
             android:id="@+id/text_message_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_message_body"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="2dp" android:text="Oct 6, 01:58 AM"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:text="01:58 AM"
             android:textSize="10sp"
-            android:textColor="#CCCCCC"
-            android:paddingEnd="6dp"
-            android:paddingStart="6dp"
-            android:elevation="2dp" />
+            android:textColor="#E0E0E0" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,7 +25,10 @@ public class DriveLinksFragment extends Fragment {
     private RecyclerView recyclerView;
     private DriveLinkAdapter adapter;
     private List<DriveLink> driveLinks;
+    private List<DriveLink> fullLinkList;
     private TextView emptyStateTextView;
+    private androidx.appcompat.widget.SearchView searchView;
+    private View searchCard;
 
     @Nullable
     @Override
@@ -38,6 +41,7 @@ public class DriveLinksFragment extends Fragment {
         emptyStateTextView = view.findViewById(R.id.emptyStateLinksText);
 
         driveLinks = new ArrayList<>();
+        fullLinkList = new ArrayList<>();
         adapter = new DriveLinkAdapter(driveLinks);
         recyclerView.setAdapter(adapter);
 
@@ -79,18 +83,23 @@ public class DriveLinksFragment extends Fragment {
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         String title = doc.getString("title");
                         String url = doc.getString("url");
-                        driveLinks.add(new DriveLink(title, url));
+                        fullLinkList.add(new DriveLink(title, url));
                     }
 
+                    driveLinks.clear();
+                    driveLinks.addAll(fullLinkList);
+                    adapter.setFullList(fullLinkList);
                     adapter.notifyDataSetChanged();
 
-                    if (driveLinks.isEmpty()) {
+                    if (fullLinkList.isEmpty()) {
                         emptyStateTextView.setText("No links found for the " + deptCode + " department.");
                         emptyStateTextView.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
+                        if (searchCard != null) searchCard.setVisibility(View.GONE);
                     } else {
                         recyclerView.setVisibility(View.VISIBLE);
                         emptyStateTextView.setVisibility(View.GONE);
+                        if (searchCard != null) searchCard.setVisibility(View.VISIBLE);
                     }
                 })
                 .addOnFailureListener(e -> {

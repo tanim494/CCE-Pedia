@@ -15,7 +15,6 @@ import android.widget.AutoCompleteTextView;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
 
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,10 +27,10 @@ import java.util.stream.Collectors;
 public class ProfileFragment extends Fragment {
 
     private TextView nameText, idText, emailText, phoneText, semesterText, viewCountText, departmentText;
-    private TextInputLayout nameInputLayout, idInputLayout, phoneInputLayout, semesterInputLayout, departmentInputLayout;
     private EditText nameEdit, idEdit, phoneEdit;
     private AutoCompleteTextView semesterEdit, departmentEdit;
     private Button editButton, logoutButton, saveButton;
+    private View academicInfoCard, contactInfoCard, statsCard, editModeLayout;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -52,13 +51,6 @@ public class ProfileFragment extends Fragment {
         viewCountText = view.findViewById(R.id.viewCountText);
         departmentText = view.findViewById(R.id.departmentText);
 
-        nameInputLayout = view.findViewById(R.id.nameInputLayout);
-        idInputLayout = view.findViewById(R.id.idInputLayout);
-        phoneInputLayout = view.findViewById(R.id.phoneInputLayout);
-        semesterInputLayout = view.findViewById(R.id.semesterInputLayout);
-        departmentInputLayout = view.findViewById(R.id.departmentInputLayout);
-
-
         nameEdit = view.findViewById(R.id.nameEdit);
         idEdit = view.findViewById(R.id.idEdit);
         phoneEdit = view.findViewById(R.id.phoneEdit);
@@ -68,6 +60,11 @@ public class ProfileFragment extends Fragment {
         editButton = view.findViewById(R.id.editButton);
         logoutButton = view.findViewById(R.id.logoutButton);
         saveButton = view.findViewById(R.id.saveButton);
+
+        academicInfoCard = view.findViewById(R.id.academicInfoCard);
+        contactInfoCard = view.findViewById(R.id.contactInfoCard);
+        statsCard = view.findViewById(R.id.statsCard);
+        editModeLayout = view.findViewById(R.id.editModeLayout);
 
         editButton.setOnClickListener(v -> switchToEditMode());
         saveButton.setOnClickListener(v -> saveUserData());
@@ -84,11 +81,11 @@ public class ProfileFragment extends Fragment {
                         UserData.getInstance().getRole().equalsIgnoreCase("moderator"));
 
         if (canViewMetrics) {
-            viewCountText.setVisibility(View.VISIBLE);
+            statsCard.setVisibility(View.VISIBLE);
             long views = UserData.getInstance().getViewCount();
             viewCountText.setText("Total File Views: " + String.valueOf(views));
         } else {
-            viewCountText.setVisibility(View.GONE);
+            statsCard.setVisibility(View.GONE);
         }
 
         return view;
@@ -99,10 +96,10 @@ public class ProfileFragment extends Fragment {
 
         nameText.setText(user.getName());
         idText.setText("ID: " + user.getStudentId());
-        emailText.setText("Email: " + user.getEmail());
+        emailText.setText(user.getEmail());
         phoneText.setText("Phone: " + user.getPhone());
         semesterText.setText("Semester: " + user.getSemester());
-        departmentText.setText("Department: " + user.getDepartmentName());
+        departmentText.setText("Dept: " + user.getDepartmentName());
 
         nameEdit.setText(user.getName());
         idEdit.setText(user.getStudentId());
@@ -112,17 +109,11 @@ public class ProfileFragment extends Fragment {
     }
 
     private void switchToEditMode() {
-        idText.setVisibility(View.GONE);
-        phoneText.setVisibility(View.GONE);
-        semesterText.setVisibility(View.GONE);
-        viewCountText.setVisibility(View.GONE);
-        departmentText.setVisibility(View.GONE);
-
-        nameInputLayout.setVisibility(View.VISIBLE);
-        idInputLayout.setVisibility(View.VISIBLE);
-        phoneInputLayout.setVisibility(View.VISIBLE);
-        semesterInputLayout.setVisibility(View.VISIBLE);
-        departmentInputLayout.setVisibility(View.VISIBLE);
+        academicInfoCard.setVisibility(View.GONE);
+        contactInfoCard.setVisibility(View.GONE);
+        statsCard.setVisibility(View.GONE);
+        logoutButton.setVisibility(View.GONE);
+        editModeLayout.setVisibility(View.VISIBLE);
 
         String[] SEMESTERS = new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "Outgoing"};
         ArrayAdapter<String> semesterAdapter = new ArrayAdapter<>(requireContext(), R.layout.dropdown_item, SEMESTERS);
@@ -157,23 +148,17 @@ public class ProfileFragment extends Fragment {
 
 
     private void switchToViewMode() {
-        nameInputLayout.setVisibility(View.GONE);
-        idInputLayout.setVisibility(View.GONE);
-        phoneInputLayout.setVisibility(View.GONE);
-        semesterInputLayout.setVisibility(View.GONE);
-        departmentInputLayout.setVisibility(View.GONE);
-
-        idText.setVisibility(View.VISIBLE);
-        phoneText.setVisibility(View.VISIBLE);
-        semesterText.setVisibility(View.VISIBLE);
-        departmentText.setVisibility(View.VISIBLE);
+        editModeLayout.setVisibility(View.GONE);
+        academicInfoCard.setVisibility(View.VISIBLE);
+        contactInfoCard.setVisibility(View.VISIBLE);
+        logoutButton.setVisibility(View.VISIBLE);
 
         boolean canViewMetrics = UserData.getInstance().getRole() != null &&
                 (UserData.getInstance().getRole().equalsIgnoreCase("admin") ||
                         UserData.getInstance().getRole().equalsIgnoreCase("moderator"));
 
         if (canViewMetrics) {
-            viewCountText.setVisibility(View.VISIBLE);
+            statsCard.setVisibility(View.VISIBLE);
         }
 
         editButton.setVisibility(View.VISIBLE);

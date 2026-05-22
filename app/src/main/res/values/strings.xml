@@ -9,4 +9,8 @@
     <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
 
     <string name="welcome_text"><b>Welcome To IIUC Pedia</b> \n\nPlease Log In to continue</string>
+    <string name="pdf_page_count">%1$d / %2$d</string>
+    <string name="hub_greeting">Hello, %1$s!</string>
+    <string name="hub_title">Student Daily Hub</string>
+    <string name="app_version">Version %1$s</string>
 </resources>

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import com.google.android.material.card.MaterialCardView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 public class AdminFragment extends Fragment {
 
-    private Button btnBatchLinks, btnDriveLinks, btnMessages, btnBusSchedule, btnAppConfig, btnUserList, btnImport;
+    private MaterialCardView btnBatchLinks, btnDriveLinks, btnMessages, btnBusSchedule, btnAppConfig, btnUserList, btnImport;
 
     @Nullable
     @Override

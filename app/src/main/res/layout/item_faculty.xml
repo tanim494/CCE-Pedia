@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="6dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/dividerColor"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:padding="12dp">
 
-        <ImageView
-            android:id="@+id/facultyPhoto"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:scaleType="centerCrop"
-            android:layout_marginEnd="16dp"/>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/backgroundColor"
+            app:strokeWidth="1dp">
+
+            <ImageView
+                android:id="@+id/facultyPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/ic_profile" />
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -32,27 +47,61 @@
                 android:id="@+id/facultyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Faculty Name"
-                android:textAppearance="?attr/textAppearanceHeadlineSmallEmphasized"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/textPrimary"
+                android:textSize="17sp"
+                tools:text="Dr. Abu Sayed" />
 
             <TextView
                 android:id="@+id/facultyDesignation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Designation"
-                android:textSize="14sp"
-                android:textColor="?android:attr/textColorSecondary"/>
+                android:fontFamily="sans-serif"
+                android:textColor="@color/Green"
+                android:textSize="13sp"
+                tools:text="Assistant Professor" />
 
-            <TextView
-                android:id="@+id/facultyPhone"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone"
-                android:textSize="14sp"
-                android:textColor="?android:attr/textColorSecondary"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_phone"
+                    app:tint="@color/textSecondary" />
+
+                <TextView
+                    android:id="@+id/facultyPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="13sp"
+                    tools:text="018XXXXXXXX" />
+            </LinearLayout>
         </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="@color/GreenLight"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_phone"
+                app:tint="@color/Green"
+                android:contentDescription="Call Icon" />
+        </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

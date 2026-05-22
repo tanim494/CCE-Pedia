@@ -1,22 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-    <EditText
-        android:id="@+id/etNoticeText"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Notice Text" />
+        android:hint="Notice Message"
+        app:startIconDrawable="@drawable/ic_notification">
 
-    <EditText
-        android:id="@+id/etNoticeLink"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNoticeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minLines="2" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Link (optional)"
-        android:inputType="textUri"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="16dp"
+        android:hint="Resource Link (Optional)"
+        app:startIconDrawable="@drawable/ic_link">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNoticeLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>

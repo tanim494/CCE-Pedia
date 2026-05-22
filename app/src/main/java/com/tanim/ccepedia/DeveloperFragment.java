@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.util.TypedValue;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.TypedValue;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.Collections;
@@ -24,7 +26,7 @@ public class DeveloperFragment extends Fragment {
     private LinearLayout moderatorListContainer;
     private FirebaseFirestore db;
 
-    private LinearLayout githubButton, facebookButton, linkedInButton;
+    private View githubButton, facebookButton, linkedInButton;
 
     private static class AppUser {
         String name;
@@ -79,7 +81,7 @@ public class DeveloperFragment extends Fragment {
                 });
     }
 
-    private void setupLinkButton(LinearLayout button, String url) {
+    private void setupLinkButton(View button, String url) {
         if (url != null && !url.isEmpty()) {
             button.setOnClickListener(v -> {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -139,32 +141,76 @@ public class DeveloperFragment extends Fragment {
         });
 
         for (AppUser user : users) {
+            MaterialCardView card = new MaterialCardView(requireContext());
+            LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            cardParams.setMargins(0, 0, 0, 4);
+            card.setLayoutParams(cardParams);
+            card.setCardElevation(0);
+            card.setRadius(0);
+
             LinearLayout itemLayout = new LinearLayout(getContext());
             itemLayout.setLayoutParams(new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT));
-            itemLayout.setOrientation(LinearLayout.VERTICAL);
-            itemLayout.setPadding(0, 8, 0, 8);
+            itemLayout.setOrientation(LinearLayout.HORIZONTAL);
+            itemLayout.setGravity(android.view.Gravity.CENTER_VERTICAL);
+            itemLayout.setPadding(16, 16, 16, 16);
+
+            MaterialCardView iconCard = new MaterialCardView(requireContext());
+            int iconSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
+            iconCard.setLayoutParams(new LinearLayout.LayoutParams(iconSize, iconSize));
+            iconCard.setRadius(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics()));
+            iconCard.setCardBackgroundColor(getResources().getColor(R.color.GreenLight, null));
+            iconCard.setCardElevation(0);
+
+            ImageView icon = new ImageView(requireContext());
+            icon.setLayoutParams(new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+            icon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            icon.setPadding(8, 8, 8, 8);
+            icon.setImageResource(R.drawable.ic_profile);
+            icon.setColorFilter(getResources().getColor(R.color.Green, null));
+            iconCard.addView(icon);
+
+            LinearLayout textLayout = new LinearLayout(getContext());
+            LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+            textLayoutParams.setMarginStart(16);
+            textLayout.setLayoutParams(textLayoutParams);
+            textLayout.setOrientation(LinearLayout.VERTICAL);
 
             TextView nameRoleText = new TextView(getContext());
-            nameRoleText.setText(user.name + " (" + user.role + ")");
-            nameRoleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            nameRoleText.setText(user.name);
+            nameRoleText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            nameRoleText.setTextColor(getResources().getColor(R.color.textPrimary, null));
             nameRoleText.setTypeface(null, android.graphics.Typeface.BOLD);
 
             TextView studentIdText = new TextView(getContext());
-            String idText = (user.studentId != null ? user.studentId : "ID N/A");
-            String deptText = (user.department != null ? " - " + user.department : "");
-            String viewText = " (Views: " + user.viewCount + ")";
+            String idText = (user.studentId != null ? user.studentId : "N/A");
+            String deptText = (user.department != null ? " • " + user.department : "");
+            String roleText = " • " + user.role;
+            studentIdText.setText(idText + deptText + roleText);
+            studentIdText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+            studentIdText.setTextColor(getResources().getColor(R.color.textSecondary, null));
 
-            studentIdText.setText(idText + deptText + viewText);
+            textLayout.addView(nameRoleText);
+            textLayout.addView(studentIdText);
 
-            studentIdText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-            studentIdText.setTextColor(getResources().getColor(android.R.color.darker_gray, null));
+            TextView viewCountText = new TextView(getContext());
+            viewCountText.setText("Views: " + user.viewCount);
+            viewCountText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+            viewCountText.setTextColor(getResources().getColor(R.color.Green, null));
+            viewCountText.setTypeface(null, android.graphics.Typeface.BOLD);
+            viewCountText.setPadding(8, 4, 8, 4);
 
-            itemLayout.addView(nameRoleText);
-            itemLayout.addView(studentIdText);
+            itemLayout.addView(iconCard);
+            itemLayout.addView(textLayout);
+            itemLayout.addView(viewCountText);
 
-            moderatorListContainer.addView(itemLayout);
+            card.addView(itemLayout);
+            moderatorListContainer.addView(card);
         }
     }
 }

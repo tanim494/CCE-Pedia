@@ -5,11 +5,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,9 +29,9 @@ import java.util.stream.Collectors;
 public class AdminLinksFragment extends Fragment {
 
     private EditText editDriveTitle, editDriveUrl;
-    private Button btnAddDriveLink;
+    private MaterialButton btnAddDriveLink;
     private RecyclerView rvDriveLinks;
-    private Spinner spinnerDepartment;
+    private AutoCompleteTextView spinnerDepartment;
 
     private FirebaseFirestore firestore;
     private DepartmentRepository departmentRepository;
@@ -66,16 +65,9 @@ public class AdminLinksFragment extends Fragment {
 
         loadDepartmentSpinner();
 
-        spinnerDepartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fetchDriveLinks();
-                clearInput();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+        spinnerDepartment.setOnItemClickListener((parent, view1, position, id) -> {
+            fetchDriveLinks();
+            clearInput();
         });
 
         btnAddDriveLink.setOnClickListener(v -> {
@@ -113,16 +105,16 @@ public class AdminLinksFragment extends Fragment {
                     displayNames.add(0, "Select Department");
 
                     ArrayAdapter<String> deptAdapter = new ArrayAdapter<>(
-                            getContext(),
-                            android.R.layout.simple_spinner_item,
+                            requireContext(),
+                            R.layout.dropdown_item,
                             displayNames
                     );
-                    deptAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinnerDepartment.setAdapter(deptAdapter);
 
                     String currentDept = UserData.getInstance().getDepartmentName();
                     if (displayNames.contains(currentDept)) {
-                        spinnerDepartment.setSelection(displayNames.indexOf(currentDept));
+                        spinnerDepartment.setText(currentDept, false);
+                        fetchDriveLinks();
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -131,7 +123,7 @@ public class AdminLinksFragment extends Fragment {
     }
 
     private CollectionReference getCollectionRef() {
-        String selectedDeptCode = spinnerDepartment.getSelectedItem() != null ? spinnerDepartment.getSelectedItem().toString() : "";
+        String selectedDeptCode = spinnerDepartment.getText().toString();
 
         if (selectedDeptCode.equals("Select Department") || selectedDeptCode.isEmpty()) {
             Toast.makeText(getContext(), "Please select a department.", Toast.LENGTH_SHORT).show();

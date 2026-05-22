@@ -24,13 +24,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -47,9 +47,9 @@ import java.util.Map;
 
 public class UploadFileFragment extends Fragment {
 
-    private Button btnPickFile, btnUpload;
+    private MaterialButton btnPickFile, btnUpload;
     private EditText etFileName;
-    private Spinner spinnerSemester, spinnerCourse;
+    private AutoCompleteTextView spinnerSemester, spinnerCourse;
     private ProgressBar progressBar;
     private TextView thankText;
     private Uri selectedFileUri = null;
@@ -129,8 +129,7 @@ public class UploadFileFragment extends Fragment {
 
     private void setupSemesterSpinner() {
         ArrayAdapter<String> semesterAdapter = new ArrayAdapter<>(requireContext(),
-                android.R.layout.simple_spinner_item, semesters);
-        semesterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.layout.dropdown_item, semesters);
         spinnerSemester.setAdapter(semesterAdapter);
 
         spinnerCourse.setEnabled(false);
@@ -138,80 +137,65 @@ public class UploadFileFragment extends Fragment {
         final DocumentReference deptRootRef = getDepartmentRootRef();
         if (deptRootRef == null) return;
 
-        spinnerSemester.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedSemesterId = "semester_" + semesters[position];
-                spinnerCourse.setEnabled(false);
-                spinnerCourse.setAdapter(null);
-                checkUploadReadiness();
+        spinnerSemester.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedSemesterId = "semester_" + semesters[position];
+            spinnerCourse.setEnabled(false);
+            spinnerCourse.setText("");
+            spinnerCourse.setAdapter(null);
+            checkUploadReadiness();
 
-                CollectionReference coursesRef;
+            CollectionReference coursesRef;
 
-                if (deptCode.equalsIgnoreCase("CCE")) {
-                    coursesRef = deptRootRef.getFirestore().collection("semesters")
-                            .document(selectedSemesterId)
-                            .collection("courses");
-                } else {
-                    coursesRef = deptRootRef.collection("semesters")
-                            .document(selectedSemesterId)
-                            .collection("courses");
-                }
+            if (deptCode.equalsIgnoreCase("CCE")) {
+                coursesRef = deptRootRef.getFirestore().collection("semesters")
+                        .document(selectedSemesterId)
+                        .collection("courses");
+            } else {
+                coursesRef = deptRootRef.collection("semesters")
+                        .document(selectedSemesterId)
+                        .collection("courses");
+            }
 
-
-                coursesRef
-                        .get()
-                        .addOnSuccessListener(queryDocumentSnapshots -> {
-                            List<String> courseList = new ArrayList<>();
-                            if (!queryDocumentSnapshots.isEmpty()) {
-                                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                    courseList.add(doc.getId());
-                                }
-                                ArrayAdapter<String> courseAdapter = new ArrayAdapter<>(requireContext(),
-                                        android.R.layout.simple_spinner_item, courseList);
-                                courseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                spinnerCourse.setAdapter(courseAdapter);
-                                spinnerCourse.setEnabled(true);
-                            } else {
-                                Toast.makeText(requireContext(), "No courses found for semester " + semesters[position], Toast.LENGTH_SHORT).show();
+            coursesRef
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        List<String> courseList = new ArrayList<>();
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                courseList.add(doc.getId());
                             }
-                            checkUploadReadiness();
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(requireContext(), "Failed to load courses: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                            spinnerCourse.setEnabled(false);
-                            checkUploadReadiness();
-                        });
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                spinnerCourse.setEnabled(false);
-                checkUploadReadiness();
-            }
+                            ArrayAdapter<String> courseAdapter = new ArrayAdapter<>(requireContext(),
+                                    R.layout.dropdown_item, courseList);
+                            spinnerCourse.setAdapter(courseAdapter);
+                            spinnerCourse.setEnabled(true);
+                        } else {
+                            Toast.makeText(requireContext(), "No courses found for semester " + semesters[position], Toast.LENGTH_SHORT).show();
+                        }
+                        checkUploadReadiness();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(requireContext(), "Failed to load courses: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        spinnerCourse.setEnabled(false);
+                        checkUploadReadiness();
+                    });
         });
 
-        spinnerCourse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                checkUploadReadiness();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                checkUploadReadiness();
-            }
-        });
+        spinnerCourse.setOnItemClickListener((parent, view, position, id) -> checkUploadReadiness());
     }
 
     private void setupFilePicker() {
         filePickerLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
-            if (uri != null) {
+            if (uri != null && isAdded()) {
                 selectedFileUri = uri;
                 String fileName = getFileName(uri);
                 etFileName.setText(fileName != null ? fileName : "");
+                btnPickFile.setText(fileName != null ? fileName : "File Selected");
+                btnPickFile.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.ic_right));
                 checkUploadReadiness();
             } else {
                 selectedFileUri = null;
+                btnPickFile.setText("Choose PDF File");
+                btnPickFile.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.ic_pdf));
                 checkUploadReadiness();
             }
         });
@@ -238,8 +222,8 @@ public class UploadFileFragment extends Fragment {
                 return;
             }
 
-            String semester = spinnerSemester.getSelectedItem().toString();
-            String course = spinnerCourse.getSelectedItem().toString();
+            String semester = spinnerSemester.getText().toString().trim();
+            String course = spinnerCourse.getText().toString().trim();
 
             new androidx.appcompat.app.AlertDialog.Builder(requireContext())
                     .setTitle("Confirm Upload")
@@ -253,9 +237,10 @@ public class UploadFileFragment extends Fragment {
     private void checkUploadReadiness() {
         boolean fileSelected = selectedFileUri != null;
         boolean fileNameValid = !etFileName.getText().toString().trim().isEmpty();
-        boolean courseSelected = spinnerCourse.getSelectedItem() != null && spinnerCourse.isEnabled();
+        boolean semesterSelected = !spinnerSemester.getText().toString().trim().isEmpty();
+        boolean courseSelected = !spinnerCourse.getText().toString().trim().isEmpty() && spinnerCourse.isEnabled();
 
-        btnUpload.setEnabled(fileSelected && fileNameValid && courseSelected);
+        btnUpload.setEnabled(fileSelected && fileNameValid && semesterSelected && courseSelected);
     }
 
     private void uploadFile(Uri fileUri, String fileName, String semesterId, String courseId) {
@@ -325,11 +310,15 @@ public class UploadFileFragment extends Fragment {
         filesCollectionRef
                 .add(fileData)
                 .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(requireContext(), "File uploaded successfully", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    etFileName.setText("");
-                    selectedFileUri = null;
-                    checkUploadReadiness();
+                    if (isAdded()) {
+                        Toast.makeText(requireContext(), "File uploaded successfully", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        etFileName.setText("");
+                        selectedFileUri = null;
+                        btnPickFile.setText("Choose PDF File");
+                        btnPickFile.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.ic_pdf));
+                        checkUploadReadiness();
+                    }
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(requireContext(), "Failed to save file metadata: " + e.getMessage(), Toast.LENGTH_SHORT).show();

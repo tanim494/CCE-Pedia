@@ -1,169 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    android:clipToPadding="false"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:padding="20dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Academic Resources"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp" />
+            android:textSize="24sp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp" />
 
+
+        <!-- Top Grid Section -->
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false">
+
+            <!-- Semester Wise -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSemesterResourcesPage"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/dividerColor"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_semester"
+                        app:tint="@color/accent_resources"
+                        android:padding="8dp"
+                        android:scaleType="centerInside"
+                        android:background="@color/backgroundColor"
+                        android:layout_marginBottom="12dp"
+                        android:contentDescription="Semester Icon" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Semester Wise"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textPrimary"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Batch Wise -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardBatchWise"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/dividerColor"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="16dp">
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_batch"
+                        app:tint="@color/accent_community"
+                        android:padding="8dp"
+                        android:scaleType="centerInside"
+                        android:background="@color/backgroundColor"
+                        android:layout_marginBottom="12dp"
+                        android:contentDescription="Batch Icon" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Batch Wise"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textPrimary"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </GridLayout>
+
+        <!-- Drive Links (Full Width Card) -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardDriveLinks"
-            style="@style/listCardStyle">
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/dividerColor"
+            android:clickable="true"
+            android:focusable="true">
             <LinearLayout
-                style="@style/listLayoutStyle"
-                >
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
                 <ImageView
-                    style="@style/listIconStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/ic_link"
-                    android:contentDescription="Drive Icon" />
-
-                <TextView
-                    android:id="@+id/openDriveLinks"
-                    android:layout_width="wrap_content"
+                    app:tint="@color/Green"
+                    android:padding="12dp"
+                    android:scaleType="centerInside"
+                    android:background="@color/GreenLight"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="Link Icon" />
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Important Links (Notes, Files)"
-                    android:textSize="18sp"
-                    android:textColor="@color/black" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardSemesterResourcesPage"
-            style="@style/listCardStyle">
-
-            <LinearLayout
-                style="@style/listLayoutStyle">
-
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Important Drive Links"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/textPrimary"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Curated notes, books &amp; question banks"
+                        android:textSize="12sp"
+                        android:textColor="@color/textSecondary"/>
+                </LinearLayout>
                 <ImageView
-                    style="@style/listIconStyle"
-                    android:src="@drawable/ic_semester"
-                    android:contentDescription="Folder Icon" />
-
-                <TextView
-                    android:id="@+id/openSemesterResourcesPage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Semester Wise Resources"
-                    android:textSize="18sp"
-                    android:textColor="@color/black" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardBatchWise"
-            style="@style/listCardStyle">
-
-            <LinearLayout
-                style="@style/listLayoutStyle">
-
-                <ImageView
-                    style="@style/listIconStyle"
-                    android:src="@drawable/ic_batch"
-                    android:contentDescription="Group Icon" />
-
-                <TextView
-                    android:id="@+id/batchWise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Batch Wise Resources"
-                    android:textSize="18sp"
-                    android:textColor="@color/black" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_right"
+                    app:tint="@color/dividerColor"
+                    android:contentDescription="Arrow Right" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Other Links"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
+            android:text="Utility &amp; Community"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/textPrimary"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp" />
 
+        <!-- Bus Schedule -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardBusPage"
-            style="@style/listCardStyle">
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/dividerColor"
+            android:clickable="true"
+            android:focusable="true">
             <LinearLayout
-                style="@style/listLayoutStyle">
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
                 <ImageView
-                    style="@style/listIconStyle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_bus"
+                    app:tint="@color/accent_schedule"
+                    android:padding="8dp"
+                    android:background="@color/backgroundColor"
+                    android:layout_marginEnd="16dp"
                     android:contentDescription="Bus Icon" />
-
                 <TextView
-                    android:id="@+id/openBusPage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Bus Schedule"
-                    android:textSize="18sp"
-                    android:textColor="@color/black" />
+                    android:textSize="15sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/textPrimary"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_right"
+                    app:tint="@color/dividerColor"
+                    android:contentDescription="Arrow Right" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-
+        <!-- FB Male Club -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardFacebookPage"
-            style="@style/listCardStyle">
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/dividerColor"
+            android:clickable="true"
+            android:focusable="true">
             <LinearLayout
-                style="@style/listLayoutStyle">
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
                 <ImageView
-                    style="@style/listIconStyle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_fb"
+                    app:tint="@color/Blue"
+                    android:padding="8dp"
+                    android:background="@color/BlueLight"
+                    android:layout_marginEnd="16dp"
                     android:contentDescription="Facebook Icon" />
-
                 <TextView
                     android:id="@+id/openFacebookPage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="18sp"
-                    android:textColor="@color/black" />
+                    android:layout_weight="1"
+                    android:text="Male Club"
+                    android:textSize="15sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/textPrimary"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_right"
+                    app:tint="@color/dividerColor"
+                    android:contentDescription="Arrow Right" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-
+        <!-- FB Female Club -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardFacebookFemPage"
-            style="@style/listCardStyle">
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="32dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/dividerColor"
+            android:clickable="true"
+            android:focusable="true">
             <LinearLayout
-                style="@style/listLayoutStyle">
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical">
                 <ImageView
-                    style="@style/listIconStyle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_fb"
-                    android:contentDescription="Facebook Female Icon" />
-
+                    app:tint="@color/Blue"
+                    android:padding="8dp"
+                    android:background="@color/backgroundColor"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="Facebook Icon" />
                 <TextView
                     android:id="@+id/openFacebookFemPage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="18sp"
-                    android:textColor="@color/black" />
+                    android:layout_weight="1"
+                    android:text="Female Club"
+                    android:textSize="15sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/textPrimary"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_right"
+                    app:tint="@color/dividerColor"
+                    android:contentDescription="Arrow Right" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

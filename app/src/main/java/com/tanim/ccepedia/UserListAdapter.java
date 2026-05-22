@@ -40,17 +40,17 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         UserListModel user = userList.get(position);
 
         holder.tvName.setText(user.getName());
-        holder.tvStudentId.setText("ID: " + user.getStudentId());
+        holder.tvStudentId.setText(user.getStudentId() + " | " + user.getEmail());
         holder.tvEmail.setText(user.getEmail());
         holder.tvPhone.setText(user.getPhone());
-        holder.tvSemester.setText("Semester: " + user.getSemester());
-        holder.tvGender.setText("Gender: " + (user.getGender() != null ? user.getGender() : "N/A"));
+        holder.tvSemester.setText(user.getSemester());
+        holder.tvGender.setText((user.getGender() != null ? user.getGender() : "N/A"));
 
         String role = user.getRole();
         if (role == null || role.isEmpty()) {
             role = "user";
         }
-        holder.tvRole.setText("Role: " + role.toUpperCase(Locale.ROOT));
+        holder.tvRole.setText(role.toUpperCase(Locale.ROOT));
 
         String dept = user.getDepartmentName();
         if (dept == null || dept.isEmpty()) {
@@ -59,7 +59,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         } else {
             holder.tvUserDepartment.setTextColor(ContextCompat.getColor(context, R.color.Green));
         }
-        holder.tvUserDepartment.setText("Dept: " + dept);
+        holder.tvUserDepartment.setText(dept);
 
         Date lastLoggedIn = user.getLastLoggedIn();
         if (lastLoggedIn != null) {
@@ -69,8 +69,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         } else {
             holder.tvLastLoggedIn.setText("Last Seen: Unavailable");
         }
-
-        holder.tvViewCount.setText("Views: " + user.getViewCount());
 
         holder.itemView.setOnClickListener(v -> showRoleChangeDialog(user));
     }
@@ -128,7 +126,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvStudentId, tvEmail, tvPhone, tvSemester, tvGender, tvRole, tvUserDepartment, tvLastLoggedIn, tvViewCount;
+        TextView tvName, tvStudentId, tvEmail, tvPhone, tvSemester, tvGender, tvRole, tvUserDepartment, tvLastLoggedIn;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -141,7 +139,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             tvRole = itemView.findViewById(R.id.tvRole);
             tvUserDepartment = itemView.findViewById(R.id.tvUserDepartment);
             tvLastLoggedIn = itemView.findViewById(R.id.tvLastLoggedIn);
-            tvViewCount = itemView.findViewById(R.id.tvViewCount);
         }
     }
 }
