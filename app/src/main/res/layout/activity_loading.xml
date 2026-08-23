@@ -21,7 +21,7 @@
             android:layout_height="140dp"
             app:cardCornerRadius="70dp"
             app:cardElevation="0dp"
-            app:strokeColor="@color/GreenLight"
+            app:strokeColor="?attr/colorOutlineVariant"
             app:strokeWidth="2dp">
 
             <ImageView
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/space_grotesk_bold"
             android:text="IIUC Pedia"
             android:textColor="@color/textPrimary"
             android:textSize="28sp" />
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/manrope_regular"
             android:text="Your IIUC Companion"
             android:textColor="@color/textSecondary"
             android:textSize="14sp"
@@ -68,7 +68,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/manrope_medium"
         android:text="Developed by Tanim (CCE Batch - 27)"
         android:textColor="@color/textSecondary"
         android:textSize="16sp"
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/manrope_regular"
         android:text="Version 1.0.0"
         android:textColor="@color/dividerColor"
         android:textSize="11sp"

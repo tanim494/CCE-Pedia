@@ -4,6 +4,8 @@ public class UserData {
     private static UserData instance;
     private String studentId, name, email, gender, phone, semester, role;
     private String departmentName;
+    private String photoUrl;
+    private String profileLink;
     private long viewCount;
 
     private UserData() {}
@@ -81,5 +83,21 @@ public class UserData {
 
     public void setViewCount(long viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setProfileLink(String profileLink) {
+        this.profileLink = profileLink;
+    }
+
+    public String getProfileLink() {
+        return profileLink;
     }
 }

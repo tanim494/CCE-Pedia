@@ -8,7 +8,7 @@
     android:layout_margin="8dp"
     android:clickable="true"
     android:focusable="true"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="16dp"
     app:cardElevation="0dp"
     app:strokeColor="@color/dividerColor"
     app:strokeWidth="1dp">
@@ -29,7 +29,7 @@
                 android:id="@+id/cv_number_container"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:cardBackgroundColor="@color/GreenLight"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp">
 
@@ -37,9 +37,9 @@
                     android:id="@+id/tv_semester_number"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="@font/space_grotesk_bold"
                     android:gravity="center"
-                    android:textColor="@color/Green"
+                    android:textColor="@color/textPrimary"
                     android:textSize="18sp"
                     tools:text="4" />
             </com.google.android.material.card.MaterialCardView>
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_whitebg"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/manrope_medium"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="4dp"
                 android:textColor="@color/textSecondary"
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/manrope_medium"
             android:textColor="@color/textPrimary"
             android:textSize="16sp"
             tools:text="Semester 4" />
@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/manrope_regular"
             android:text="Browse files"
             android:textColor="@color/textSecondary"
             android:textSize="12sp" />

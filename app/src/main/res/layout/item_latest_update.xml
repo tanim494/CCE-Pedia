@@ -22,7 +22,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:cardBackgroundColor="@color/GreenLight"
+            app:cardBackgroundColor="?attr/colorSurfaceVariant"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp">
 
@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_message"
-                app:tint="@color/Green"
+                app:tint="@color/textSecondary"
                 tools:ignore="ContentDescription" />
         </com.google.android.material.card.MaterialCardView>
 
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/manrope_medium"
             android:textColor="@color/textPrimary"
             android:textSize="14sp"
             tools:text="Course resources for CSE 1101 have been updated with new files." />

@@ -32,7 +32,7 @@ public class WebFragment extends Fragment {
     private String url;
     private WebView webView;
     private ProgressBar progressBar;
-    private FloatingActionButton fabShare;
+    private FloatingActionButton fabShare, fabShareCommunity;
 
     private FirebaseFirestore db;
     private String appUpdateLink;
@@ -63,6 +63,15 @@ public class WebFragment extends Fragment {
         progressBar = view.findViewById(R.id.progressBar);
         fabShare = view.findViewById(R.id.fabShare);
         fabShare.setOnClickListener(v -> shareCurrentPage());
+
+        // Share the currently loaded page into the Community Chat as a link attachment card.
+        fabShareCommunity = view.findViewById(R.id.fabShareCommunity);
+        fabShareCommunity.setOnClickListener(v -> {
+            String currentUrl = (webView != null && webView.getUrl() != null) ? webView.getUrl() : url;
+            String title = (webView != null && webView.getTitle() != null && !webView.getTitle().isEmpty())
+                    ? webView.getTitle() : currentUrl;
+            ShareToCommunityDialog.show(requireContext(), CommunityShare.TYPE_LINK, currentUrl, title);
+        });
 
         setupWebView();
         fetchAppConfig();

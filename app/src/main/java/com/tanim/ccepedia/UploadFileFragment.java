@@ -118,7 +118,7 @@ public class UploadFileFragment extends Fragment {
         int startName = message.indexOf(name);
         int endName = startName + name.length();
         spannable.setSpan(new StyleSpan(Typeface.BOLD), startName, endName, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannable.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.Green)), startName, endName, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.textPrimary)), startName, endName, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         int startID = message.indexOf(studentId);
         int endID = startID + studentId.length();
@@ -159,6 +159,7 @@ public class UploadFileFragment extends Fragment {
             coursesRef
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!isAdded()) return;
                         List<String> courseList = new ArrayList<>();
                         if (!queryDocumentSnapshots.isEmpty()) {
                             for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
@@ -174,6 +175,7 @@ public class UploadFileFragment extends Fragment {
                         checkUploadReadiness();
                     })
                     .addOnFailureListener(e -> {
+                        if (!isAdded()) return;
                         Toast.makeText(requireContext(), "Failed to load courses: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         spinnerCourse.setEnabled(false);
                         checkUploadReadiness();
@@ -256,15 +258,18 @@ public class UploadFileFragment extends Fragment {
 
         fileRef.putFile(fileUri)
                 .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl()
-                        .addOnSuccessListener(uri -> {
-                            String downloadUrl = uri.toString();
-                            saveFileMetadata(fileName, downloadUrl, semesterId, courseId);
-                        }))
-                .addOnFailureListener(e -> {
-                    Toast.makeText(requireContext(), "Upload failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                    btnUpload.setEnabled(true);
-                });
+                        .addOnSuccessListener(uri -> saveFileMetadata(fileName, uri.toString(), semesterId, courseId))
+                        .addOnFailureListener(e -> showUploadError("Upload failed: " + e.getMessage())))
+                .addOnFailureListener(e -> showUploadError("Upload failed: " + e.getMessage()));
+    }
+
+    // Reset the form's busy state and report an error, but only while still attached — these fire
+    // from async callbacks that may return after the user has navigated away.
+    private void showUploadError(String message) {
+        if (!isAdded()) return;
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.GONE);
+        btnUpload.setEnabled(true);
     }
 
     private void saveFileMetadata(String fileName, String downloadUrl, String semesterId, String courseId) {
@@ -308,23 +313,42 @@ public class UploadFileFragment extends Fragment {
 
 
         filesCollectionRef
-                .add(fileData)
-                .addOnSuccessListener(documentReference -> {
-                    if (isAdded()) {
-                        Toast.makeText(requireContext(), "File uploaded successfully", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                        etFileName.setText("");
-                        selectedFileUri = null;
-                        btnPickFile.setText("Choose PDF File");
-                        btnPickFile.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.ic_pdf));
-                        checkUploadReadiness();
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(requireContext(), "Failed to save file metadata: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                .document(toDocId(fileName))
+                .set(fileData)
+                .addOnSuccessListener(aVoid -> {
+                    if (!isAdded()) return;
                     progressBar.setVisibility(View.GONE);
-                    btnUpload.setEnabled(true);
-                });
+                    etFileName.setText("");
+                    selectedFileUri = null;
+                    btnPickFile.setText("Choose PDF File");
+                    btnPickFile.setIcon(ContextCompat.getDrawable(requireContext(), R.drawable.ic_pdf));
+                    checkUploadReadiness();
+                    showUploadSuccessDialog(fileName, downloadUrl);
+                })
+                .addOnFailureListener(e -> showUploadError("Failed to save file metadata: " + e.getMessage()));
+    }
+
+    // Key each course's file docs on the (sanitized) file name so re-uploading the same name
+    // overwrites its metadata in place instead of adding a duplicate list entry — matching Storage,
+    // which already overwrites the object at the same path. Firestore IDs can't contain '/'.
+    private String toDocId(String fileName) {
+        String id = fileName.trim().replaceAll("[/\\\\]", "_");
+        if (id.isEmpty() || id.equals(".") || id.equals("..")) {
+            id = "file_" + System.currentTimeMillis();
+        }
+        return id;
+    }
+
+    // Offer to announce the fresh upload in the Community Chat (attributed to the uploader by
+    // CommunityShare), or just dismiss.
+    private void showUploadSuccessDialog(String fileName, String downloadUrl) {
+        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("File uploaded")
+                .setMessage("\"" + fileName + "\" was uploaded successfully. Share it to the Community Chat?")
+                .setPositiveButton("Share to Community", (dialog, which) ->
+                        CommunityShare.post(requireContext(), CommunityShare.TYPE_PDF, downloadUrl, fileName, "New upload"))
+                .setNegativeButton("Dismiss", null)
+                .show();
     }
 
     private String getFileName(Uri uri) {

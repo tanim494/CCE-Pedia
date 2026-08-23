@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One swipeable page inside the bus schedule ViewPager2. Root must be match_parent so VP2 can
+     lay it out full-bleed. The spinner clears once Glide finishes loading this page's image. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/pageImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        tools:ignore="ContentDescription" />
+
+    <ProgressBar
+        android:id="@+id/pageSpinner"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/Green" />
+</FrameLayout>

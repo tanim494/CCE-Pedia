@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/space_grotesk_bold"
             android:text="Admin Control Panel"
             android:textColor="@color/textPrimary"
             android:textSize="24sp" />
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="24dp"
-            android:fontFamily="sans-serif"
+            android:fontFamily="@font/manrope_regular"
             android:text="System-wide management and resources"
             android:textColor="@color/textSecondary"
             android:textSize="14sp" />
@@ -64,14 +64,15 @@
                         android:src="@drawable/ic_profile"
                         app:tint="@color/Blue"
                         android:padding="6dp"
-                        android:background="@color/BlueLight"
+                        android:background="@drawable/bg_circle"
+                        android:backgroundTint="@color/BlueLight"
                         android:layout_marginBottom="8dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Manage Users"
                         android:textSize="14sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:textColor="@color/textPrimary"
                         android:gravity="center"/>
                 </LinearLayout>
@@ -100,16 +101,17 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/ic_department"
-                        app:tint="@color/Green"
+                        app:tint="@color/textSecondary"
                         android:padding="6dp"
-                        android:background="@color/GreenLight"
+                        android:background="@drawable/bg_circle"
+                        android:backgroundTint="?attr/colorSurfaceVariant"
                         android:layout_marginBottom="8dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Import Faculty"
                         android:textSize="14sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:textColor="@color/textPrimary"
                         android:gravity="center"/>
                 </LinearLayout>
@@ -140,14 +142,15 @@
                         android:src="@drawable/ic_batch"
                         app:tint="@color/accent_resources"
                         android:padding="6dp"
-                        android:background="@color/backgroundColor"
+                        android:background="@drawable/bg_circle"
+                        android:backgroundTint="@color/accent_resources_soft"
                         android:layout_marginBottom="8dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Batch Resources"
                         android:textSize="14sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:textColor="@color/textPrimary"
                         android:gravity="center"/>
                 </LinearLayout>
@@ -178,14 +181,15 @@
                         android:src="@drawable/ic_link"
                         app:tint="@color/accent_community"
                         android:padding="6dp"
-                        android:background="@color/backgroundColor"
+                        android:background="@drawable/bg_circle"
+                        android:backgroundTint="@color/accent_community_soft"
                         android:layout_marginBottom="8dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="External Links"
                         android:textSize="14sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:textColor="@color/textPrimary"
                         android:gravity="center"/>
                 </LinearLayout>
@@ -216,14 +220,15 @@
                         android:src="@drawable/ic_notification"
                         app:tint="@color/orange"
                         android:padding="6dp"
-                        android:background="@color/backgroundColor"
+                        android:background="@drawable/bg_circle"
+                        android:backgroundTint="@color/orange_soft"
                         android:layout_marginBottom="8dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Notices"
                         android:textSize="14sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:textColor="@color/textPrimary"
                         android:gravity="center"/>
                 </LinearLayout>
@@ -254,14 +259,15 @@
                         android:src="@drawable/ic_bus"
                         app:tint="@color/accent_schedule"
                         android:padding="6dp"
-                        android:background="@color/backgroundColor"
+                        android:background="@drawable/bg_circle"
+                        android:backgroundTint="@color/accent_schedule_soft"
                         android:layout_marginBottom="8dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Bus Schedule"
                         android:textSize="14sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:textColor="@color/textPrimary"
                         android:gravity="center"/>
                 </LinearLayout>
@@ -286,14 +292,15 @@
                     android:orientation="horizontal"
                     android:padding="16dp"
                     android:gravity="center_vertical"
-                    android:background="@color/white">
+                    android:background="@color/surfaceColor">
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/ic_semester"
                         app:tint="@color/accent_ai"
                         android:padding="8dp"
-                        android:background="@color/backgroundColor"
+                        android:background="@drawable/bg_circle"
+                        android:backgroundTint="@color/accent_ai_soft"
                         android:layout_marginEnd="16dp"/>
                     <LinearLayout
                         android:layout_width="0dp"
@@ -305,7 +312,7 @@
                             android:layout_height="wrap_content"
                             android:text="App Configuration"
                             android:textSize="16sp"
-                            android:fontFamily="sans-serif-medium"
+                            android:fontFamily="@font/manrope_medium"
                             android:textColor="@color/textPrimary"/>
                         <TextView
                             android:layout_width="wrap_content"

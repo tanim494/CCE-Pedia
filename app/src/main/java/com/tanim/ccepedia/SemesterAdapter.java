@@ -1,12 +1,12 @@
 package com.tanim.ccepedia;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import java.util.List;
@@ -71,39 +71,33 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterAdapter.Semest
         }
 
         private void applyStatusColors(String status) {
+            Context ctx = itemView.getContext();
             int numberCardColor;
             int numberTextColor;
-            int tagTextColor;
-            int tagBgColor;
 
             switch (status) {
                 case "Completed":
-                    numberCardColor = Color.parseColor("#E8F5E9"); // Light Green
-                    numberTextColor = Color.parseColor("#2E7D32"); // Green
-                    tagTextColor = Color.parseColor("#2E7D32");
-                    tagBgColor = Color.parseColor("#E8F5E9");
+                    numberCardColor = ContextCompat.getColor(ctx, R.color.GreenLight);
+                    numberTextColor = ContextCompat.getColor(ctx, R.color.GreenDark);
                     break;
                 case "Current":
-                    numberCardColor = Color.parseColor("#E3F2FD"); // Light Blue
-                    numberTextColor = Color.parseColor("#1565C0"); // Blue
-                    tagTextColor = Color.parseColor("#1565C0");
-                    tagBgColor = Color.parseColor("#E3F2FD");
+                    numberCardColor = ContextCompat.getColor(ctx, R.color.BlueLight);
+                    numberTextColor = ContextCompat.getColor(ctx, R.color.Blue);
                     break;
                 case "Upcoming":
                 default:
-                    numberCardColor = Color.parseColor("#F5F7F9"); // Light Gray
-                    numberTextColor = Color.parseColor("#757575"); // Text Secondary
-                    tagTextColor = Color.parseColor("#757575");
-                    tagBgColor = Color.parseColor("#F5F7F9");
+                    numberCardColor = ContextCompat.getColor(ctx, R.color.surface_variant);
+                    numberTextColor = ContextCompat.getColor(ctx, R.color.textSecondary);
                     break;
             }
 
             numberCard.setCardBackgroundColor(numberCardColor);
             tvNumber.setTextColor(numberTextColor);
-            
-            tvStatusTag.setTextColor(tagTextColor);
+
+            tvStatusTag.setTextColor(numberTextColor);
             if (tvStatusTag.getBackground() != null) {
-                tvStatusTag.getBackground().setTint(tagBgColor);
+                // mutate() so each tag tints independently (the shape drawable is shared).
+                tvStatusTag.getBackground().mutate().setTint(numberCardColor);
             }
         }
     }

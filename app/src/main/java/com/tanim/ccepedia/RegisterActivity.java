@@ -2,15 +2,16 @@ package com.tanim.ccepedia;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Patterns;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -112,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String departmentId = departmentAutoComplete.getText().toString();
 
 
-        if (name.isEmpty() || rawId.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty()) {
+        if (name.isEmpty() || rawId.isEmpty() || email.isEmpty() || password.isEmpty()) {
             showAlert("Please fill in all required fields");
             return;
         }
@@ -153,52 +154,50 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerButton.setEnabled(false);
 
-
-        mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                boolean emailExists = task.getResult().getSignInMethods() != null && !task.getResult().getSignInMethods().isEmpty();
-                if (emailExists) {
-                    showAlert("Email already in use");
-                    registerButton.setEnabled(true);
-                } else {
-                    mAuth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(this, authTask -> {
-                                if (authTask.isSuccessful()) {
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    if (user != null) {
-                                        user.sendEmailVerification()
-                                                .addOnCompleteListener(emailTask -> {
-                                                    if (emailTask.isSuccessful()) {
-                                                        User newUser = new User(name, finalId, phone, email, gender, semester, finalDeptCode);
-                                                        db.collection("users")
-                                                                .document(user.getUid())
-                                                                .set(newUser)
-                                                                .addOnSuccessListener(aVoid -> {
-                                                                    showAlert("Registration successful. Please verify your email.");
-                                                                    mAuth.signOut();
-                                                                    new Handler().postDelayed(this::finish, 1500);
-                                                                })
-                                                                .addOnFailureListener(e -> {
-                                                                    showAlert("Error saving user data: " + e.getMessage());
-                                                                    registerButton.setEnabled(true);
-                                                                });
-                                                    } else {
-                                                        showAlert("Failed to send verification email.");
-                                                        registerButton.setEnabled(true);
-                                                    }
+        // Create the account directly; a duplicate email is reported by Firebase as a
+        // collision error below. (The old fetchSignInMethodsForEmail() pre-check is
+        // deprecated and returns nothing when Email Enumeration Protection is enabled.)
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, authTask -> {
+                    if (authTask.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user == null) {
+                            showAlert("Registration failed. Please try again.");
+                            registerButton.setEnabled(true);
+                            return;
+                        }
+                        user.sendEmailVerification()
+                                .addOnCompleteListener(emailTask -> {
+                                    if (emailTask.isSuccessful()) {
+                                        User newUser = new User(name, finalId, phone, email, gender, semester, finalDeptCode);
+                                        db.collection("users")
+                                                .document(user.getUid())
+                                                .set(newUser)
+                                                .addOnSuccessListener(aVoid -> {
+                                                    AnalyticsHelper.logSignUp("email");
+                                                    showAlert("Registration successful. Please verify your email.");
+                                                    mAuth.signOut();
+                                                    new Handler(Looper.getMainLooper()).postDelayed(this::finish, 1500);
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    showAlert("Error saving user data: " + e.getMessage());
+                                                    registerButton.setEnabled(true);
                                                 });
+                                    } else {
+                                        showAlert("Failed to send verification email.");
+                                        registerButton.setEnabled(true);
                                     }
-                                } else {
-                                    showAlert(authTask.getException().getMessage());
-                                    registerButton.setEnabled(true);
-                                }
-                            });
-                }
-            } else {
-                Toast.makeText(this, "Failed to check email: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                registerButton.setEnabled(true);
-            }
-        });
+                                });
+                    } else {
+                        Exception ex = authTask.getException();
+                        if (ex instanceof FirebaseAuthUserCollisionException) {
+                            showAlert("Email already in use");
+                        } else {
+                            showAlert(ex != null ? ex.getMessage() : "Registration failed. Please try again.");
+                        }
+                        registerButton.setEnabled(true);
+                    }
+                });
     }
 
     private boolean isStrongPassword(String password) {

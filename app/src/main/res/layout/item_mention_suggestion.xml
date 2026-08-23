@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One row in the @mention autocomplete list: initial-circle + name + student id. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="10dp">
+
+    <TextView
+        android:id="@+id/mention_initial"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/accent_community_soft"
+        android:contentDescription="@string/mention_suggestion_icon_desc"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:gravity="center"
+        android:textColor="@color/accent_community"
+        android:textSize="15sp"
+        tools:text="A" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mention_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/manrope_semibold"
+            android:maxLines="1"
+            android:textColor="@color/textPrimary"
+            android:textSize="14sp"
+            tools:text="Ada Lovelace" />
+
+        <TextView
+            android:id="@+id/mention_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/textSecondary"
+            android:textSize="12sp"
+            tools:text="C201001" />
+    </LinearLayout>
+</LinearLayout>

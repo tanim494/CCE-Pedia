@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+
+    // Firestore-based role check (no Custom Claims needed)
+    function isAdminOrModerator(uid) {
+      return exists(/databases/$(database)/documents/users/$(uid)) &&
+        get(/databases/$(database)/documents/users/$(uid)).data.role in ['admin', 'moderator'];
+    }
+
+    // Get the student ID (id field) of the authenticated user
+    function currentUserStudentId() {
+      return signedIn() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.id
+        : null;
+    }
+
+    // Check if current user is the message owner (by studentId)
+    function isMessageOwner(userStudentId) {
+      return currentUserStudentId() == userStudentId;
+    }
+
+    match /departments/{id} {
+      allow read: if true;
+      allow write: if signedIn() && isAdminOrModerator(request.auth.uid);
+    }
+
+    match /community_messages/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.userStudentId == currentUserStudentId()
+        && request.resource.data.userName is string
+        && request.resource.data.messageText is string
+        && request.resource.data.messageText.size() <= 2000
+        && request.resource.data.timestamp is timestamp;
+      allow update: if false;
+      allow delete: if signedIn()
+        && (isMessageOwner(resource.data.userStudentId) || isAdminOrModerator(request.auth.uid));
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn();
+      // Owner can write their own doc; admin/moderator can write any user doc
+      allow write: if signedIn() && (request.auth.uid == uid || isAdminOrModerator(request.auth.uid));
+    }
+
+    match /viewCounter/{id} {
+      allow read, write: if signedIn();
+    }
+
+    match /{document=**} {
+      allow read: if signedIn();
+      allow write: if signedIn() && isAdminOrModerator(request.auth.uid);
+    }
+  }
+}

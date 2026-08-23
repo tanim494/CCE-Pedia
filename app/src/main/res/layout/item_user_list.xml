@@ -21,17 +21,27 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="48dp"
             android:layout_height="48dp"
-            app:cardBackgroundColor="@color/GreenLight"
+            app:cardBackgroundColor="?attr/colorSurfaceVariant"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp">
 
+            <!-- Placeholder glyph; shown for users without a profile photo. -->
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_profile"
-                app:tint="@color/Green"
+                app:tint="@color/textSecondary"
+                tools:ignore="ContentDescription" />
+
+            <!-- Real profile photo; fills the circle and covers the placeholder once loaded. -->
+            <ImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
                 tools:ignore="ContentDescription" />
         </com.google.android.material.card.MaterialCardView>
 
@@ -46,7 +56,7 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/manrope_medium"
                 android:textColor="@color/textPrimary"
                 android:textSize="16sp"
                 tools:text="Ahsanul Karim Tanim" />
@@ -55,7 +65,7 @@
                 android:id="@+id/tvStudentId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:textColor="@color/textSecondary"
                 android:textSize="13sp"
                 tools:text="E221013"
@@ -71,8 +81,8 @@
                     android:id="@+id/tvUserDepartment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:textColor="@color/Green"
+                    android:fontFamily="@font/manrope_regular"
+                    android:textColor="@color/textPrimary"
                     android:textSize="11sp"
                     android:textStyle="bold"
                     tools:text="CCE" />
@@ -88,7 +98,7 @@
                     android:id="@+id/tvSemester"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/manrope_regular"
                     android:textColor="@color/textSecondary"
                     android:textSize="11sp"
                     tools:text="6th Sem" />
@@ -104,7 +114,7 @@
                     android:id="@+id/tvRole"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/manrope_medium"
                     android:textColor="#F9A825"
                     android:textSize="11sp"
                     tools:text="Admin" />
@@ -115,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:textColor="@color/textSecondary"
                 android:textSize="10sp"
                 tools:text="Last Seen: 2 hours ago" />

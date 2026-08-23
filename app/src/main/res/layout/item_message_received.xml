@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="@color/Green"
+        android:fontFamily="@font/manrope_medium"
+        android:textColor="@color/textPrimary"
         android:maxLines="1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +35,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constrainedWidth="true"
         android:layout_marginTop="2dp">
+
+        <LinearLayout
+            android:id="@+id/quote_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_quote_received"
+            android:padding="6dp"
+            android:layout_marginBottom="6dp"
+            android:visibility="gone">
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:background="@color/accent_community" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/quote_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/manrope_medium"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/accent_community"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/quote_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <include
+            android:id="@+id/attachment_card"
+            layout="@layout/view_chat_attachment"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/text_message_body"

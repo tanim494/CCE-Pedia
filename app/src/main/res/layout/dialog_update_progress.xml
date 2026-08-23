@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/updateProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:max="100"
+        android:indeterminate="false"
+        app:indicatorColor="@color/primary"
+        app:trackColor="@color/surface_variant"
+        app:trackCornerRadius="4dp"
+        app:trackThickness="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/updateProgressPercent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/manrope_semibold"
+            android:text="@string/update_downloading"
+            android:textColor="@color/textPrimary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/updateProgressSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_regular"
+            android:textColor="@color/textSecondary"
+            android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

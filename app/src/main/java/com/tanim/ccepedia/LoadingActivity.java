@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +29,11 @@ public class LoadingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = getSharedPreferences("ThemePrefs", MODE_PRIVATE);
+        boolean followSystem = sharedPreferences.getBoolean("FollowSystem", false);
         boolean isDarkMode = sharedPreferences.getBoolean("DarkMode", false);
-        if (isDarkMode) {
+        if (followSystem) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        } else if (isDarkMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -38,13 +42,16 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
+        // Initialize Firebase Analytics
+        AnalyticsHelper.initialize(this);
+
         TextView versionText = findViewById(R.id.appVersionText);
         versionText.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        new Handler().postDelayed(() -> {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             FirebaseUser currentUser = mAuth.getCurrentUser();
 
             if (currentUser == null) {
@@ -122,13 +129,19 @@ public class LoadingActivity extends AppCompatActivity {
 
             user.setDepartmentName(departmentCode);
 
+            // Set analytics user properties
+            AnalyticsHelper.setUserId(snapshot.getId());
+            AnalyticsHelper.setUserProperty("department", departmentCode);
+            if (user.getSemester() != null) {
+                AnalyticsHelper.setUserProperty("semester", user.getSemester());
+            }
+            if (user.getRole() != null && !user.getRole().isEmpty()) {
+                AnalyticsHelper.setUserProperty("user_role", user.getRole());
+            }
+
             updateLastLoggedIn();
 
-            if (departmentCode.equalsIgnoreCase("CCE")) {
-                goToHome();
-            } else {
-                goToHome();
-            }
+            goToHome();
         } else {
             FirebaseAuth.getInstance().signOut();
             Toast.makeText(this, "Profile data not found. Please login.", Toast.LENGTH_SHORT).show();

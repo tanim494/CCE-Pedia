@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="Bus Schedule"
                 android:textColor="@color/textPrimary"
                 android:textSize="24sp" />
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="20dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="View and download the latest university bus schedule"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
+                app:cardElevation="0dp"
                 app:strokeColor="@color/dividerColor"
                 app:strokeWidth="1dp">
 
@@ -58,13 +58,10 @@
                         android:background="@color/white"
                         android:minHeight="200dp">
 
-                        <ImageView
-                            android:id="@+id/scheduleImage"
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/schedulePager"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:contentDescription="Bus Schedule Image"
-                            android:scaleType="fitCenter" />
+                            android:layout_height="460dp" />
 
                         <ProgressBar
                             android:id="@+id/loadingSpinner"
@@ -75,17 +72,50 @@
                             android:visibility="gone" />
                     </FrameLayout>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/downloadButton"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                    <!-- Labels the pages "Regular" / "Friday"; hidden when only one image exists. -->
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/scheduleTabs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:text="Download Schedule"
-                        android:textColor="@color/Green"
-                        app:icon="@drawable/ic_download"
-                        app:iconGravity="textStart"
-                        app:iconTint="@color/Green" />
+                        android:background="@android:color/transparent"
+                        android:visibility="gone"
+                        app:tabGravity="fill"
+                        app:tabIndicatorColor="@color/Green"
+                        app:tabMode="fixed"
+                        app:tabSelectedTextColor="@color/Green"
+                        app:tabTextColor="@color/textSecondary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/downloadButton"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="8dp"
+                            android:text="Download"
+                            android:textColor="@color/Green"
+                            app:icon="@drawable/ic_download"
+                            app:iconGravity="textStart"
+                            app:iconTint="@color/Green" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/shareButton"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="8dp"
+                            android:text="Share"
+                            android:textColor="@color/Green"
+                            app:icon="@drawable/ic_share"
+                            app:iconGravity="textStart"
+                            app:iconTint="@color/Green" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -94,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/manrope_medium"
                 android:text="Important Contacts"
                 android:textColor="@color/textPrimary"
                 android:textSize="18sp" />

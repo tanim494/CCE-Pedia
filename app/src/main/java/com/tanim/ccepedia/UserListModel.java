@@ -16,6 +16,7 @@ public class UserListModel {
     private Date lastLoggedIn;
     private String departmentName;
     private long viewCount;
+    private String photoUrl;
 
     public UserListModel() {
     }
@@ -61,4 +62,7 @@ public class UserListModel {
 
     public long getViewCount() { return viewCount; }
     public void setViewCount(long viewCount) { this.viewCount = viewCount; }
+
+    public String getPhotoUrl() { return photoUrl; }
+    public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
 }

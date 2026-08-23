@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="External Resources"
                 android:textColor="@color/textPrimary"
                 android:textSize="24sp" />
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Useful external links and drive collections"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/manrope_medium"
             android:text="No links found."
             android:textColor="@color/textSecondary"
             android:textSize="16sp"

@@ -20,23 +20,17 @@
         android:orientation="horizontal"
         android:padding="12dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:cardBackgroundColor="@color/GreenLight"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="0dp">
-
-            <ImageView
-                android:id="@+id/iv_file_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_pdf"
-                app:tint="@color/Green"
-                android:contentDescription="File Icon" />
-        </com.google.android.material.card.MaterialCardView>
+        <ImageView
+            android:id="@+id/iv_file_icon"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:padding="11dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_pdf"
+            app:tint="@color/accent_resources"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/accent_resources_soft"
+            android:contentDescription="File Icon" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -49,7 +43,7 @@
                 android:id="@+id/tv_file_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/manrope_medium"
                 android:textColor="@color/textPrimary"
                 android:textSize="15sp"
                 tools:text="CSE 1101 Final Exam Solution.pdf" />
@@ -59,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:textColor="@color/textSecondary"
                 android:textSize="12sp"
                 tools:text="Contributed by Tanim" />

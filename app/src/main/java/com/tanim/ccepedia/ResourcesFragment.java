@@ -1,6 +1,7 @@
 package com.tanim.ccepedia;
 
-import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
@@ -63,26 +65,32 @@ public class ResourcesFragment extends Fragment {
         cardBusPage.setOnClickListener(v -> openFragment(new BusScheduleFragment()));
         cardSemesterResourcesPage.setOnClickListener(v -> openFragment(new SemesterResources()));
         cardDriveLinks.setOnClickListener(v -> openFragment(new DriveLinksFragment()));
+
+        // Fallback until the dynamic club links load — and if the fetch fails, taps still respond.
+        cardFacebookPage.setOnClickListener(v -> notifyLinkUnavailable());
+        cardFacebookFemPage.setOnClickListener(v -> notifyLinkUnavailable());
     }
 
     private void fetchDynamicLinks() {
         db.collection("appConfig").document("main")
                 .get()
                 .addOnSuccessListener(doc -> {
+                    if (!isAdded()) return;
                     if (doc != null && doc.exists()) {
 
-                        Map<String, String> fbClubData = (Map<String, String>) doc.get("club_link_male");
-                        Map<String, String> fbFemaleData = (Map<String, String>) doc.get("club_link_female");
+                        Map<String, String> fbClubData = asStringMap(doc.get("club_link_male"));
+                        Map<String, String> fbFemaleData = asStringMap(doc.get("club_link_female"));
 
                         setupLinkButton(cardFacebookPage, textFacebookPage, fbClubData);
                         setupLinkButton(cardFacebookFemPage, textFacebookFemPage, fbFemaleData);
 
                     } else {
-                        Toast.makeText(getContext(), "Failed to load external links.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Failed to load external links.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Failed to load external links.", Toast.LENGTH_SHORT).show();
+                    if (!isAdded()) return;
+                    Toast.makeText(requireContext(), "Failed to load external links.", Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -94,17 +102,31 @@ public class ResourcesFragment extends Fragment {
             textView.setText(title);
             button.setOnClickListener(v -> openWebPage(url));
         } else {
-            button.setOnClickListener(v -> Toast.makeText(getContext(), "Link not available.", Toast.LENGTH_SHORT).show());
+            button.setOnClickListener(v -> notifyLinkUnavailable());
         }
     }
 
     private void openWebPage(String url) {
         if (url == null || url.isEmpty()) {
-            Toast.makeText(getContext(), "Link not available.", Toast.LENGTH_SHORT).show();
+            notifyLinkUnavailable();
             return;
         }
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(intent);
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (ActivityNotFoundException e) {
+            Context ctx = getContext();
+            if (ctx != null) Toast.makeText(ctx, "Couldn't open the link.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void notifyLinkUnavailable() {
+        Context ctx = getContext();
+        if (ctx != null) Toast.makeText(ctx, "Link not available.", Toast.LENGTH_SHORT).show();
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, String> asStringMap(Object value) {
+        return value instanceof Map ? (Map<String, String>) value : null;
     }
 
     private void openFragment(Fragment fragment) {
@@ -117,13 +139,13 @@ public class ResourcesFragment extends Fragment {
 
 
     private void showGenderDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Select Section")
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Select Section")
                 .setItems(new String[]{"Male", "Female"}, (dialog, which) -> {
                     String gender = (which == 0) ? "male" : "female";
                     openBatchWiseFragment(gender);
-                });
-        builder.show();
+                })
+                .show();
     }
 
     private void openBatchWiseFragment(String gender) {

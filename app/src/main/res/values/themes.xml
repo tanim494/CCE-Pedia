@@ -1,24 +1,92 @@
 <resources>
-    <style name="Theme.IIUCPedia" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">#00695C</item>
-        <item name="colorPrimaryVariant">#003E36</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">#003231</item>
-        <item name="colorSecondaryVariant">#00695C</item>
-        <item name="colorOnSecondary">@color/black</item>
+    <style name="Theme.IIUCPedia" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary — emerald, reserved for primary actions -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
 
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">#333333</item>
-        <item name="backgroundColor">@color/white</item>
-        <item name="colorPrimaryContainer">#8A562B</item>
-        <item name="colorOnPrimaryContainer">#F2E9D0</item>
-        <item name="colorSecondaryContainer">#004D40</item>
-        <item name="colorOnSecondaryContainer">#FFFFFF</item>
+        <!-- Secondary — slate neutral -->
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorSecondaryContainer">@color/secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_secondary_container</item>
 
-        <item name="android:statusBarColor">@color/white</item>
-        <item name="android:navigationBarColor">@color/white</item>
+        <!-- Error -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/on_error</item>
+        <item name="colorErrorContainer">@color/error_container</item>
+        <item name="colorOnErrorContainer">@color/on_error_container</item>
+
+        <!-- Background / surface — paper + ink -->
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="colorOnBackground">@color/textPrimary</item>
+        <item name="colorSurface">@color/surfaceColor</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/textSecondary</item>
+        <item name="colorSurfaceContainerLowest">@color/surface_container_lowest</item>
+        <item name="colorSurfaceContainerLow">@color/surface_container_low</item>
+        <item name="colorSurfaceContainer">@color/surface_container</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_container_highest</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorOutlineVariant">@color/dividerColor</item>
+
+        <!-- System bars -->
+        <item name="android:statusBarColor">@color/surfaceColor</item>
+        <item name="android:navigationBarColor">@color/surfaceColor</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowBackground">@color/backgroundColor</item>
+
+        <!-- Controls / dividers -->
+        <item name="colorControlHighlight">@color/surface_variant</item>
+        <item name="colorControlActivated">@color/primary</item>
+        <item name="android:divider">@color/dividerColor</item>
+        <item name="android:dividerHeight">1dp</item>
 
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+
+        <!-- App-wide typography -->
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontFamily">@font/manrope</item>
+
+        <!-- Display type ramp — Space Grotesk on headings (body/label stay Manrope) -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.CoolAcademic.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.CoolAcademic.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.CoolAcademic.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.CoolAcademic.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.CoolAcademic.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.CoolAcademic.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.CoolAcademic.TitleLarge</item>
+
+        <!-- Shape system -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+    </style>
+
+    <!-- Elevated surfaces keep their drop shadow but drop the M3 surface-tint (emerald)
+         overlay, so white/dark cards stay a true neutral instead of picking up a green cast.
+         Apply via android:theme on an elevated MaterialCardView. -->
+    <style name="ThemeOverlay.App.NoElevationTint" parent="">
+        <item name="elevationOverlayEnabled">false</item>
+    </style>
+
+    <!-- Shape appearance tokens -->
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
     </style>
 </resources>

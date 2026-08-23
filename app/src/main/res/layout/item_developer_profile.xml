@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:theme="@style/ThemeOverlay.App.NoElevationTint"
     app:cardCornerRadius="24dp"
     app:cardElevation="4dp"
     app:strokeWidth="0dp">
@@ -25,7 +26,7 @@
                 android:layout_height="100dp"
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp"
-                app:strokeColor="@color/GreenLight"
+                app:strokeColor="?attr/colorOutlineVariant"
                 app:strokeWidth="2dp">
 
                 <ImageView
@@ -40,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="Ahsanul Karim Tanim"
                 android:textColor="@color/textPrimary"
                 android:textSize="22sp" />
@@ -49,9 +50,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Developer • CCE Batch 27"
-                android:textColor="@color/Green"
+                android:textColor="@color/textPrimary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -87,7 +88,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_github"
-                    app:tint="@color/textPrimary" />
+                    app:tint="@color/Blue" />
             </com.google.android.material.card.MaterialCardView>
 
             <!-- LinkedIn Button -->

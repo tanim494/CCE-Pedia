@@ -1,40 +1,54 @@
 <resources>
 
-    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemBackground">@drawable/nav_item_background</item>
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
         <item name="itemPaddingTop">12dp</item>
         <item name="itemPaddingBottom">12dp</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.App.BottomNavigationView.ActiveIndicator</item>
     </style>
 
-    <style name="listIconStyle">
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="tint">@color/Green</item>
-        <item name="android:layout_width">32dp</item>
-        <item name="android:layout_height">32dp</item>
+    <style name="Widget.App.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">?attr/colorSecondaryContainer</item>
     </style>
 
-    <style name="listLayoutStyle">
-        <item name="android:orientation">horizontal</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:padding">16dp</item>
-    </style>
-
-    <style name="listCardStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-        <item name="android:layout_marginBottom">12dp</item>
-        <item name="android:elevation">4dp</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="cardCornerRadius">12dp</item>
-    </style>
-
-    <style name="ShapeAppearance.App.Circle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+    <style name="ShapeAppearance.App.Circle" parent="ShapeAppearance.Material3.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Cool Academic display type: Space Grotesk on the heading tier, Manrope stays on body/label -->
+    <style name="TextAppearance.CoolAcademic.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+    </style>
+
+    <style name="TextAppearance.CoolAcademic.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+    </style>
+
+    <style name="TextAppearance.CoolAcademic.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+    </style>
+
+    <style name="TextAppearance.CoolAcademic.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+    </style>
+
+    <style name="TextAppearance.CoolAcademic.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+    </style>
+
+    <style name="TextAppearance.CoolAcademic.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+    </style>
+
+    <style name="TextAppearance.CoolAcademic.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/space_grotesk_medium</item>
+        <item name="android:fontFamily">@font/space_grotesk_medium</item>
     </style>
 
 </resources>

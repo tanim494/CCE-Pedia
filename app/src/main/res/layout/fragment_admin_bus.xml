@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="Bus Schedule Manager"
                 android:textColor="@color/textPrimary"
                 android:textSize="24sp" />
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Update the university bus schedule image and info"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
@@ -64,7 +64,7 @@
                     android:padding="20dp">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -79,15 +79,30 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="16dp"
                         android:hint="Direct Image URL"
                         app:startIconDrawable="@drawable/ic_link">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editBusUrl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textUri" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:hint="Friday Schedule Image URL (optional)"
+                        app:startIconDrawable="@drawable/ic_link">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editBusFridayUrl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textUri" />
@@ -110,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="40dp"
-                app:cardBackgroundColor="@color/GreenLight"
+                app:cardBackgroundColor="?attr/colorSecondaryContainer"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
 
@@ -125,14 +140,14 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_notification"
-                        app:tint="@color/Green" />
+                        app:tint="@color/textSecondary" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Tip: Use a high-quality JPG or PNG link for the best view."
+                        android:fontFamily="@font/manrope_medium"
+                        android:text="Tip: Use direct JPG or PNG links. Add a Friday URL to show a second swipeable page; leave it empty to show the regular schedule only."
                         android:textColor="@color/textPrimary"
                         android:textSize="12sp" />
                 </LinearLayout>

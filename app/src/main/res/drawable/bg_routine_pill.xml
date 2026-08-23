@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stadium pill for the "NOW"/"NEXT" tags on today's classes. Solid white so it can be
+     tinted at runtime (accent for NOW, soft accent for NEXT). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="999dp" />
+    <solid android:color="@android:color/white" />
+</shape>

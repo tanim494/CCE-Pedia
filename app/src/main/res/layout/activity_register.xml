@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="64dp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="Create Account"
                 android:textColor="@color/textPrimary"
                 android:textSize="28sp"
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Join the IIUC Pedia community"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp"
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:layout_constraintTop_toBottomOf="@id/subtitleTextView"
                 app:strokeColor="@color/dividerColor"
@@ -62,7 +62,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/nameField"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Full Name"
@@ -76,7 +76,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/idField"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -91,7 +91,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/departmentField"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:layout_constraintTop_toBottomOf="@id/profileInfoCard"
                 app:strokeColor="@color/dividerColor"
@@ -127,7 +127,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/semesterField"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Semester"
@@ -141,7 +141,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/genderField"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -156,11 +156,11 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/phoneField"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:hint="Phone Number"
+                        android:hint="Phone Number (optional)"
                         app:startIconDrawable="@drawable/ic_phone">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/phoneEditText"
@@ -178,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:layout_constraintTop_toBottomOf="@id/contactInfoCard"
                 app:strokeColor="@color/dividerColor"
@@ -192,7 +192,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/emailField"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Email"
@@ -206,7 +206,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/passwordField"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"

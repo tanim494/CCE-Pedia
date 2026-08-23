@@ -18,8 +18,9 @@
             android:layout_height="wrap_content"
             android:text="Academic Resources"
             android:textSize="24sp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/space_grotesk_bold"
             android:textColor="@color/textPrimary"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="8dp" />
 
 
@@ -35,10 +36,10 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardSemesterResourcesPage"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/dividerColor"
@@ -51,21 +52,22 @@
                     android:gravity="center"
                     android:padding="16dp">
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
                         android:src="@drawable/ic_semester"
                         app:tint="@color/accent_resources"
-                        android:padding="8dp"
+                        android:padding="11dp"
                         android:scaleType="centerInside"
-                        android:background="@color/backgroundColor"
-                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/bg_circle"
+                        android:backgroundTint="@color/accent_resources_soft"
+                        android:layout_marginBottom="10dp"
                         android:contentDescription="Semester Icon" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Semester Wise"
                         android:textSize="15sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:textColor="@color/textPrimary"
                         android:gravity="center"/>
                 </LinearLayout>
@@ -75,10 +77,10 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardBatchWise"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_margin="8dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:strokeWidth="1dp"
                 app:strokeColor="@color/dividerColor"
@@ -91,21 +93,22 @@
                     android:gravity="center"
                     android:padding="16dp">
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
                         android:src="@drawable/ic_batch"
-                        app:tint="@color/accent_community"
-                        android:padding="8dp"
+                        app:tint="@color/accent_portal"
+                        android:padding="11dp"
                         android:scaleType="centerInside"
-                        android:background="@color/backgroundColor"
-                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/bg_circle"
+                        android:backgroundTint="@color/accent_portal_soft"
+                        android:layout_marginBottom="10dp"
                         android:contentDescription="Batch Icon" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Batch Wise"
                         android:textSize="15sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:textColor="@color/textPrimary"
                         android:gravity="center"/>
                 </LinearLayout>
@@ -118,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:strokeWidth="1dp"
             app:strokeColor="@color/dividerColor"
@@ -131,13 +134,14 @@
                 android:padding="20dp"
                 android:gravity="center_vertical">
                 <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
                     android:src="@drawable/ic_link"
-                    app:tint="@color/Green"
-                    android:padding="12dp"
+                    app:tint="@color/accent_java"
+                    android:padding="11dp"
                     android:scaleType="centerInside"
-                    android:background="@color/GreenLight"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/accent_java_soft"
                     android:layout_marginEnd="16dp"
                     android:contentDescription="Link Icon" />
                 <LinearLayout
@@ -148,9 +152,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Important Drive Links"
+                        android:text="Important Links"
                         android:textSize="16sp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:textColor="@color/textPrimary"/>
                     <TextView
                         android:layout_width="wrap_content"
@@ -163,7 +167,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_right"
-                    app:tint="@color/dividerColor"
+                    app:tint="@color/textSecondary"
                     android:contentDescription="Arrow Right" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -173,8 +177,9 @@
             android:layout_height="wrap_content"
             android:text="Utility &amp; Community"
             android:textSize="18sp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/manrope_medium"
             android:textColor="@color/textPrimary"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="12dp" />
 
@@ -198,12 +203,14 @@
                 android:padding="16dp"
                 android:gravity="center_vertical">
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
                     android:src="@drawable/ic_bus"
                     app:tint="@color/accent_schedule"
-                    android:padding="8dp"
-                    android:background="@color/backgroundColor"
+                    android:padding="11dp"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/accent_schedule_soft"
                     android:layout_marginEnd="16dp"
                     android:contentDescription="Bus Icon" />
                 <TextView
@@ -212,13 +219,13 @@
                     android:layout_weight="1"
                     android:text="Bus Schedule"
                     android:textSize="15sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/manrope_medium"
                     android:textColor="@color/textPrimary"/>
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_right"
-                    app:tint="@color/dividerColor"
+                    app:tint="@color/textSecondary"
                     android:contentDescription="Arrow Right" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -243,12 +250,14 @@
                 android:padding="16dp"
                 android:gravity="center_vertical">
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
                     android:src="@drawable/ic_fb"
+                    android:padding="11dp"
                     app:tint="@color/Blue"
-                    android:padding="8dp"
-                    android:background="@color/BlueLight"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/blue_soft"
                     android:layout_marginEnd="16dp"
                     android:contentDescription="Facebook Icon" />
                 <TextView
@@ -258,13 +267,13 @@
                     android:layout_weight="1"
                     android:text="Male Club"
                     android:textSize="15sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/manrope_medium"
                     android:textColor="@color/textPrimary"/>
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_right"
-                    app:tint="@color/dividerColor"
+                    app:tint="@color/textSecondary"
                     android:contentDescription="Arrow Right" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -289,12 +298,14 @@
                 android:padding="16dp"
                 android:gravity="center_vertical">
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
                     android:src="@drawable/ic_fb"
                     app:tint="@color/Blue"
-                    android:padding="8dp"
-                    android:background="@color/backgroundColor"
+                    android:padding="11dp"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@color/blue_soft"
                     android:layout_marginEnd="16dp"
                     android:contentDescription="Facebook Icon" />
                 <TextView
@@ -304,13 +315,13 @@
                     android:layout_weight="1"
                     android:text="Female Club"
                     android:textSize="15sp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/manrope_medium"
                     android:textColor="@color/textPrimary"/>
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_right"
-                    app:tint="@color/dividerColor"
+                    app:tint="@color/textSecondary"
                     android:contentDescription="Arrow Right" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

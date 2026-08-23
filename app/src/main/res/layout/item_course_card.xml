@@ -21,22 +21,16 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:cardBackgroundColor="@color/GreenLight"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="0dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_repository"
-                app:tint="@color/Green"
-                android:contentDescription="Course Icon" />
-        </com.google.android.material.card.MaterialCardView>
+        <ImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:padding="11dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_repository"
+            app:tint="@color/accent_resources"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/accent_resources_soft"
+            android:contentDescription="Course Icon" />
 
         <TextView
             android:id="@+id/tv_course_title"
@@ -44,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/manrope_medium"
             android:textColor="@color/textPrimary"
             android:textSize="16sp"
             tools:text="Computer Fundamentals and Programming" />
@@ -53,7 +47,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_right"
-            app:tint="@color/dividerColor"
+            app:tint="@color/textSecondary"
             android:contentDescription="Enter Course" />
 
     </LinearLayout>

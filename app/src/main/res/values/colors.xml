@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Legacy Material template colors (unused by app) -->
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
@@ -8,16 +9,26 @@
     <color name="white">#FFFFFFFF</color>
     <color name="menuText">#FFFFFFFF</color>
     <color name="Red">#FF0000</color>
-    <color name="Green">#2E7D32</color>
+
+    <!-- === Cool Academic brand === -->
+    <!-- Emerald — reserved for primary actions -->
+    <color name="Green">#10876A</color>
     <color name="GreenLight">#E8F5E9</color>
     <color name="GreenDark">#1B5E20</color>
+
+    <!-- Community chat: outgoing bubble stays a dark emerald in BOTH modes (never the
+         lightened night accent) so white text + links keep contrast. Link = bright mint. -->
+    <color name="chat_sent_bubble">#10876A</color>
+    <color name="chat_link_on_sent">#A8F0DC</color>
     <color name="Blue">#1565C0</color>
     <color name="BlueLight">#E3F2FD</color>
-    <color name="surfaceColor">#FFFFFF</color>
-    <color name="backgroundColor">#F5F7F9</color>
-    <color name="textPrimary">#212121</color>
-    <color name="textSecondary">#757575</color>
-    <color name="dividerColor">#EEEEEE</color>
+
+    <!-- Surfaces & text — sources for M3 roles; names kept for existing layout refs -->
+    <color name="surfaceColor">#FFFFFF</color>       <!-- colorSurface -->
+    <color name="backgroundColor">#F6F8FA</color>    <!-- paper: colorBackground -->
+    <color name="textPrimary">#1B2430</color>        <!-- ink: onSurface/onBackground -->
+    <color name="textSecondary">#5B6673</color>      <!-- slate: onSurfaceVariant -->
+    <color name="dividerColor">#C7CDD3</color>       <!-- outlineVariant -->
 
     <color name="accent_ai">#6200EE</color>
     <color name="accent_community">#00B0FF</color>
@@ -26,6 +37,57 @@
     <color name="accent_tracker">#D50000</color>
     <color name="accent_schedule">#304FFE</color>
     <color name="accent_java">#795548</color>
+
+    <!-- Soft (15% alpha) accent tints for icon chips -->
+    <color name="accent_community_soft">#2600B0FF</color>
+    <color name="accent_resources_soft">#26FF6D00</color>
+    <color name="accent_portal_soft">#2600C853</color>
+    <color name="accent_tracker_soft">#26D50000</color>
+    <color name="accent_schedule_soft">#26304FFE</color>
+    <color name="accent_java_soft">#26795548</color>
+    <color name="blue_soft">#261565C0</color>
+    <color name="accent_ai_soft">#266200EE</color>
+    <color name="orange_soft">#26FFB74D</color>
+
+    <!-- Brighter (~35% alpha) community halo — lights the icon chip when there are unread messages -->
+    <color name="accent_community_glow">#5900B0FF</color>
     <color name="accent_repo">#607D8B</color>
+
+    <!-- === Material 3 semantic roles (Cool Academic) === -->
+    <color name="primary">#10876A</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#B8E9DA</color>
+    <color name="on_primary_container">#00382B</color>
+    <color name="secondary">#5B6673</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="secondary_container">#DDE2E8</color>
+    <color name="on_secondary_container">#1B2430</color>
+    <color name="surface_variant">#E3E8ED</color>
+    <color name="outline">#79838D</color>
+    <color name="surface_container_lowest">#FFFFFF</color>
+    <color name="surface_container_low">#F1F4F7</color>
+    <color name="surface_container">#EBEEF3</color>
+    <color name="surface_container_high">#E5E9EF</color>
+    <color name="surface_container_highest">#DFE4EA</color>
+    <color name="error">#BA1A1A</color>
+    <color name="on_error">#FFFFFF</color>
+    <color name="error_container">#FFDAD6</color>
+    <color name="on_error_container">#410002</color>
+    <color name="accentColor">#10876A</color>
+
+    <!-- Misc / system -->
+    <color name="amoled_black">#000000</color>
+    <color name="textDisabled">#BDBDBD</color>
+    <color name="textOnPrimary">#FFFFFF</color>
+    <color name="textOnSecondary">#FFFFFF</color>
+    <color name="statusBarColor">#FFFFFF</color>
+    <color name="navigationBarColor">#FFFFFF</color>
+    <color name="White">#FFFFFFFF</color>
+    <color name="Black">#FF000000</color>
+
+    <!-- Invite / Share hero card: foreground veils over colorPrimary (emerald) -->
+    <color name="invite_chip_bg">#33FFFFFF</color>
+    <color name="invite_outline">#59FFFFFF</color>
+    <color name="invite_ripple">#33000000</color>
 
 </resources>

@@ -1,20 +1,64 @@
 <resources>
-    <style name="Theme.IIUCPedia" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">#2E7D32</item>
-        <item name="colorPrimaryVariant">#1B5E20</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">#81C784</item>
-        <item name="colorSecondaryVariant">#2E7D32</item>
-        <item name="colorOnSecondary">@color/black</item>
+    <style name="Theme.IIUCPedia" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary — emerald (lightened for dark surfaces), actions only -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
 
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">#E1E1E1</item>
-        <item name="backgroundColor">@color/backgroundColor</item>
+        <!-- Secondary — slate neutral -->
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorSecondaryContainer">@color/secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_secondary_container</item>
 
-        <item name="android:statusBarColor">@color/backgroundColor</item>
-        <item name="android:navigationBarColor">@color/backgroundColor</item>
+        <!-- Error -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/on_error</item>
+        <item name="colorErrorContainer">@color/error_container</item>
+        <item name="colorOnErrorContainer">@color/on_error_container</item>
+
+        <!-- Background / surface — deep slate night + ink-inverse text -->
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="colorOnBackground">@color/textPrimary</item>
+        <item name="colorSurface">@color/surfaceColor</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/textSecondary</item>
+        <item name="colorSurfaceContainerLowest">@color/surface_container_lowest</item>
+        <item name="colorSurfaceContainerLow">@color/surface_container_low</item>
+        <item name="colorSurfaceContainer">@color/surface_container</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_container_highest</item>
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorOutlineVariant">@color/dividerColor</item>
+
+        <!-- System bars -->
+        <item name="android:statusBarColor">@color/surfaceColor</item>
+        <item name="android:navigationBarColor">@color/surfaceColor</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowBackground">@color/backgroundColor</item>
+
+        <!-- Controls / dividers -->
+        <item name="colorControlHighlight">@color/surface_variant</item>
+        <item name="colorControlActivated">@color/primary</item>
+        <item name="android:divider">@color/dividerColor</item>
+        <item name="android:dividerHeight">1dp</item>
 
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+
+        <!-- App-wide typography -->
+        <item name="android:fontFamily">@font/manrope</item>
+        <item name="fontFamily">@font/manrope</item>
+
+        <!-- Display type ramp — Space Grotesk on headings (body/label stay Manrope) -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.CoolAcademic.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.CoolAcademic.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.CoolAcademic.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.CoolAcademic.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.CoolAcademic.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.CoolAcademic.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.CoolAcademic.TitleLarge</item>
     </style>
 </resources>

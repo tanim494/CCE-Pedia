@@ -1,11 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="backgroundColor">#121212</color>
-    <color name="surfaceColor">#1E1E1E</color>
-    <color name="white">#1E1E1E</color>
-    <color name="textPrimary">#E1E1E1</color>
-    <color name="textSecondary">#B0B0B0</color>
-    <color name="dividerColor">#2C2C2C</color>
-    <color name="GreenLight">#1B2E1C</color>
+    <color name="amoled_black">#000000</color>
+
+    <!-- Cool Academic night: deep slate background, raised surfaces -->
+    <color name="backgroundColor">#10151B</color>
+    <color name="surfaceColor">#161C23</color>
+    <color name="surface_variant">#3A424B</color>
+
+    <!-- Text — soft ink-inverse for comfortable dark contrast -->
+    <color name="textPrimary">#E1E6EC</color>
+    <color name="textSecondary">#B8C0C9</color>
+    <color name="textDisabled">#707070</color>
+    <color name="textOnPrimary">#FFFFFF</color>
+    <color name="textOnSecondary">#000000</color>
+
+    <color name="accentColor">#3DBD9C</color>
+
+    <!-- Primary — emerald lightened for dark surfaces -->
+    <color name="primary">#3DBD9C</color>
+    <color name="secondary">#B8C0C9</color>
+
+    <!-- Error -->
+    <color name="error">#FFB4AB</color>
+    <color name="on_error">#690005</color>
+
+    <!-- System bars -->
+    <color name="statusBarColor">#000000</color>
+    <color name="navigationBarColor">#000000</color>
+
+    <color name="dividerColor">#3A424B</color>
+
+    <!-- === Material 3 role additions (night) === -->
+    <color name="on_primary">#00382B</color>
+    <color name="primary_container">#00543F</color>
+    <color name="on_primary_container">#A8F0DC</color>
+    <color name="on_secondary">#26303A</color>
+    <color name="secondary_container">#3B434C</color>
+    <color name="on_secondary_container">#D6DDE4</color>
+    <color name="outline">#8A939D</color>
+    <color name="surface_container_lowest">#0B0F14</color>
+    <color name="surface_container_low">#161C23</color>
+    <color name="surface_container">#1A2129</color>
+    <color name="surface_container_high">#232B34</color>
+    <color name="surface_container_highest">#2E3740</color>
+    <color name="error_container">#93000A</color>
+    <color name="on_error_container">#FFDAD6</color>
+
+    <!-- Legacy aliases — decorative greens neutralized per-site in Stage B/C -->
+    <color name="Green">#3DBD9C</color>
+    <color name="GreenLight">#1B3320</color>
+    <color name="GreenDark">#2E7D32</color>
+
+    <!-- Outgoing bubble: deep emerald (NOT the lightened #3DBD9C accent) so white text +
+         mint links stay legible. chat_link_on_sent inherits the base #A8F0DC. -->
+    <color name="chat_sent_bubble">#0E7357</color>
+    <color name="Blue">#1E88E5</color>
     <color name="BlueLight">#1A237E</color>
+    <color name="white">#E0E0E0</color>
+    <color name="White">#E0E0E0</color>
+    <color name="Black">#000000</color>
+
+    <!-- Invite / Share hero card: colorPrimary is a light mint here, so the veils flip to dark -->
+    <color name="invite_chip_bg">#33000000</color>
+    <color name="invite_outline">#59000000</color>
+    <color name="invite_ripple">#33FFFFFF</color>
 </resources>

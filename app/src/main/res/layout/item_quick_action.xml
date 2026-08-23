@@ -25,9 +25,9 @@
             android:id="@+id/actionIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:tint="@color/Green"
+            app:tint="@color/textSecondary"
             android:padding="8dp"
-            android:background="@color/GreenLight"
+            android:background="?attr/colorSurfaceVariant"
             android:layout_marginBottom="8dp"
             android:contentDescription="Quick Action Icon" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:text="Action Name"
             android:textSize="13sp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/manrope_medium"
             android:textColor="@color/textPrimary"
             android:gravity="center"
             android:maxLines="2"

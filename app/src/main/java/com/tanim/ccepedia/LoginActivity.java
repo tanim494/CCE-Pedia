@@ -5,19 +5,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -124,6 +124,18 @@ public class LoginActivity extends AppCompatActivity {
 
             user.setDepartmentName(departmentName);
 
+            // Load profile image URL
+            String photoUrl = snapshot.getString("photoUrl");
+            if (photoUrl != null && !photoUrl.isEmpty()) {
+                user.setPhotoUrl(photoUrl);
+            }
+
+            // Load profile link
+            String profileLink = snapshot.getString("profileLink");
+            if (profileLink != null && !profileLink.isEmpty()) {
+                user.setProfileLink(profileLink);
+            }
+
             updateLastLoggedIn();
 
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -131,10 +143,12 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         } else {
             showAlert("User data not found, contact the developer");
+            loginButton.setEnabled(true);
         }
     }
 
     private void loginUser(String email, String password) {
+        loginButton.setEnabled(false);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
@@ -143,23 +157,34 @@ public class LoginActivity extends AppCompatActivity {
                             if (user.isEmailVerified()) {
                                 String uid = user.getUid();
 
+                                AnalyticsHelper.logLogin("email");
+
                                 db.collection("users")
                                         .document(uid)
                                         .get()
                                         .addOnSuccessListener(this::handleUserDocument)
-                                        .addOnFailureListener(e ->
-                                                showAlert("Failed to fetch user data"));
+                                        .addOnFailureListener(e -> {
+                                            showAlert("Failed to fetch user data");
+                                            loginButton.setEnabled(true);
+                                        });
 
                             } else {
                                 user.sendEmailVerification()
-                                        .addOnSuccessListener(aVoid ->
-                                                showAlert("Email not verified. A verification email has been sent."))
-                                        .addOnFailureListener(e ->
-                                                showAlert("Failed to resend verification email. Please try again."));
+                                        .addOnSuccessListener(aVoid -> {
+                                            showAlert("Email not verified. A verification email has been sent.");
+                                            loginButton.setEnabled(true);
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            showAlert("Failed to resend verification email. Please try again.");
+                                            loginButton.setEnabled(true);
+                                        });
                             }
+                        } else {
+                            loginButton.setEnabled(true);
                         }
                     } else {
                         showAlert("Incorrect Email/Password");
+                        loginButton.setEnabled(true);
                     }
                 });
     }

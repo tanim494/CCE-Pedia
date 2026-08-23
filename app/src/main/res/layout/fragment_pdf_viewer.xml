@@ -9,7 +9,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/backgroundColor"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -20,7 +20,7 @@
             app:navigationIconTint="@color/textPrimary"
             app:title="PDF Viewer"
             app:titleTextColor="@color/textPrimary"
-            app:titleTextAppearance="@style/TextAppearance.MaterialComponents.Headline6">
+            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge">
 
             <TextView
                 android:id="@+id/tvPageCount"
@@ -81,5 +81,21 @@
         app:fabSize="mini"
         app:elevation="6dp"
         android:visibility="invisible"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabShareCommunity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="156dp"
+        android:src="@drawable/logo"
+        app:tint="@null"
+        app:backgroundTint="#FFFFFF"
+        app:maxImageSize="30dp"
+        app:fabSize="mini"
+        app:elevation="6dp"
+        android:visibility="invisible"
+        android:contentDescription="@string/share_to_community_desc" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

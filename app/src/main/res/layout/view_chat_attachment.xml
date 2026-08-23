@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Shared-resource card embedded in a chat bubble. The bubble is a wrap_content LinearLayout with
+  layout_constrainedWidth, so this card uses a fixed width (else it would collapse to nothing).
+-->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/surfaceColor"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/dividerColor"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/attachment_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/accent_resources_soft"
+            android:contentDescription="@string/share_to_community"
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_pdf"
+            app:tint="@color/accent_resources" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/attachment_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/manrope_medium"
+                android:maxLines="2"
+                android:textColor="@color/textPrimary"
+                android:textSize="14sp"
+                tools:text="CCCE 1207 Final Exam Solution.pdf" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/share_open_in_app"
+            android:src="@drawable/ic_right"
+            app:tint="@color/textSecondary" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

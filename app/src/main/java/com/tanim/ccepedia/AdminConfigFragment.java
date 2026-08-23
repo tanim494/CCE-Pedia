@@ -16,13 +16,15 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class AdminConfigFragment extends Fragment {
 
-    private EditText editVersion, editUpdateLink;
+    private EditText editVersion, editUpdateLink, editApkLink;
+    private com.google.android.material.switchmaterial.SwitchMaterial switchForceUpdate;
     private EditText editDevGithub, editDevFacebook, editDevLinkedin;
     private EditText editClubMaleTitle, editClubMaleUrl, editClubFemaleTitle, editClubFemaleUrl;
     private EditText editHomeBannerUrl, editHomeBannerClickUrl;
@@ -44,6 +46,8 @@ public class AdminConfigFragment extends Fragment {
 
         editVersion = view.findViewById(R.id.editVersion);
         editUpdateLink = view.findViewById(R.id.editUpdateLink);
+        editApkLink = view.findViewById(R.id.editApkLink);
+        switchForceUpdate = view.findViewById(R.id.switchForceUpdate);
 
         editHomeBannerUrl = view.findViewById(R.id.editHomeBannerUrl);
         editHomeBannerClickUrl = view.findViewById(R.id.editHomeBannerClickUrl);
@@ -100,15 +104,21 @@ public class AdminConfigFragment extends Fragment {
     private void loadExistingConfig() {
         configRef.get().addOnSuccessListener(doc -> {
             if (doc.exists()) {
-                if (doc.contains("version")) {
-                    Long versionCode = doc.getLong("version");
+                if (doc.contains("versionCode")) {
+                    Long versionCode = doc.getLong("versionCode");
                     if (versionCode != null) {
                         editVersion.setText(String.valueOf(versionCode.intValue()));
                     }
                 }
 
+                Boolean force = doc.getBoolean("forceUpdate");
+                switchForceUpdate.setChecked(force != null && force);
+
                 if (doc.contains("updateLink"))
                     editUpdateLink.setText(doc.getString("updateLink"));
+
+                if (doc.contains("apkLink"))
+                    editApkLink.setText(doc.getString("apkLink"));
 
                 if (doc.contains("homeBannerUrl"))
                     editHomeBannerUrl.setText(doc.getString("homeBannerUrl"));
@@ -163,8 +173,10 @@ public class AdminConfigFragment extends Fragment {
         }
 
         Map<String, Object> configMap = new HashMap<>();
-        configMap.put("version", versionCode);
+        configMap.put("versionCode", versionCode);
+        configMap.put("forceUpdate", switchForceUpdate.isChecked());
         configMap.put("updateLink", updateLink);
+        configMap.put("apkLink", editApkLink.getText().toString().trim());
 
         configMap.put("homeBannerUrl", editHomeBannerUrl.getText().toString().trim());
         configMap.put("homeBannerClickUrl", editHomeBannerClickUrl.getText().toString().trim());
@@ -183,8 +195,14 @@ public class AdminConfigFragment extends Fragment {
         clubFemaleMap.put("url", editClubFemaleUrl.getText().toString().trim());
         configMap.put("club_link_female", clubFemaleMap);
 
-        configRef.update(configMap)
-                .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Config updated.", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to update config.", Toast.LENGTH_SHORT).show());
+        // Merge (not update): creates appConfig/main if it doesn't exist yet and preserves any
+        // fields not written here, so the admin never has to seed the document by hand.
+        configRef.set(configMap, SetOptions.merge())
+                .addOnSuccessListener(aVoid -> {
+                    if (isAdded()) Toast.makeText(getContext(), "Config updated.", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    if (isAdded()) Toast.makeText(getContext(), "Failed to update config.", Toast.LENGTH_SHORT).show();
+                });
     }
 }

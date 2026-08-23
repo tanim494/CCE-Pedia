@@ -15,10 +15,14 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AdminBusFragment extends Fragment {
 
-    private EditText editBusTitle, editBusUrl;
+    private EditText editBusTitle, editBusUrl, editBusFridayUrl;
     private MaterialButton btnSaveBusSchedule;
 
     private FirebaseFirestore firestore;
@@ -33,6 +37,7 @@ public class AdminBusFragment extends Fragment {
 
         editBusTitle = view.findViewById(R.id.editBusTitle);
         editBusUrl = view.findViewById(R.id.editBusUrl);
+        editBusFridayUrl = view.findViewById(R.id.editBusFridayUrl);
         btnSaveBusSchedule = view.findViewById(R.id.btnSaveBusSchedule);
 
         firestore = FirebaseFirestore.getInstance();
@@ -51,9 +56,11 @@ public class AdminBusFragment extends Fragment {
                     if (documentSnapshot.exists()) {
                         String title = documentSnapshot.getString("title");
                         String url = documentSnapshot.getString("url");
+                        String fridayUrl = documentSnapshot.getString("fridayUrl");
 
                         editBusTitle.setText(title != null ? title : "");
                         editBusUrl.setText(url != null ? url : "");
+                        editBusFridayUrl.setText(fridayUrl != null ? fridayUrl : "");
                     }
                 })
                 .addOnFailureListener(e ->
@@ -63,6 +70,7 @@ public class AdminBusFragment extends Fragment {
     private void saveBusSchedule() {
         String title = editBusTitle.getText().toString().trim();
         String url = editBusUrl.getText().toString().trim();
+        String fridayUrl = editBusFridayUrl.getText().toString().trim();
 
         if (TextUtils.isEmpty(title)) {
             editBusTitle.setError("Title required");
@@ -73,13 +81,17 @@ public class AdminBusFragment extends Fragment {
             return;
         }
 
-        busScheduleDocRef.update("title", title, "url", url)
+        // Merge-write so the existing `contacts` array (managed elsewhere) is preserved.
+        // fridayUrl is optional: an empty value clears the second page on the user screen.
+        Map<String, Object> data = new HashMap<>();
+        data.put("title", title);
+        data.put("url", url);
+        data.put("fridayUrl", fridayUrl);
+
+        busScheduleDocRef.set(data, SetOptions.merge())
                 .addOnSuccessListener(aVoid ->
                         Toast.makeText(getContext(), "Bus schedule updated.", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> busScheduleDocRef.set(new ManageBusSchedule(title, url))
-                        .addOnSuccessListener(aVoid ->
-                                Toast.makeText(getContext(), "Bus schedule saved.", Toast.LENGTH_SHORT).show())
-                        .addOnFailureListener(e2 ->
-                                Toast.makeText(getContext(), "Failed to save bus schedule.", Toast.LENGTH_SHORT).show()));
+                .addOnFailureListener(e ->
+                        Toast.makeText(getContext(), "Failed to save bus schedule.", Toast.LENGTH_SHORT).show());
     }
 }

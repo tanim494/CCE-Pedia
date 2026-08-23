@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="6dp">
+
+    <View
+        android:id="@+id/v_dot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/accent_schedule" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="76dp"
+        android:fontFamily="@font/manrope_semibold"
+        android:textSize="13sp"
+        tools:text="09:30 AM"
+        tools:textColor="@color/accent_schedule" />
+
+    <TextView
+        android:id="@+id/tv_course"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/manrope_medium"
+        android:textSize="14sp"
+        tools:text="CSE-2431"
+        tools:textColor="@color/textPrimary" />
+
+    <TextView
+        android:id="@+id/tv_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_routine_pill"
+        android:fontFamily="@font/manrope_semibold"
+        android:letterSpacing="0.06"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="2dp"
+        android:textSize="10sp"
+        android:visibility="gone"
+        tools:ignore="SmallSp"
+        tools:text="NOW"
+        tools:visibility="visible" />
+
+</LinearLayout>

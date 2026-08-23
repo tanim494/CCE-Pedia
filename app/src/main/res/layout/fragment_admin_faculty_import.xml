@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="Faculty Batch Import"
                 android:textColor="@color/textPrimary"
                 android:textSize="24sp" />
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Paste structured CSV data to import faculty members"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
@@ -66,7 +66,7 @@
                     android:padding="16dp">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -79,7 +79,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:cardBackgroundColor="@color/GreenLight"
+                app:cardBackgroundColor="?attr/colorSecondaryContainer"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
 
@@ -126,16 +126,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:text="Data Format Guide"
-                        android:textColor="@color/Green"
+                        android:textColor="@color/textPrimary"
                         android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:fontFamily="sans-serif"
+                        android:fontFamily="@font/manrope_regular"
                         android:text="John Doe,Assistant Professor,018XXXXXXXX,https://link.com/photo.jpg\nJane Doe,Lecturer,017XXXXXXXX,https://link.com/p2.jpg"
                         android:textColor="@color/textSecondary"
                         android:textSize="11sp" />

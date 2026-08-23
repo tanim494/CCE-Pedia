@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Count pill for the community-chat unread badge. Stadium shape (large radius);
+     accent_community keeps emerald reserved for primary actions. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="999dp" />
+    <solid android:color="@color/accent_community" />
+</shape>

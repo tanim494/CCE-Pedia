@@ -1,15 +1,46 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# ============================================================
+#  Android / Gradle .gitignore  —  IIUC Pedia
+# ============================================================
+
+# --- Built application files ---
+*.apk
+*.aab
+*.ap_
+*.aar
+*.dex
+*.class
+
+# --- Generated output dirs ---
+bin/
+gen/
+out/
+
+# --- Gradle ---
+.gradle/
+build/
+
+# --- Local, machine-specific config (SDK path, etc.) ---
 local.properties
+
+# --- Signing material & secrets: NEVER commit these ---
+keystore.properties
+*.jks
+*.keystore
+*.p12
+
+# --- Android Studio / IntelliJ IDEA ---
+*.iml
+.idea/
+
+# --- Native build ---
+.externalNativeBuild/
+.cxx/
+
+# --- Captures / logs / temp ---
+captures/
+*.log
+*.hprof
+
+# --- OS cruft ---
+.DS_Store
+Thumbs.db

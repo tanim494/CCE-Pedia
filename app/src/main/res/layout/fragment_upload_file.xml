@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="Contribute Resources"
                 android:textColor="@color/textPrimary"
                 android:textSize="24sp" />
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Help your peers by sharing useful notes and files"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
@@ -70,14 +70,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:text="1. Subject Details"
                         android:textColor="@color/textPrimary"
                         android:textSize="16sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilSemester"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
@@ -93,7 +93,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilCourse"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Select Course"
@@ -129,14 +129,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:text="2. File Information"
                         android:textColor="@color/textPrimary"
                         android:textSize="16sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnPickFile"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:layout_marginBottom="12dp"
@@ -149,7 +149,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilFileName"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="File Name"
@@ -170,7 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                app:cardBackgroundColor="@color/GreenLight"
+                app:cardBackgroundColor="?attr/colorSecondaryContainer"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
 
@@ -185,7 +185,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/ic_notification"
-                        app:tint="@color/Green"
+                        app:tint="@color/textSecondary"
                         android:scaleType="centerInside"
                         android:contentDescription="Notification Icon" />
 
@@ -195,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_weight="1"
-                        android:fontFamily="sans-serif-medium"
+                        android:fontFamily="@font/manrope_medium"
                         android:textColor="@color/textPrimary"
                         android:textSize="13sp"
                         tools:text="Thank you for your contribution!" />

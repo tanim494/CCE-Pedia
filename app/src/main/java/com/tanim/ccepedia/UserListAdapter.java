@@ -5,12 +5,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +41,22 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         UserListModel user = userList.get(position);
 
+        // Show the uploader's profile photo when one is set; otherwise fall back to the placeholder
+        // glyph beneath. Clearing on the empty branch resets recycled rows so a prior row's photo
+        // doesn't linger.
+        String photoUrl = user.getPhotoUrl();
+        if (photoUrl != null && !photoUrl.isEmpty()) {
+            holder.imgProfile.setVisibility(View.VISIBLE);
+            Glide.with(context)
+                    .load(photoUrl)
+                    .circleCrop()
+                    .into(holder.imgProfile);
+        } else {
+            Glide.with(context).clear(holder.imgProfile);
+            holder.imgProfile.setImageDrawable(null);
+            holder.imgProfile.setVisibility(View.GONE);
+        }
+
         holder.tvName.setText(user.getName());
         holder.tvStudentId.setText(user.getStudentId() + " | " + user.getEmail());
         holder.tvEmail.setText(user.getEmail());
@@ -57,7 +75,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             dept = "N/A";
             holder.tvUserDepartment.setTextColor(ContextCompat.getColor(context, android.R.color.darker_gray));
         } else {
-            holder.tvUserDepartment.setTextColor(ContextCompat.getColor(context, R.color.Green));
+            holder.tvUserDepartment.setTextColor(ContextCompat.getColor(context, R.color.textSecondary));
         }
         holder.tvUserDepartment.setText(dept);
 
@@ -127,6 +145,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvStudentId, tvEmail, tvPhone, tvSemester, tvGender, tvRole, tvUserDepartment, tvLastLoggedIn;
+        ImageView imgProfile;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -139,6 +158,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             tvRole = itemView.findViewById(R.id.tvRole);
             tvUserDepartment = itemView.findViewById(R.id.tvUserDepartment);
             tvLastLoggedIn = itemView.findViewById(R.id.tvLastLoggedIn);
+            imgProfile = itemView.findViewById(R.id.imgProfile);
         }
     }
 }

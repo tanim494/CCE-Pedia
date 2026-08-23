@@ -12,7 +12,7 @@
     app:cardElevation="0dp"
     app:strokeWidth="1dp"
     app:strokeColor="@color/dividerColor"
-    app:cardBackgroundColor="@color/white">
+    app:cardBackgroundColor="@color/surfaceColor">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,9 +25,9 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/ic_notification"
-            app:tint="@color/Green"
+            app:tint="@color/textSecondary"
             android:padding="6dp"
-            android:background="@color/GreenLight"
+            android:background="?attr/colorSurfaceVariant"
             android:contentDescription="Announcement Icon"
             android:layout_marginEnd="16dp" />
 
@@ -40,6 +40,6 @@
             android:text="Fetching new announcement data..."
             android:textColor="@color/textPrimary"
             android:textSize="14sp"
-            android:fontFamily="sans-serif-medium" />
+            android:fontFamily="@font/manrope_medium" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

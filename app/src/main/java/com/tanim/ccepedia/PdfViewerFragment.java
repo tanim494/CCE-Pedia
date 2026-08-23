@@ -43,7 +43,7 @@ public class PdfViewerFragment extends Fragment {
     private PDFView pdfView;
     private ProgressBar loadingSpinner;
     private TextView tvPageCount;
-    private FloatingActionButton fabAction, fabShare;
+    private FloatingActionButton fabAction, fabShare, fabShareCommunity;
 
     private Uri localPdfUri = null;
 
@@ -70,6 +70,7 @@ public class PdfViewerFragment extends Fragment {
         tvPageCount = view.findViewById(R.id.tvPageCount);
         fabAction = view.findViewById(R.id.fabAction);
         fabShare = view.findViewById(R.id.fabShare);
+        fabShareCommunity = view.findViewById(R.id.fabShareCommunity);
         Toolbar toolbar = view.findViewById(R.id.pdfToolbar);
 
         if (getArguments() != null) {
@@ -100,6 +101,16 @@ public class PdfViewerFragment extends Fragment {
                 sharePdfFile();
             } else {
                 Toast.makeText(requireContext(), "PDF not loaded yet. Please wait.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Third action: share this resource into the Community Chat as an attachment card. Uses the
+        // known Storage URL from arguments (not the downloaded bytes), so it works before render too.
+        fabShareCommunity.setOnClickListener(v -> {
+            if (fileUrl != null && !fileUrl.isEmpty()) {
+                ShareToCommunityDialog.show(requireContext(), CommunityShare.TYPE_PDF, fileUrl, fileName);
+            } else {
+                Toast.makeText(requireContext(), R.string.share_failed, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -165,6 +176,7 @@ public class PdfViewerFragment extends Fragment {
                         .onLoad(nbPages -> {
                             loadingSpinner.setVisibility(View.GONE);
                             if (fabShare != null) fabShare.setVisibility(View.VISIBLE);
+                            if (fabShareCommunity != null) fabShareCommunity.setVisibility(View.VISIBLE);
                         })
                         .onError(t -> {
                             loadingSpinner.setVisibility(View.GONE);

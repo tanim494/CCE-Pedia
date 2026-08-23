@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="Faculty Directory"
                 android:textColor="@color/textPrimary"
                 android:textSize="24sp" />
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Find and contact your course instructors"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
@@ -39,10 +39,11 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="@color/surfaceColor"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:strokeWidth="0dp">
+                app:cardElevation="0dp"
+                app:strokeColor="@color/dividerColor"
+                app:strokeWidth="1dp">
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/facultySearchView"
@@ -83,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/manrope_medium"
             android:text="No faculty found."
             android:textColor="@color/textSecondary"
             android:textSize="16sp"

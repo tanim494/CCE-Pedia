@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="About IIUC Pedia"
                 android:textColor="@color/textPrimary"
                 android:textSize="24sp" />
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Meet the developer and contributors"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/manrope_medium"
                 android:text="Community Contributors"
                 android:textColor="@color/textPrimary"
                 android:textSize="18sp" />
@@ -78,12 +78,129 @@
                     android:padding="8dp" />
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- ===================== Invite / Share (emerald hero) ===================== -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_share_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:cardBackgroundColor="?attr/colorPrimary"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            app:cardBackgroundColor="@color/invite_chip_bg"
+                            app:cardCornerRadius="14dp"
+                            app:cardElevation="0dp">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_share"
+                                app:tint="?attr/colorOnPrimary" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/space_grotesk_bold"
+                                android:text="@string/share_app_title"
+                                android:textColor="?attr/colorOnPrimary"
+                                android:textSize="17sp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:alpha="0.85"
+                                android:fontFamily="@font/manrope_regular"
+                                android:lineSpacingMultiplier="1.15"
+                                android:text="@string/share_app_subtitle"
+                                android:textColor="?attr/colorOnPrimary"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_share_app"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_semibold"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:text="@string/share_action_share"
+                            android:textColor="?attr/colorPrimary"
+                            android:textSize="14sp"
+                            app:backgroundTint="?attr/colorOnPrimary"
+                            app:cornerRadius="12dp"
+                            app:icon="@drawable/ic_share"
+                            app:iconGravity="textStart"
+                            app:iconSize="18dp"
+                            app:iconTint="?attr/colorPrimary"
+                            app:rippleColor="@color/invite_ripple" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_copy_invite"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/manrope_semibold"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:text="@string/share_action_copy"
+                            android:textColor="?attr/colorOnPrimary"
+                            android:textSize="14sp"
+                            app:cornerRadius="12dp"
+                            app:icon="@drawable/ic_link"
+                            app:iconGravity="textStart"
+                            app:iconSize="18dp"
+                            app:iconTint="?attr/colorOnPrimary"
+                            app:rippleColor="@color/invite_ripple"
+                            app:strokeColor="@color/invite_outline" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <TextView
                 android:id="@+id/appVersionText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:gravity="center"
                 android:text="App Version 1.0"
                 android:textColor="@color/textSecondary"

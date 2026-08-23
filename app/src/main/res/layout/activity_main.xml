@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/backgroundColor"
     android:fitsSystemWindows="true"
     >
 
@@ -13,26 +13,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@color/white"
+        android:background="@color/surfaceColor"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:elevation="4dp">
+        android:elevation="0dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profileImage"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profileImageContainer"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_profile"
-            app:tint="@color/Green"
-            android:padding="8dp"
-            android:background="@color/GreenLight"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:contentDescription="User Profile" />
+            app:strokeColor="?attr/colorOutlineVariant"
+            app:strokeWidth="2dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_profile"
+                app:tint="@color/textSecondary"
+                android:padding="5dp"
+                android:background="?attr/colorSurfaceVariant"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.App.Circle"
+                android:contentDescription="User Profile" />
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:id="@+id/profileTextContainer"
@@ -40,9 +50,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@id/profileImage"
-            app:layout_constraintTop_toTopOf="@id/profileImage"
-            app:layout_constraintBottom_toBottomOf="@id/profileImage"
+            app:layout_constraintStart_toEndOf="@id/profileImageContainer"
+            app:layout_constraintTop_toTopOf="@id/profileImageContainer"
+            app:layout_constraintBottom_toBottomOf="@id/profileImageContainer"
             app:layout_constraintEnd_toStartOf="@+id/iv_app_logo"
             >
 
@@ -53,7 +63,7 @@
                 android:text="User Name"
                 android:textSize="18sp"
                 android:textColor="@color/textPrimary"
-                android:fontFamily="sans-serif-medium" />
+                android:fontFamily="@font/manrope_medium" />
 
             <TextView
                 android:id="@+id/userId"
@@ -76,27 +86,41 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:id="@+id/headerDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/customHeader"
+        android:background="@color/dividerColor" />
+
+
+    <View
+        android:id="@+id/bottomNavDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/bottomNavigation"
+        android:background="@color/dividerColor" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
+        android:background="@color/surfaceColor"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
         app:itemIconTint="@color/nav_icon_selector"
         app:itemTextColor="@color/nav_icon_selector"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom_navigation"
-        android:elevation="8dp" />
+        app:elevation="0dp" />
 
     <FrameLayout
         android:id="@+id/Midcontainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/customHeader"
-        android:layout_above="@id/bottomNavigation"
+        android:layout_below="@id/headerDivider"
+        android:layout_above="@id/bottomNavDivider"
         android:background="@color/backgroundColor" />
 
 </RelativeLayout>

@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="Notifications &amp; Messages"
                 android:textColor="@color/textPrimary"
                 android:textSize="24sp" />
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Manage home screen notices and update logs"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
@@ -62,18 +62,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/manrope_medium"
                     android:text="Home Notices"
                     android:textColor="@color/textPrimary"
                     android:textSize="18sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAddNotice"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+ Add"
-                    android:textColor="@color/Green" />
+                    android:textColor="@color/textPrimary" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -96,18 +96,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="@font/manrope_medium"
                     android:text="System Updates"
                     android:textColor="@color/textPrimary"
                     android:textSize="18sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAddMessage"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+ Add"
-                    android:textColor="@color/Green" />
+                    android:textColor="@color/textPrimary" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

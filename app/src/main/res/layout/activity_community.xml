@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/surfaceColor"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -36,12 +36,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="@color/GreenLight"
-            android:fontFamily="sans-serif-medium"
+            android:background="?attr/colorSecondaryContainer"
+            android:fontFamily="@font/manrope_medium"
             android:gravity="center"
             android:padding="8dp"
             android:text="Displaying recent 100 messages"
-            android:textColor="@color/Green"
+            android:textColor="@color/textPrimary"
             android:textSize="11sp"
             android:visibility="gone"
             tools:visibility="visible" />
@@ -58,6 +58,30 @@
             android:paddingBottom="12dp"
             tools:listitem="@layout/item_message_received" />
 
+        <!-- @mention autocomplete — floats directly above the input while composing -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mentionSuggestionCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/inputCard"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="4dp"
+            android:visibility="gone"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:strokeColor="@color/dividerColor"
+            app:strokeWidth="1dp"
+            tools:visibility="visible">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mentionSuggestionRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingVertical="4dp"
+                tools:listitem="@layout/item_mention_suggestion" />
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- Message Input -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/inputCard"
@@ -72,34 +96,101 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="4dp">
 
-                <EditText
-                    android:id="@+id/communityMessageEditText"
-                    android:layout_width="0dp"
+                <!-- Reply preview — shown while composing a reply to a specific message -->
+                <LinearLayout
+                    android:id="@+id/replyPreviewContainer"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:hint="Type a message..."
-                    android:inputType="textCapSentences|textMultiLine"
-                    android:maxLines="5"
-                    android:minHeight="48dp"
-                    android:textSize="15sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="4dp"
+                    android:paddingBottom="4dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/communitySendButton"
-                    android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="3dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@color/accent_community" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/replyPreviewName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/manrope_medium"
+                            android:maxLines="1"
+                            android:textColor="@color/accent_community"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            tools:text="Replying to User Name" />
+
+                        <TextView
+                            android:id="@+id/replyPreviewSnippet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:textColor="@color/textSecondary"
+                            android:textSize="13sp"
+                            tools:text="Quoted message text" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/replyPreviewClose"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/cancel_reply_desc"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_close"
+                        app:tint="@color/textSecondary" />
+                </LinearLayout>
+
+                <!-- Input row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:src="@drawable/ic_send"
-                    app:backgroundTint="@color/Green"
-                    app:elevation="0dp"
-                    app:fabCustomSize="40dp"
-                    app:tint="@color/white"
-                    tools:ignore="ContentDescription" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/communityMessageEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/community_message_hint"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:maxLines="5"
+                        android:minHeight="48dp"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/communitySendButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:src="@drawable/ic_send"
+                        app:backgroundTint="@color/Green"
+                        app:elevation="0dp"
+                        app:fabCustomSize="40dp"
+                        app:tint="@color/white"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/space_grotesk_bold"
                 android:text="Batch Resources"
                 android:textColor="@color/textPrimary"
                 android:textSize="24sp" />
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="16dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="@font/manrope_regular"
                 android:text="Shared collections specifically for your batch"
                 android:textColor="@color/textSecondary"
                 android:textSize="14sp" />
@@ -40,10 +40,11 @@
                 android:id="@+id/searchCard"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                app:cardBackgroundColor="@color/white"
+                app:cardBackgroundColor="@color/surfaceColor"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                app:strokeWidth="0dp">
+                app:cardElevation="0dp"
+                app:strokeColor="@color/dividerColor"
+                app:strokeWidth="1dp">
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/searchViewBatchResources"
@@ -52,7 +53,7 @@
                     app:iconifiedByDefault="false"
                     app:queryBackground="@android:color/transparent"
                     app:queryHint="Search resources..."
-                    app:searchIcon="@drawable/ic_batch" />
+                    app:searchIcon="@drawable/ic_search" />
 
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
@@ -77,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/manrope_medium"
             android:text="No resources found."
             android:textColor="@color/textSecondary"
             android:textSize="16sp"

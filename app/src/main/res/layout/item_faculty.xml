@@ -47,7 +47,7 @@
                 android:id="@+id/facultyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
+                android:fontFamily="@font/manrope_medium"
                 android:textColor="@color/textPrimary"
                 android:textSize="17sp"
                 tools:text="Dr. Abu Sayed" />
@@ -56,8 +56,8 @@
                 android:id="@+id/facultyDesignation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:textColor="@color/Green"
+                android:fontFamily="@font/manrope_regular"
+                android:textColor="@color/textPrimary"
                 android:textSize="13sp"
                 tools:text="Assistant Professor" />
 
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/manrope_regular"
                     android:textColor="@color/textSecondary"
                     android:textSize="13sp"
                     tools:text="018XXXXXXXX" />
@@ -89,8 +89,8 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:cardBackgroundColor="@color/GreenLight"
-            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="?attr/colorSurfaceVariant"
+            app:cardCornerRadius="16dp"
             app:cardElevation="0dp">
 
             <ImageView
@@ -99,7 +99,7 @@
                 android:layout_gravity="center"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_phone"
-                app:tint="@color/Green"
+                app:tint="@color/textSecondary"
                 android:contentDescription="Call Icon" />
         </com.google.android.material.card.MaterialCardView>
 

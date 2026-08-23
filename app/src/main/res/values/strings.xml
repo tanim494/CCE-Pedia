@@ -10,7 +10,130 @@
 
     <string name="welcome_text"><b>Welcome To IIUC Pedia</b> \n\nPlease Log In to continue</string>
     <string name="pdf_page_count">%1$d / %2$d</string>
-    <string name="hub_greeting">Hello, %1$s!</string>
     <string name="hub_title">Student Daily Hub</string>
     <string name="app_version">Version %1$s</string>
+
+    <!-- Home / general -->
+    <string name="explore_services">Explore Services</string>
+    <string name="latest_announcements">Latest Announcements</string>
+    <string name="community_chat">Community Chat</string>
+    <string name="community_chat_subtitle">Chat with peers &amp; discuss</string>
+    <string name="academic_resources">Academic Resources</string>
+    <string name="academic_resources_subtitle">Notes, PDFs &amp; Slides</string>
+    <string name="portal">Portal</string>
+    <string name="bus_tracker">Bus Tracker</string>
+    <string name="schedule">Schedule</string>
+    <string name="cp_in_java">CP in JAVA</string>
+    <string name="admin_panel">Admin Panel</string>
+    <string name="upload_pdf">Upload PDF</string>
+    <string name="share_app_title">Invite your classmates</string>
+    <string name="share_app_subtitle">Notes, routines, notices &amp; bus schedules — all in one app.</string>
+    <string name="share_action_share">Share</string>
+    <string name="share_action_copy">Copy</string>
+    <string name="invite_copied">Invite copied to clipboard</string>
+    <string name="promotional_banner">Promotional Banner</string>
+
+    <!-- Error handling -->
+    <string name="error_title">Something went wrong</string>
+    <string name="error_load_notices">Couldn\'t load announcements. Please check your connection and try again.</string>
+    <string name="error_load_updates">Couldn\'t load the latest updates. Please try again.</string>
+    <string name="retry">Retry</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_notice_link">No external link available for this notice.</string>
+
+    <!-- Share -->
+    <string name="share_message_default">📚 IIUC Pedia — the whole campus in one app!\n\n✅ Class notes &amp; resources\n✅ Your personal class routine\n✅ Notices &amp; announcements\n✅ Bus schedules\n\n</string>
+    <string name="share_message_link">👉 Download: %1$s</string>
+    <string name="share_chooser_title">Share IIUC Pedia via</string>
+    <string name="share_subject">IIUC Pedia App</string>
+
+    <!-- Update dialog -->
+    <string name="update_available">Update Available</string>
+    <string name="update_message">A new version of IIUC Pedia is ready to download. Update now to get the latest features and improvements.</string>
+    <string name="update">Update</string>
+    <string name="later">Later</string>
+    <string name="update_message_forced">This version is out of date and no longer supported. Please update to keep using IIUC Pedia.</string>
+    <string name="update_link_missing">No update link is available yet. Please try again later.</string>
+    <string name="update_link_failed">Couldn\'t open the update link.</string>
+    <string name="update_downloading">Downloading update…</string>
+    <string name="update_download_failed">Update download failed. Please try again.</string>
+    <string name="update_allow_installs">Allow IIUC Pedia to install apps, then tap Update again.</string>
+    <!-- First-time consent before downloading/installing an APK outside the Play Store -->
+    <string name="update_consent_title">Install update?</string>
+    <string name="update_consent_message">IIUC Pedia will download the update and open Android\'s installer to finish. The first time, Android asks you to allow installs from this app.</string>
+    <string name="update_consent_accept">Download &amp; install</string>
+    <!-- In-app download progress dialog -->
+    <string name="update_downloading_title">Downloading update</string>
+    <string name="update_progress_percent">%1$d%%</string>
+    <string name="update_progress_size">%1$s / %2$s</string>
+
+    <!-- Exit dialog -->
+    <string name="exit_title">Exit IIUC Pedia?</string>
+    <string name="exit_message">Are you sure you want to close the application?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- Theme -->
+    <string name="theme_follow_system">Following system theme</string>
+
+    <!-- Community chat -->
+    <string name="unread_count_capped">9+</string>
+    <string name="unread_mention_format">@%1$s</string>
+    <!-- Live subtitle on the Home community card when unread > 0 (%1$s is the count, e.g. "3" or "9+") -->
+    <plurals name="community_new_messages">
+        <item quantity="one">%1$s new message</item>
+        <item quantity="other">%1$s new messages</item>
+    </plurals>
+    <string name="community_message_hint">Type a message… use @ to mention</string>
+    <string name="mention_suggestion_icon_desc">User avatar</string>
+    <string name="cancel_reply_desc">Cancel reply</string>
+    <string name="reply_preview_prefix">Replying to %1$s</string>
+    <string name="reply_to_self">You</string>
+    <string name="msg_action_reply">Reply</string>
+    <string name="msg_action_copy">Copy</string>
+    <string name="msg_action_delete">Delete</string>
+
+    <!-- Share a resource into the Community Chat -->
+    <string name="share_to_community">Share to Community</string>
+    <string name="share_to_community_desc">Share to Community Chat</string>
+    <string name="share_note_hint">Add a note (optional)</string>
+    <string name="share_open_in_app">Open in IIUC Pedia</string>
+    <string name="share_success">Shared to Community</string>
+    <string name="share_failed">Couldn\'t share. Please try again.</string>
+    <string name="share_signed_out">Please sign in again to share.</string>
+
+    <!-- Personal class routine -->
+    <string name="routine_title">My Class Routine</string>
+    <string name="routine_add">Add class</string>
+    <string name="routine_delete">Delete class</string>
+    <string name="routine_empty">No classes yet.\nTap + to add your first class.</string>
+    <string name="routine_hint_day">Day</string>
+    <string name="routine_hint_start">Start time</string>
+    <string name="routine_hint_end">End time</string>
+    <string name="routine_hint_course">Course (e.g. CCE-2431)</string>
+    <string name="routine_card_title">Today\'s Classes</string>
+    <string name="routine_no_classes_today">No classes today.</string>
+    <string name="routine_no_classes_today_next">No classes today. Next class: %1$s at %2$s — %3$s (in %4$s)</string>
+    <string name="routine_setup_prompt">Add classes from your Profile to see them here.</string>
+    <string name="routine_profile_title">My Class Routine</string>
+    <string name="routine_profile_subtitle">Build your weekly class schedule</string>
+    <string name="routine_toggle_desc">Show or hide today\'s classes</string>
+
+    <!-- Home routine card status header -->
+    <string name="routine_status_in_class">In class · %1$s · %2$s left</string>
+    <string name="routine_status_next">Next · %1$s · in %2$s</string>
+    <string name="routine_status_done">Done for today</string>
+    <string name="routine_status_no_classes">No classes today</string>
+    <string name="routine_status_setup">Set up your class routine</string>
+    <string name="routine_eyebrow_routine">ROUTINE</string>
+    <string name="routine_badge_now">NOW</string>
+    <string name="routine_badge_next">NEXT</string>
+    <string name="routine_countdown_now">now</string>
+
+    <!-- Pre-class reminder notifications -->
+    <string name="routine_reminder_title">Class starting soon</string>
+    <string name="routine_reminder_text">%1$s at %2$s · in %3$d min</string>
+    <string name="routine_reminder_channel_name">Class Reminders</string>
+    <string name="routine_reminder_channel_desc">Heads-up before each class in your routine starts.</string>
+
 </resources>
