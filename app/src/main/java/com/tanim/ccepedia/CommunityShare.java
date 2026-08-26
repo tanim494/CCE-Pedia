@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Posts a resource (a PDF or a web link) into the Community Chat as an attachment message.
@@ -20,11 +21,22 @@ public final class CommunityShare {
 
     public static final String TYPE_PDF = "pdf";
     public static final String TYPE_LINK = "link";
+    public static final String TYPE_BUS_SCHEDULE = "bus_schedule";
+    public static final String TYPE_COURSE_LIST = "course_list";
+    public static final String TYPE_FILE_LIST = "file_list";
 
     private CommunityShare() {}
 
+    /** Fragment types that load their data from Firestore and don't need a URL to reopen. */
+    private static final Set<String> FRAGMENT_ONLY_TYPES = Set.of(
+            TYPE_BUS_SCHEDULE,
+            TYPE_COURSE_LIST,
+            TYPE_FILE_LIST
+    );
+
     /**
      * @param caption optional note typed by the sharer; may be null or empty.
+     * @param url     required for TYPE_PDF and TYPE_LINK; ignored for fragment-only types.
      */
     static void post(Context context, String type, String url, String title, String caption) {
         UserData user = UserData.getInstance();
@@ -32,7 +44,8 @@ public final class CommunityShare {
             Toast.makeText(context, R.string.share_signed_out, Toast.LENGTH_SHORT).show();
             return;
         }
-        if (url == null || url.isEmpty()) {
+        boolean needsUrl = !FRAGMENT_ONLY_TYPES.contains(type);
+        if (needsUrl && (url == null || url.isEmpty())) {
             Toast.makeText(context, R.string.share_failed, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -45,7 +58,12 @@ public final class CommunityShare {
         message.put("messageText", caption == null ? "" : caption.trim());
         message.put("timestamp", FieldValue.serverTimestamp());
         message.put("attachmentType", type);
-        message.put("attachmentUrl", url);
+        if (!needsUrl) {
+            // fragment-only: store empty string so the field exists but isn't used
+            message.put("attachmentUrl", "");
+        } else {
+            message.put("attachmentUrl", url);
+        }
         message.put("attachmentTitle", title != null ? title : "");
 
         // Use the application context for the async result: the sharing screen may be gone by then.

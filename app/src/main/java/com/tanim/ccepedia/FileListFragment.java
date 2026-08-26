@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -41,6 +42,7 @@ public class FileListFragment extends Fragment {
     private ProgressBar loadingSpinner;
     private SearchView searchView;
     private TextView emptyStateText;
+    private MaterialButton shareCommunityButton;
 
     public static FileListFragment newInstance(String semesterId, String courseId, String deptCode) {
         FileListFragment fragment = new FileListFragment();
@@ -74,6 +76,15 @@ public class FileListFragment extends Fragment {
         loadingSpinner = view.findViewById(R.id.loadingSpinner);
         searchView = view.findViewById(R.id.searchViewFiles);
         emptyStateText = view.findViewById(R.id.emptyStateText);
+        shareCommunityButton = view.findViewById(R.id.shareCommunityButton);
+        TextView resourceHeader = view.findViewById(R.id.resourceHeaderText);
+        TextView resourceSubtitle = view.findViewById(R.id.resourceSubtitleText);
+
+        String semesterDisplay = semesterId != null ? semesterId.replace("semester_", "Semester ") : "Semester";
+        resourceHeader.setText(courseId != null && !courseId.isEmpty() ? courseId : "Course");
+        resourceSubtitle.setText(deptCode != null && !deptCode.isEmpty()
+                ? deptCode + " / " + semesterDisplay
+                : semesterDisplay);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -107,6 +118,12 @@ public class FileListFragment extends Fragment {
 
         setupSearch();
         fetchFiles();
+
+        shareCommunityButton.setOnClickListener(v -> {
+            String title = deptCode + "/" + semesterDisplay + "/" + courseId + " Resources";
+            ShareToCommunityDialog.show(requireContext(), CommunityShare.TYPE_FILE_LIST, "", title);
+        });
+
         return view;
     }
 

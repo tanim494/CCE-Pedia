@@ -57,7 +57,9 @@ public class AdminUserListFragment extends Fragment {
         tvUserCount = view.findViewById(R.id.tvUserCount);
         recyclerViewUsers = view.findViewById(R.id.recyclerViewUsers);
 
-        searchView.setIconified(false);
+        // Keep the (permanently expanded) search box from stealing focus on entry — otherwise
+        // it pops the keyboard, and the first Back press only dismisses that instead of leaving.
+        searchView.clearFocus();
 
         userList = new ArrayList<>();
         allUsers = new ArrayList<>();

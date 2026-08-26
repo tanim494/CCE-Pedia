@@ -26,6 +26,7 @@
     <!-- Surfaces & text — sources for M3 roles; names kept for existing layout refs -->
     <color name="surfaceColor">#FFFFFF</color>       <!-- colorSurface -->
     <color name="backgroundColor">#F6F8FA</color>    <!-- paper: colorBackground -->
+    <color name="scrim_bg">#80FFFFFF</color>
     <color name="textPrimary">#1B2430</color>        <!-- ink: onSurface/onBackground -->
     <color name="textSecondary">#5B6673</color>      <!-- slate: onSurfaceVariant -->
     <color name="dividerColor">#C7CDD3</color>       <!-- outlineVariant -->

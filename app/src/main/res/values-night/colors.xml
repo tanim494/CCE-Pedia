@@ -6,6 +6,7 @@
     <color name="backgroundColor">#10151B</color>
     <color name="surfaceColor">#161C23</color>
     <color name="surface_variant">#3A424B</color>
+    <color name="scrim_bg">#80161C23</color>
 
     <!-- Text — soft ink-inverse for comfortable dark contrast -->
     <color name="textPrimary">#E1E6EC</color>

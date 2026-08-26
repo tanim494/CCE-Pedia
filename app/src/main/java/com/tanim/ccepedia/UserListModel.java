@@ -17,6 +17,7 @@ public class UserListModel {
     private String departmentName;
     private long viewCount;
     private String photoUrl;
+    private String appVersion;
 
     public UserListModel() {
     }
@@ -65,4 +66,7 @@ public class UserListModel {
 
     public String getPhotoUrl() { return photoUrl; }
     public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+
+    public String getAppVersion() { return appVersion; }
+    public void setAppVersion(String appVersion) { this.appVersion = appVersion; }
 }

@@ -183,15 +183,38 @@ public class MainActivity extends AppCompatActivity {
      */
     private void maybeOpenSharedResource(Intent intent) {
         if (intent == null) return;
-        String url = intent.getStringExtra(EXTRA_OPEN_URL);
-        if (url == null || url.isEmpty()) return;
-
         String type = intent.getStringExtra(EXTRA_OPEN_TYPE);
+        if (type == null || type.isEmpty()) return;
+
+        String url = intent.getStringExtra(EXTRA_OPEN_URL);
         String title = intent.getStringExtra(EXTRA_OPEN_TITLE);
 
-        Fragment fragment = CommunityShare.TYPE_LINK.equals(type)
-                ? WebFragment.newInstance(url)
-                : PdfViewerFragment.newInstance(url, title, null);
+        // Fragment-only types (like bus_schedule, course_list, file_list) don't need a URL — they load from Firestore.
+        boolean needsUrl = !CommunityShare.TYPE_BUS_SCHEDULE.equals(type)
+                && !CommunityShare.TYPE_COURSE_LIST.equals(type)
+                && !CommunityShare.TYPE_FILE_LIST.equals(type);
+        if (needsUrl && (url == null || url.isEmpty())) return;
+
+        Fragment fragment;
+        if (CommunityShare.TYPE_LINK.equals(type)) {
+            fragment = WebFragment.newInstance(url);
+        } else if (CommunityShare.TYPE_BUS_SCHEDULE.equals(type)) {
+            fragment = new BusScheduleFragment();
+        } else if (CommunityShare.TYPE_COURSE_LIST.equals(type)) {
+            // Parse title "DeptName/Semester X Resources" to get semester number
+            String semesterId = parseSemesterIdFromTitle(title);
+            fragment = CourseListFragment.newInstance(semesterId);
+        } else if (CommunityShare.TYPE_FILE_LIST.equals(type)) {
+            // Parse title "DeptName/Semester X/CourseName Resources" to get semester and course
+            String[] parts = parseFileListTitle(title);
+            if (parts != null) {
+                fragment = FileListFragment.newInstance(parts[0], parts[1], parts[2]);
+            } else {
+                fragment = new PdfViewerFragment(); // fallback
+            }
+        } else {
+            fragment = PdfViewerFragment.newInstance(url, title, null);
+        }
 
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
@@ -204,6 +227,36 @@ public class MainActivity extends AppCompatActivity {
         intent.removeExtra(EXTRA_OPEN_URL);
         intent.removeExtra(EXTRA_OPEN_TYPE);
         intent.removeExtra(EXTRA_OPEN_TITLE);
+    }
+
+    /** Extracts "semester_N" from title like "CCE/Semester 1 Resources" */
+    private String parseSemesterIdFromTitle(String title) {
+        if (title == null) return "semester_1";
+        int idx = title.indexOf("Semester ");
+        if (idx >= 0) {
+            int start = idx + "Semester ".length();
+            int end = start;
+            while (end < title.length() && Character.isDigit(title.charAt(end))) {
+                end++;
+            }
+            if (end > start) {
+                return "semester_" + title.substring(start, end);
+            }
+        }
+        return "semester_1";
+    }
+
+    /** Extracts [semesterId, courseId, deptCode] from title like "CCE/Semester 1/CSE101 Resources" */
+    private String[] parseFileListTitle(String title) {
+        if (title == null) return null;
+        String[] parts = title.split("/");
+        if (parts.length >= 3) {
+            String deptCode = parts[0].trim();
+            String semesterId = parseSemesterIdFromTitle(parts[1]);
+            String courseId = parts[2].replace(" Resources", "").trim();
+            return new String[]{semesterId, courseId, deptCode};
+        }
+        return null;
     }
 
     private void checkForUpdate() {

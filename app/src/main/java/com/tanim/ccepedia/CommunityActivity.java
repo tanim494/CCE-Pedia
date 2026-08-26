@@ -170,7 +170,11 @@ public class CommunityActivity extends AppCompatActivity implements MessageInter
     /** Tapping a shared-resource card opens it inside MainActivity's middle fragment container. */
     @Override
     public void onOpenAttachment(CommunityMessage message) {
-        if (message.getAttachmentUrl() == null || message.getAttachmentUrl().isEmpty()) {
+        // Fragment-only types (like bus_schedule, course_list, file_list) don't need a URL — they load from Firestore.
+        boolean needsUrl = !CommunityShare.TYPE_BUS_SCHEDULE.equals(message.getAttachmentType())
+                && !CommunityShare.TYPE_COURSE_LIST.equals(message.getAttachmentType())
+                && !CommunityShare.TYPE_FILE_LIST.equals(message.getAttachmentType());
+        if (needsUrl && (message.getAttachmentUrl() == null || message.getAttachmentUrl().isEmpty())) {
             Toast.makeText(this, R.string.share_failed, Toast.LENGTH_SHORT).show();
             return;
         }

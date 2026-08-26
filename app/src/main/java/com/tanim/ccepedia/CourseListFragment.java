@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,6 +33,8 @@ public class CourseListFragment extends Fragment implements CourseAdapter.OnCour
     private CourseAdapter adapter;
     private SearchView searchView;
     private TextView emptyStateTextView; // 🌟 NEW FIELD
+    private ProgressBar loadingSpinner;
+    private MaterialButton shareCommunityButton;
 
     public static CourseListFragment newInstance(String semesterId) {
         CourseListFragment fragment = new CourseListFragment();
@@ -58,7 +62,18 @@ public class CourseListFragment extends Fragment implements CourseAdapter.OnCour
 
         recyclerView = view.findViewById(R.id.courseRecyclerView);
         searchView = view.findViewById(R.id.searchViewCourses);
-        emptyStateTextView = view.findViewById(R.id.emptyStateCoursesText); // 🌟 INITIALIZE TEXTVIEW
+        emptyStateTextView = view.findViewById(R.id.emptyStateCoursesText);
+        loadingSpinner = view.findViewById(R.id.loadingSpinner);
+        shareCommunityButton = view.findViewById(R.id.shareCommunityButton);
+        TextView resourceHeader = view.findViewById(R.id.resourceHeaderText);
+        TextView resourceSubtitle = view.findViewById(R.id.resourceSubtitleText);
+
+        String deptName = UserData.getInstance().getDepartmentName();
+        String semesterDisplay = semesterId != null ? semesterId.replace("semester_", "Semester ") : "Semester";
+        resourceHeader.setText(deptName != null && !deptName.isEmpty()
+                ? deptName + " / " + semesterDisplay
+                : semesterDisplay);
+        resourceSubtitle.setText("Browse Courses");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new CourseAdapter(new ArrayList<>(), this);
@@ -66,6 +81,12 @@ public class CourseListFragment extends Fragment implements CourseAdapter.OnCour
 
         setupSearch();
         fetchCourses();
+
+        shareCommunityButton.setOnClickListener(v -> {
+            String title = deptName + "/" + semesterDisplay + " Resources";
+            ShareToCommunityDialog.show(requireContext(), CommunityShare.TYPE_COURSE_LIST, "", title);
+        });
+
         return view;
     }
 
@@ -111,11 +132,13 @@ public class CourseListFragment extends Fragment implements CourseAdapter.OnCour
 
         emptyStateTextView.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
+        loadingSpinner.setVisibility(View.VISIBLE);
 
 
         collectionRef
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    loadingSpinner.setVisibility(View.GONE);
                     List<Course> newCourseList = new ArrayList<>();
                     for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                         String id = doc.getId();
@@ -135,6 +158,7 @@ public class CourseListFragment extends Fragment implements CourseAdapter.OnCour
                     }
                 })
                 .addOnFailureListener(e -> {
+                    loadingSpinner.setVisibility(View.GONE);
                     emptyStateTextView.setText("Failed to connect and load courses for " + deptCode + ".");
                     emptyStateTextView.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);

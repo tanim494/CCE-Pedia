@@ -19,22 +19,24 @@
             android:padding="20dp">
 
             <TextView
+                android:id="@+id/resourceHeaderText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/space_grotesk_bold"
-                android:text="Available Files"
                 android:textColor="@color/textPrimary"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                tools:text="CCE101" />
 
             <TextView
+                android:id="@+id/resourceSubtitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="18dp"
                 android:fontFamily="@font/manrope_regular"
-                android:text="Notes, slides and question banks"
                 android:textColor="@color/textSecondary"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:text="CCE / Semester 1" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -69,7 +71,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingHorizontal="12dp"
-            android:paddingBottom="80dp"
+            android:paddingBottom="140dp"
             tools:listitem="@layout/item_file" />
 
         <TextView
@@ -90,6 +92,22 @@
             android:layout_gravity="center"
             android:indeterminateTint="@color/Green"
             android:visibility="gone" />
+
+        <!-- Share to Community button at bottom -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/shareCommunityButton"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_button_scrim"
+            android:text="Share to Community"
+            android:textColor="@color/accent_community"
+            app:backgroundTint="@null"
+            app:icon="@drawable/logo"
+            app:iconGravity="textStart"
+            app:iconTint="@color/accent_community" />
 
     </FrameLayout>
 

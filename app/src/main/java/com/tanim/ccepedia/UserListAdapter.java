@@ -88,6 +88,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             holder.tvLastLoggedIn.setText("Last Seen: Unavailable");
         }
 
+        String appVersion = user.getAppVersion();
+        if (appVersion != null && !appVersion.isEmpty()) {
+            holder.tvAppVersion.setText("V: " + appVersion);
+            holder.tvAppVersion.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvAppVersion.setVisibility(View.GONE);
+        }
+
         holder.itemView.setOnClickListener(v -> showRoleChangeDialog(user));
     }
 
@@ -144,7 +152,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvStudentId, tvEmail, tvPhone, tvSemester, tvGender, tvRole, tvUserDepartment, tvLastLoggedIn;
+        TextView tvName, tvStudentId, tvEmail, tvPhone, tvSemester, tvGender, tvRole, tvUserDepartment, tvLastLoggedIn, tvAppVersion;
         ImageView imgProfile;
 
         public UserViewHolder(@NonNull View itemView) {
@@ -158,6 +166,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             tvRole = itemView.findViewById(R.id.tvRole);
             tvUserDepartment = itemView.findViewById(R.id.tvUserDepartment);
             tvLastLoggedIn = itemView.findViewById(R.id.tvLastLoggedIn);
+            tvAppVersion = itemView.findViewById(R.id.tvAppVersion);
             imgProfile = itemView.findViewById(R.id.imgProfile);
         }
     }

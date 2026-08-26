@@ -257,12 +257,33 @@ public class CommunityChatAdapter extends RecyclerView.Adapter<CommunityChatAdap
                 if (attachmentType != null && !attachmentType.isEmpty()) {
                     Context ctx = attachmentCard.getContext();
                     boolean isLink = CommunityShare.TYPE_LINK.equals(attachmentType);
+                    boolean isBusSchedule = CommunityShare.TYPE_BUS_SCHEDULE.equals(attachmentType);
+                    boolean isCourseList = CommunityShare.TYPE_COURSE_LIST.equals(attachmentType);
+                    boolean isFileList = CommunityShare.TYPE_FILE_LIST.equals(attachmentType);
+                    int iconRes;
+                    int glyphColor;
+                    int softColor;
+                    if (isBusSchedule) {
+                        iconRes = R.drawable.ic_bus;
+                        glyphColor = ContextCompat.getColor(ctx, R.color.accent_community);
+                        softColor = ContextCompat.getColor(ctx, R.color.accent_community_soft);
+                    } else if (isCourseList) {
+                        iconRes = R.drawable.ic_repository;
+                        glyphColor = ContextCompat.getColor(ctx, R.color.accent_java);
+                        softColor = ContextCompat.getColor(ctx, R.color.accent_java_soft);
+                    } else if (isFileList) {
+                        iconRes = R.drawable.ic_batch;
+                        glyphColor = ContextCompat.getColor(ctx, R.color.accent_resources);
+                        softColor = ContextCompat.getColor(ctx, R.color.accent_resources_soft);
+                    } else {
+                        iconRes = isLink ? R.drawable.ic_link : R.drawable.ic_pdf;
+                        glyphColor = ContextCompat.getColor(ctx, isLink ? R.color.accent_java : R.color.accent_resources);
+                        softColor = ContextCompat.getColor(ctx, isLink ? R.color.accent_java_soft : R.color.accent_resources_soft);
+                    }
                     if (attachmentIcon != null) {
-                        attachmentIcon.setImageResource(isLink ? R.drawable.ic_link : R.drawable.ic_pdf);
-                        int glyph = ContextCompat.getColor(ctx, isLink ? R.color.accent_java : R.color.accent_resources);
-                        int soft = ContextCompat.getColor(ctx, isLink ? R.color.accent_java_soft : R.color.accent_resources_soft);
-                        attachmentIcon.setImageTintList(ColorStateList.valueOf(glyph));
-                        attachmentIcon.setBackgroundTintList(ColorStateList.valueOf(soft));
+                        attachmentIcon.setImageResource(iconRes);
+                        attachmentIcon.setImageTintList(ColorStateList.valueOf(glyphColor));
+                        attachmentIcon.setBackgroundTintList(ColorStateList.valueOf(softColor));
                     }
                     if (attachmentTitle != null) {
                         String title = message.getAttachmentTitle();

@@ -95,6 +95,7 @@ public class LoadingActivity extends AppCompatActivity {
 
         Map<String, Object> updateData = new HashMap<>();
         updateData.put("lastLoggedIn", FieldValue.serverTimestamp());
+        updateData.put("appVersion", BuildConfig.VERSION_NAME);
 
         db.collection("users")
                 .document(uid)

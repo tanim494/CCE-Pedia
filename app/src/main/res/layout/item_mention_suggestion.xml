@@ -12,19 +12,34 @@
     android:paddingHorizontal="16dp"
     android:paddingVertical="10dp">
 
-    <TextView
-        android:id="@+id/mention_initial"
+    <FrameLayout
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/bg_circle"
-        android:backgroundTint="@color/accent_community_soft"
-        android:contentDescription="@string/mention_suggestion_icon_desc"
-        android:fontFamily="@font/space_grotesk_bold"
-        android:gravity="center"
-        android:textColor="@color/accent_community"
-        android:textSize="15sp"
-        tools:text="A" />
+        android:layout_marginEnd="12dp">
+
+        <!-- Fallback initial; shown for users without a profile photo. -->
+        <TextView
+            android:id="@+id/mention_initial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/accent_community_soft"
+            android:contentDescription="@string/mention_suggestion_icon_desc"
+            android:fontFamily="@font/space_grotesk_bold"
+            android:gravity="center"
+            android:textColor="@color/accent_community"
+            android:textSize="15sp"
+            tools:text="A" />
+
+        <!-- Real profile photo; fills the circle and covers the initial once loaded. -->
+        <ImageView
+            android:id="@+id/mention_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="0dp"

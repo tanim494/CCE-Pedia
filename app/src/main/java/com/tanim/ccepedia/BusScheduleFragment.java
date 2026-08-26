@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -45,7 +47,7 @@ public class BusScheduleFragment extends Fragment {
     private TabLayout scheduleTabs;
     private ProgressBar loadingSpinner;
     private LinearLayout contactsLayout;
-    private MaterialButton downloadButton, shareButton;
+    private MaterialButton downloadButton, shareButton, shareCommunityButton;
 
     private FirebaseFirestore db;
     private String appUpdateLink;
@@ -66,6 +68,7 @@ public class BusScheduleFragment extends Fragment {
         contactsLayout = rootView.findViewById(R.id.contactsLayout);
         downloadButton = rootView.findViewById(R.id.downloadButton);
         shareButton = rootView.findViewById(R.id.shareButton);
+        shareCommunityButton = rootView.findViewById(R.id.shareCommunityButton);
         loadingSpinner = rootView.findViewById(R.id.loadingSpinner);
 
         db = FirebaseFirestore.getInstance();
@@ -88,6 +91,14 @@ public class BusScheduleFragment extends Fragment {
             String url = currentUrl();
             if (url != null && !url.isEmpty()) {
                 shareCurrentSchedule();
+            } else {
+                Toast.makeText(requireContext(), "Nothing to share yet", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        shareCommunityButton.setOnClickListener(v -> {
+            if (!pageUrls.isEmpty()) {
+                ShareToCommunityDialog.show(requireContext(), CommunityShare.TYPE_BUS_SCHEDULE, "", "Bus Schedule");
             } else {
                 Toast.makeText(requireContext(), "Nothing to share yet", Toast.LENGTH_SHORT).show();
             }
@@ -169,6 +180,11 @@ public class BusScheduleFragment extends Fragment {
                             contactsLayout.removeAllViews();
                             TextView noContacts = new TextView(requireContext());
                             noContacts.setText("No important contacts found");
+                            noContacts.setTextColor(ContextCompat.getColor(requireContext(), R.color.textSecondary));
+                            noContacts.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                            noContacts.setTypeface(ResourcesCompat.getFont(requireContext(), R.font.manrope_regular));
+                            int topPad = Math.round(8 * getResources().getDisplayMetrics().density);
+                            noContacts.setPadding(0, topPad, 0, 0);
                             contactsLayout.addView(noContacts);
                         }
                     } else {

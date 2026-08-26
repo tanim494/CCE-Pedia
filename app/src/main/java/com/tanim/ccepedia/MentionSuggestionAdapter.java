@@ -3,10 +3,13 @@ package com.tanim.ccepedia;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 import java.util.Locale;
@@ -46,6 +49,21 @@ public class MentionSuggestionAdapter extends RecyclerView.Adapter<MentionSugges
         holder.id.setText(user.getStudentId() != null ? user.getStudentId() : "");
         holder.initial.setText(name.isEmpty() ? "?" : name.substring(0, 1).toUpperCase(Locale.getDefault()));
 
+        // Show the user's profile photo when set; otherwise fall back to the initial glyph beneath.
+        // Clearing on the empty branch resets recycled rows so a prior row's photo doesn't linger.
+        String photoUrl = user.getPhotoUrl();
+        if (photoUrl != null && !photoUrl.isEmpty()) {
+            holder.avatar.setVisibility(View.VISIBLE);
+            Glide.with(holder.avatar.getContext())
+                    .load(photoUrl)
+                    .circleCrop()
+                    .into(holder.avatar);
+        } else {
+            Glide.with(holder.avatar.getContext()).clear(holder.avatar);
+            holder.avatar.setImageDrawable(null);
+            holder.avatar.setVisibility(View.GONE);
+        }
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onMentionSelected(user);
@@ -60,12 +78,14 @@ public class MentionSuggestionAdapter extends RecyclerView.Adapter<MentionSugges
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView initial;
+        final ImageView avatar;
         final TextView name;
         final TextView id;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             initial = itemView.findViewById(R.id.mention_initial);
+            avatar = itemView.findViewById(R.id.mention_avatar);
             name = itemView.findViewById(R.id.mention_name);
             id = itemView.findViewById(R.id.mention_id);
         }

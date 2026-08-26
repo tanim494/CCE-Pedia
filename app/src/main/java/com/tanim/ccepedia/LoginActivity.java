@@ -1,6 +1,7 @@
 package com.tanim.ccepedia;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -86,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Map<String, Object> updateData = new HashMap<>();
         updateData.put("lastLoggedIn", FieldValue.serverTimestamp());
+        updateData.put("appVersion", getInstalledVersion());
 
         db.collection("users")
                 .document(uid)
@@ -94,6 +96,16 @@ public class LoginActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                 });
+    }
+
+    /** Version name the user currently has installed (e.g. "4.0"), or "" if unavailable. */
+    private String getInstalledVersion() {
+        try {
+            String version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            return version != null ? version : "";
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
     }
 
     private void handleUserDocument(DocumentSnapshot snapshot) {
